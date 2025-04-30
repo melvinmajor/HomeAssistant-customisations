@@ -1,0 +1,276 @@
+## Home Assistant view used as a secondary page to check configured automations.
+# GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
+# Author: Melvin Campos Casares
+# Last updated: 30/04/2025 (DD/MM/YYYY)
+
+views:
+  - title: Automations
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: House automations
+            heading_style: title
+            icon: mdi:home-automation
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.tag_white_circle_is_scanned
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: mdi:robot
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.turn_on_tv_scene
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.turn_off_tv_scene
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.entrance_light_motion_at_day
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+          - type: vertical-stack
+            cards:
+              - type: custom:bubble-card
+                card_type: separator
+                name: Without guests
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: automation.entrance_light_motion_at_sunrise
+                double_tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                button_action:
+                  double_tap_action:
+                    action: none
+                  hold_action:
+                    action: none
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: automation.entrance_light_motion_at_night
+                double_tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                button_action:
+                  double_tap_action:
+                    action: none
+                  hold_action:
+                    action: none
+          - type: vertical-stack
+            cards:
+              - type: custom:bubble-card
+                card_type: separator
+                name: With guests
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: >-
+                  automation.entrance_light_motion_at_sunrise_or_sunset_with_guests
+                double_tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                button_action:
+                  double_tap_action:
+                    action: none
+                  hold_action:
+                    action: none
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: automation.entrance_light_motion_at_night_with_guests
+                double_tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                button_action:
+                  double_tap_action:
+                    action: none
+                  hold_action:
+                    action: none
+        column_span: 1
+      - type: grid
+        cards:
+          - type: heading
+            heading: System automations
+            heading_style: title
+            icon: mdi:home-assistant
+          - type: custom:bubble-card
+            card_type: button
+            entity: sensor.material_rounded_base_color
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:format-color-fill
+            card_layout: normal
+            styles: ''
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.set_ha_theme_at_startup
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: ''
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.reset_kill_switch
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: ''
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_boolean.visitor_override
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:account-group
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_boolean.entrance_light_override
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:account-group
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_boolean.cat_night_override
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:cat
+      - type: grid
+        cards:
+          - type: heading
+            heading: Smart buttons automation
+            heading_style: title
+            icon: phu:button
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: >-
+              automation.toggle_entrance_light_override_with_smart_button_at_entrance
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.new_automation
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.button_office_long_press
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.smart_button_bedroom_short_press
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.smart_button_bedroom_long_press
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+    type: sections
+    cards: []
+    max_columns: 3
+    dense_section_placement: true
+    icon: mdi:robot
