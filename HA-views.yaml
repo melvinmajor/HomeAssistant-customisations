@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
-## Author: Melvin Campos Casares
-## GitHub profile: https://github.com/melvinmajor
-## Last updated: 30/04/2025 (DD/MM/YYYY)
+# GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
+# Author: Melvin Campos Casares
+# Last updated: 10/05/2025 (DD/MM/YYYY)
 
 views:
   - title: Shortcuts
@@ -46,23 +46,23 @@ views:
                 name: EX30
                 icon: phu:volvo
                 sub_button:
-                  - entity: sensor.volvo_yv12zel98rs016075_electric_range
+                  - entity: sensor.volvo_ex30my24_electric_range
                     show_icon: false
                     show_background: false
                     show_state: true
                     name: EX30 - Estimated range
-                  - entity: sensor.volvo_yv12zel98rs016075_battery_charge_level
+                  - entity: sensor.volvo_ex30my24_battery_charge_level
                     show_name: false
                     show_state: true
                     show_background: false
                     name: EX30 - battery level
                     tap_action:
                       action: none
-                  - entity: switch.volvo_yv12zel98rs016075_climate_status
+                  - entity: switch.volvo_ex30my24_climate_status
                     show_name: false
                     show_state: false
                     name: EX30 - AC
-                  - entity: lock.volvo_yv12zel98rs016075_lock_status
+                  - entity: lock.volvo_ex30my24_lock_status
                     name: EX30 - Lock state
                 styles: ''
               - type: custom:bubble-card
@@ -971,12 +971,12 @@ views:
                 icon: phu:motion-sensor
                 secondary_info: last-changed
               - entity: light.couloir_cote_chambre
-                name: Couloir - côté chambre
+                name: Entrance - bedroom
                 secondary_info: brightness
                 icon: phu:bulbs-classic
               - entity: light.couloir_cote_bureau
                 secondary_info: brightness
-                name: Couloir - côté bureau
+                name: Entrance - office
                 icon: phu:bulbs-classic
             state_color: true
       - type: grid
@@ -988,20 +988,24 @@ views:
           - type: entities
             entities:
               - entity: light.plafond_salon
-                name: Plafond
+                name: Ceiling
                 secondary_info: brightness
                 icon: phu:bulbs-filament
               - entity: light.lanterne_gauche
                 secondary_info: brightness
                 icon: phu:bulb-candle
+                name: Wall - Left
               - entity: light.lanterne_droite
                 secondary_info: brightness
                 icon: phu:bulb-candle
+                name: Wall - Right
               - entity: media_player.hk_citation_one
               - entity: light.friday
-                icon: phu:christmas-tree-v2
+                icon: mdi:floor-lamp
+                name: Floor lamp
               - entity: light.hue_ambiance_luster_1
                 icon: mdi:mushroom
+                name: Mushroom
             show_header_toggle: false
             state_color: true
           - show_state: true
@@ -1028,25 +1032,19 @@ views:
               - entity: media_player.google_tv_2
                 icon: ''
               - entity: light.hue_play_gauche
-                name: Hue Play - Gauche
+                name: Hue Play - Left
                 secondary_info: brightness
                 icon: phu:play-bar-one
               - entity: light.hue_play_droite
-                name: Hue Play - Droite
+                name: Hue Play - Right
                 secondary_info: brightness
                 icon: phu:play-bar-one
-            show_header_toggle: false
-            state_color: true
-          - type: heading
-            heading: Lampadaire
-            heading_style: title
-            icon: phu:floor-lamp-dual
-          - type: entities
-            entities:
               - entity: light.spot_gauche
+                name: Spot - Left
                 secondary_info: brightness
                 icon: phu:bulbs-spot
               - entity: light.spot_droite
+                name: Spot - Right
                 secondary_info: brightness
                 icon: phu:bulbs-spot
             show_header_toggle: false
@@ -1355,7 +1353,7 @@ views:
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.volvo_yv12zel98rs016075_odometer
+        entity: sensor.volvo_ex30my24_odometer
         color: ''
         name: Odometer
         show_entity_picture: false
@@ -1363,41 +1361,41 @@ views:
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.volvo_yv12zel98rs016075_electric_range
+        entity: sensor.volvo_ex30my24_electric_range
         color: ''
         name: Estimated range
       - type: entity
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.volvo_yv12zel98rs016075_charging_connection_status
+        entity: sensor.volvo_ex30my24_charging_connection_status
         color: ''
         name: Charging status
         visibility:
           - condition: state
-            entity: sensor.volvo_yv12zel98rs016075_charging_connection_status
+            entity: sensor.volvo_ex30my24_charging_connection_status
             state_not: Disconnected
       - type: entity
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.volvo_yv12zel98rs016075_charging_system_status
+        entity: sensor.volvo_ex30my24_charging_system_status
         color: ''
         name: Charging system status
         visibility:
           - condition: state
-            entity: sensor.volvo_yv12zel98rs016075_charging_system_status
+            entity: sensor.volvo_ex30my24_charging_system_status
             state_not: Idle
       - type: entity
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.volvo_yv12zel98rs016075_estimated_charging_finish_time
+        entity: sensor.volvo_ex30my24_estimated_charging_finish_time
         color: ''
         name: Charge estimated to finish in
         visibility:
           - condition: state
-            entity: sensor.volvo_yv12zel98rs016075_charging_system_status
+            entity: sensor.volvo_ex30my24_charging_system_status
             state_not: Idle
     type: sections
     sections:
@@ -1412,7 +1410,7 @@ views:
               - type: horizontal-stack
                 cards:
                   - type: gauge
-                    entity: sensor.volvo_yv12zel98rs016075_battery_charge_level
+                    entity: sensor.volvo_ex30my24_battery_charge_level
                     name: Battery level
                     unit: '%'
                     min: 0
@@ -1427,7 +1425,7 @@ views:
                     type: button
                     tap_action:
                       action: toggle
-                    entity: switch.volvo_yv12zel98rs016075_climate_status
+                    entity: switch.volvo_ex30my24_climate_status
                     show_state: true
                     name: EX30 - AC
                     icon_height: 48px
@@ -1436,7 +1434,7 @@ views:
                     type: button
                     tap_action:
                       action: toggle
-                    entity: lock.volvo_yv12zel98rs016075_lock_status
+                    entity: lock.volvo_ex30my24_lock_status
                     icon_height: 48px
                     name: EX30 - Lock state
                     show_state: true
@@ -1444,7 +1442,7 @@ views:
                 cards:
                   - type: map
                     entities:
-                      - entity: device_tracker.volvo_yv12zel98rs016075_location
+                      - entity: device_tracker.volvo_ex30my24_location
                         name: EX30
                     theme_mode: auto
                     default_zoom: 17
@@ -1463,9 +1461,9 @@ views:
                 show_state: true
                 type: glance
                 entities:
-                  - entity: sensor.volvo_yv12zel98rs016075_average_energy_consumption
+                  - entity: sensor.volvo_ex30my24_average_energy_consumption
                     name: Average consumption
-                  - entity: sensor.volvo_yv12zel98rs016075_average_speed
+                  - entity: sensor.volvo_ex30my24_average_speed
                     name: Average speed
                 columns: 2
               - show_name: true
@@ -1473,11 +1471,11 @@ views:
                 show_state: true
                 type: glance
                 entities:
-                  - entity: sensor.volvo_yv12zel98rs016075_service_warning_status
+                  - entity: sensor.volvo_ex30my24_service_warning_status
                     name: Warning status
-                  - entity: sensor.volvo_yv12zel98rs016075_time_to_service
+                  - entity: sensor.volvo_ex30my24_time_to_service
                     name: Time before
-                  - entity: sensor.volvo_yv12zel98rs016075_km_to_service
+                  - entity: sensor.volvo_ex30my24_km_to_service
                     name: Distance before
                 columns: 3
                 state_color: true
@@ -1487,13 +1485,13 @@ views:
                     show_name: false
                     camera_view: auto
                     type: picture-entity
-                    entity: image.volvo_yv12zel98rs016075_exterior_image
+                    entity: image.volvo_ex30my24_exterior_image
                     theme: Material Rounded Transparent Card
                   - show_state: false
                     show_name: false
                     camera_view: auto
                     type: picture-entity
-                    entity: image.volvo_yv12zel98rs016075_interior_image
+                    entity: image.volvo_ex30my24_interior_image
                     theme: Material Rounded Transparent Card
       - type: grid
         cards:
@@ -1508,13 +1506,13 @@ views:
                 show_state: true
                 type: glance
                 entities:
-                  - entity: sensor.volvo_yv12zel98rs016075_tyre_front_left
+                  - entity: sensor.volvo_ex30my24_tyre_front_left
                     name: Front left
-                  - entity: sensor.volvo_yv12zel98rs016075_tyre_front_right
+                  - entity: sensor.volvo_ex30my24_tyre_front_right
                     name: Front right
-                  - entity: sensor.volvo_yv12zel98rs016075_tyre_rear_left
+                  - entity: sensor.volvo_ex30my24_tyre_rear_left
                     name: Rear left
-                  - entity: sensor.volvo_yv12zel98rs016075_tyre_rear_right
+                  - entity: sensor.volvo_ex30my24_tyre_rear_right
                     name: Rear right
                 state_color: true
                 columns: 4
@@ -1523,15 +1521,15 @@ views:
                   - type: entities
                     entities:
                       - entity: text.volvo_otp
-                      - entity: sensor.volvo_yv12zel98rs016075_api_backend_status
+                      - entity: sensor.volvo_ex30my24_api_backend_status
                         name: API Backend status
-                      - entity: sensor.volvo_yv12zel98rs016075_last_data_update
+                      - entity: sensor.volvo_ex30my24_last_data_update
                         name: Last data update
                         icon: mdi:calendar
-                      - entity: button.volvo_yv12zel98rs016075_update_data
+                      - entity: button.volvo_ex30my24_update_data
                         secondary_info: none
                         name: Force update data
-                      - entity: number.volvo_yv12zel98rs016075_update_interval
+                      - entity: number.volvo_ex30my24_update_interval
                         name: Update interval
                     title: Volvo to MQTT
     max_columns: 3

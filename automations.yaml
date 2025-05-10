@@ -1,0 +1,629 @@
+## Home Assistant automations.yaml configuration file.
+# GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
+# Author: Melvin Campos Casares
+# Last updated: 10/05/2025 (DD/MM/YYYY)
+
+- id: '1726612228090'
+  alias: Entrance light motion at night  - Without guests
+  description: ''
+  triggers:
+  - type: motion
+    device_id: 5b6f139d3f1050a8fff847fb0ac42759
+    entity_id: d93219cc0a03ac6de549a144ed36d7d0
+    domain: binary_sensor
+    trigger: device
+  - type: motion
+    device_id: a95dcf5ffbb3936d36d049d2eba4426b
+    entity_id: 438a5301a4ecbdded495aab15f43c71e
+    domain: binary_sensor
+    trigger: device
+  conditions:
+  - type: is_illuminance
+    condition: device
+    device_id: 5b6f139d3f1050a8fff847fb0ac42759
+    entity_id: a3cd70ff433582b7533af5e4b8ee4ed9
+    domain: sensor
+    below: 40
+  - condition: time
+    after: '23:30:00'
+    before: sensor.sun_next_dawn
+  - condition: state
+    entity_id: input_boolean.visitor_override
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.entrance_light_override
+    state: 'off'
+  - condition: state
+    state: 'off'
+    entity_id: input_boolean.cat_night_override
+  actions:
+  - type: turn_on
+    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    domain: light
+    brightness_pct: 20
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 45
+      milliseconds: 0
+  - type: turn_off
+    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    domain: light
+  mode: single
+- id: '1726612427289'
+  alias: Entrance light motion at day
+  description: ''
+  triggers:
+  - type: motion
+    device_id: 5b6f139d3f1050a8fff847fb0ac42759
+    entity_id: d93219cc0a03ac6de549a144ed36d7d0
+    domain: binary_sensor
+    trigger: device
+  - type: motion
+    device_id: a95dcf5ffbb3936d36d049d2eba4426b
+    entity_id: 438a5301a4ecbdded495aab15f43c71e
+    domain: binary_sensor
+    trigger: device
+  conditions:
+  - condition: time
+    after: sensor.sun_next_rising
+    before: sensor.sun_next_setting
+  - type: is_illuminance
+    condition: device
+    device_id: 5b6f139d3f1050a8fff847fb0ac42759
+    entity_id: a3cd70ff433582b7533af5e4b8ee4ed9
+    domain: sensor
+    below: 9
+  - condition: state
+    entity_id: input_boolean.entrance_light_override
+    state: 'off'
+  - condition: state
+    state: 'off'
+    entity_id: input_boolean.cat_night_override
+  actions:
+  - type: turn_on
+    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    domain: light
+    brightness_pct: 100
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    domain: light
+  mode: single
+- id: '1728485170366'
+  alias: Tag white circle is scanned
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 108f34b3-668a-41be-b0e6-afba0d45954f
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: 26246bf08a5d4e4a4159e468a605b5ea
+    entity_id: 61d60cdbc77b6fbeb9659e52612320bc
+    domain: light
+  mode: single
+- id: '1729426047896'
+  alias: Entrance light motion at sunrise or sunset - Without guests
+  description: ''
+  triggers:
+  - type: motion
+    device_id: 5b6f139d3f1050a8fff847fb0ac42759
+    entity_id: d93219cc0a03ac6de549a144ed36d7d0
+    domain: binary_sensor
+    trigger: device
+  - type: motion
+    device_id: a95dcf5ffbb3936d36d049d2eba4426b
+    entity_id: 438a5301a4ecbdded495aab15f43c71e
+    domain: binary_sensor
+    trigger: device
+  conditions:
+  - condition: or
+    conditions:
+    - condition: time
+      after: sensor.sun_next_dawn
+      before: sensor.sun_next_rising
+    - condition: time
+      after: sensor.sun_next_setting
+      before: '23:30:00'
+  - condition: state
+    entity_id: input_boolean.visitor_override
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.entrance_light_override
+    state: 'off'
+  - condition: state
+    state: 'off'
+    entity_id: input_boolean.cat_night_override
+  actions:
+  - type: turn_on
+    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    domain: light
+    brightness_pct: 60
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 30
+      milliseconds: 0
+  - type: turn_off
+    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    domain: light
+  mode: single
+- id: '1735677677036'
+  alias: Startup and daily system care
+  description: Set Home Assistant theme for all users at startup and everyday at 7AM.
+  triggers:
+  - event: start
+    trigger: homeassistant
+  - trigger: time
+    at: 06:00:00
+  conditions: []
+  actions:
+  - data:
+      name: Material You
+    action: frontend.set_theme
+  - action: tts.clear_cache
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1741100141696'
+  alias: Reset kill switch
+  description: ''
+  triggers:
+  - trigger: homeassistant
+    event: start
+  - trigger: time
+    at: 06:30:00
+  conditions: []
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.visitor_override
+    data: {}
+  - action: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.entrance_light_override
+  - action: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.cat_night_override
+  mode: single
+- id: '1741100615672'
+  alias: Entrance light motion at sunrise or sunset - With guests
+  description: ''
+  triggers:
+  - type: motion
+    device_id: 5b6f139d3f1050a8fff847fb0ac42759
+    entity_id: d93219cc0a03ac6de549a144ed36d7d0
+    domain: binary_sensor
+    trigger: device
+  - type: motion
+    device_id: a95dcf5ffbb3936d36d049d2eba4426b
+    entity_id: 438a5301a4ecbdded495aab15f43c71e
+    domain: binary_sensor
+    trigger: device
+  conditions:
+  - condition: or
+    conditions:
+    - condition: time
+      after: sensor.sun_next_dawn
+      before: sensor.sun_next_rising
+    - condition: time
+      before: 01:00:00
+      after: sensor.sun_next_setting
+  - condition: state
+    entity_id: input_boolean.visitor_override
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.entrance_light_override
+    state: 'off'
+  - condition: state
+    state: 'off'
+    entity_id: input_boolean.cat_night_override
+  actions:
+  - type: turn_on
+    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    domain: light
+    brightness_pct: 60
+  - delay:
+      hours: 0
+      minutes: 3
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    domain: light
+  mode: single
+- id: '1741100805200'
+  alias: Entrance light motion at night  - With guests
+  description: ''
+  triggers:
+  - type: motion
+    device_id: 5b6f139d3f1050a8fff847fb0ac42759
+    entity_id: d93219cc0a03ac6de549a144ed36d7d0
+    domain: binary_sensor
+    trigger: device
+  - type: motion
+    device_id: a95dcf5ffbb3936d36d049d2eba4426b
+    entity_id: 438a5301a4ecbdded495aab15f43c71e
+    domain: binary_sensor
+    trigger: device
+  conditions:
+  - type: is_illuminance
+    condition: device
+    device_id: 5b6f139d3f1050a8fff847fb0ac42759
+    entity_id: a3cd70ff433582b7533af5e4b8ee4ed9
+    domain: sensor
+    below: 40
+  - condition: time
+    after: 01:00:00
+    before: sensor.sun_next_dawn
+  - condition: state
+    entity_id: input_boolean.visitor_override
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.entrance_light_override
+    state: 'off'
+  - condition: state
+    state: 'off'
+    entity_id: input_boolean.cat_night_override
+  actions:
+  - type: turn_on
+    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    domain: light
+    brightness_pct: 20
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    domain: light
+  mode: single
+- id: '1742313465937'
+  alias: Smart Button entrance short press
+  description: ''
+  triggers:
+  - device_id: 0bff05a6fed12c3d9c54d2a63eb3f9f0
+    domain: hue
+    type: initial_press
+    subtype: 1
+    unique_id: 53a34185-8e07-4623-ae2c-b5c16b4d1372
+    metadata: {}
+    trigger: device
+  conditions: []
+  actions:
+  - action: input_boolean.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.entrance_light_override
+  - if:
+    - condition: state
+      state: 'on'
+      entity_id: input_boolean.entrance_light_override
+    then:
+    - action: light.turn_on
+      metadata: {}
+      data:
+        brightness_pct: 100
+        transition: 1
+      target:
+        area_id: accueil
+    enabled: true
+    else:
+    - action: light.turn_off
+      metadata: {}
+      data:
+        transition: 1
+      target:
+        area_id: accueil
+  mode: single
+- id: '1742337911060'
+  alias: Smart Button office long press
+  description: ''
+  triggers:
+  - device_id: 4bb9d02b853f1661bcee1f1b2abb6b4c
+    domain: hue
+    type: long_press
+    subtype: 1
+    unique_id: 6dd0ada0-2691-4d96-89cb-310614912f35
+    trigger: device
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: 0d78057046776249b1d9f79b3b4cde1b
+    entity_id: a3dfcb65873e1636bdadeec82ee0c403
+    domain: light
+  mode: single
+- id: '1742338691610'
+  alias: Smart Button entrance long press
+  description: ''
+  triggers:
+  - device_id: 0bff05a6fed12c3d9c54d2a63eb3f9f0
+    domain: hue
+    type: long_press
+    subtype: 1
+    unique_id: 53a34185-8e07-4623-ae2c-b5c16b4d1372
+    trigger: device
+  conditions: []
+  actions:
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.entrance_light_override
+  - type: turn_on
+    device_id: 698e12b8043b3bea237b1a922ef86228
+    entity_id: 0cbd7a6da9f98a41c52ff05816115824
+    domain: light
+  - type: turn_on
+    device_id: f50b6d4492615b4a4264f537bec680ca
+    entity_id: 3385be7839c6553d2cff2620c7bb80d9
+    domain: light
+  mode: single
+- id: '1742765551091'
+  alias: Smart Button bedroom short press
+  description: ''
+  triggers:
+  - device_id: 2c9ac640dc4f7ed7f33bc50865f2c438
+    domain: hue
+    type: initial_press
+    subtype: 1
+    unique_id: 4f6cf236-e21e-4eb3-bc78-80e0d2d3f116
+    trigger: device
+  conditions: []
+  actions:
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.cat_night_override
+  - type: turn_off
+    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    domain: light
+  mode: single
+- id: '1742765822605'
+  alias: Smart Button bedroom long press
+  description: ''
+  triggers:
+  - device_id: 2c9ac640dc4f7ed7f33bc50865f2c438
+    domain: hue
+    type: long_release
+    subtype: 1
+    unique_id: 4f6cf236-e21e-4eb3-bc78-80e0d2d3f116
+    trigger: device
+  conditions: []
+  actions:
+  - action: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.cat_night_override
+  mode: single
+- id: '1744552564977'
+  alias: Turn on TV scene
+  description: ''
+  triggers:
+  - trigger: conversation
+    command:
+    - Allume la TV
+    - Allume la télévision
+    - Allume TV
+    - Allume télévision
+  conditions: []
+  actions:
+  - action: tts.speak
+    metadata: {}
+    data:
+      cache: true
+      media_player_entity_id: media_player.hk_citation_multibeam_1100_2678
+      message: Démarrage de l'espace TV, profitez bien.
+    target:
+      entity_id: tts.piper
+    enabled: false
+  - action: media_player.play_media
+    metadata:
+      title: homepod_notification.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
+    data:
+      media_content_id: media-source://media_source/local/homepod_notification.mp3
+      media_content_type: audio/mpeg
+    target:
+      entity_id: media_player.hk_citation_multibeam_1100_2678
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - action: media_player.play_media
+    metadata:
+      title: Siwis-FR-Demarrage_espace_TV.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
+      - media_content_type: ''
+        media_content_id: media-source://media_source/local/TTS-saved-renders
+    data:
+      media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Demarrage_espace_TV.mp3
+      media_content_type: audio/mpeg
+    target:
+      entity_id: media_player.hk_citation_multibeam_1100_2678
+  - type: turn_on
+    device_id: 3458fd1afc8a4bcbcc547872874bcbbc
+    entity_id: 4f78e3210faad5f67623cd9c4d5b471d
+    domain: remote
+  - type: turn_on
+    device_id: 747f8afa50279d2f6e9478c46f983dcd
+    entity_id: 54e76c77cf00279446abce6ce2376d4f
+    domain: light
+  mode: single
+- id: '1744552727995'
+  alias: Turn off TV scene
+  description: ''
+  triggers:
+  - trigger: conversation
+    command:
+    - Eteins la TV
+    - Eteins la télévision
+    - Eteins TV
+    - Eteins télévision
+  conditions: []
+  actions:
+  - action: tts.speak
+    metadata: {}
+    data:
+      cache: true
+      media_player_entity_id: media_player.hk_citation_multibeam_1100_2678
+      message: Extinction de l'espace TV, à bientôt.
+    target:
+      entity_id: tts.piper
+    enabled: false
+  - action: media_player.play_media
+    metadata:
+      title: homepod_notification.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
+    data:
+      media_content_id: media-source://media_source/local/homepod_notification.mp3
+      media_content_type: audio/mpeg
+    target:
+      entity_id: media_player.hk_citation_multibeam_1100_2678
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - action: media_player.play_media
+    metadata:
+      title: Siwis-FR-Extinction_espace_TV.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
+      - media_content_type: ''
+        media_content_id: media-source://media_source/local/TTS-saved-renders
+    data:
+      media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Extinction_espace_TV.mp3
+      media_content_type: audio/mpeg
+    target:
+      entity_id: media_player.hk_citation_multibeam_1100_2678
+  - type: turn_off
+    device_id: 3458fd1afc8a4bcbcc547872874bcbbc
+    entity_id: 4f78e3210faad5f67623cd9c4d5b471d
+    domain: remote
+  - type: turn_off
+    device_id: 747f8afa50279d2f6e9478c46f983dcd
+    entity_id: 54e76c77cf00279446abce6ce2376d4f
+    domain: light
+  mode: single
+- id: '1744564418959'
+  alias: Timer end
+  description: ''
+  triggers:
+  - event_type: timer.finished
+    event_data:
+      entity_id: timer.timer_jarvis
+    trigger: event
+  actions:
+  - target:
+      entity_id: media_player.hk_citation_one
+    data:
+      volume_level: 0.35
+    action: media_player.volume_set
+  - action: media_player.play_media
+    metadata:
+      title: homepod_notification.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
+    data:
+      media_content_id: media-source://media_source/local/homepod_notification.mp3
+      media_content_type: audio/mpeg
+    target:
+      entity_id: media_player.hk_citation_multibeam_1100_2678
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - action: media_player.play_media
+    metadata:
+      title: Siwis-FR-Minuteur_fin.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
+      - media_content_type: ''
+        media_content_id: media-source://media_source/local/TTS-saved-renders
+    data:
+      media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Minuteur_fin.mp3
+      media_content_type: audio/mpeg
+    target:
+      entity_id: media_player.hk_citation_one
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - action: media_player.play_media
+    metadata:
+      title: Alexa-timer.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
+    data:
+      media_content_id: media-source://media_source/local/Alexa-timer.mp3
+      media_content_type: audio/mpeg
+    target:
+      entity_id: media_player.hk_citation_one
+    enabled: true
+  mode: single

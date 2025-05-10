@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 30/04/2025 (DD/MM/YYYY)
+# Last updated: 10/05/2025 (DD/MM/YYYY)
 
 views:
   - title: Automations
@@ -135,16 +135,6 @@ views:
             heading: System automations
             heading_style: title
             icon: mdi:home-assistant
-          - type: custom:bubble-card
-            card_type: button
-            entity: sensor.material_rounded_base_color
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: mdi:format-color-fill
-            card_layout: normal
-            styles: ''
           - type: custom:bubble-card
             card_type: button
             button_type: state

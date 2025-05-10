@@ -1,0 +1,71 @@
+## Home Assistant configuration.yaml configuration file.
+# GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
+# Author: Melvin Campos Casares
+# Last updated: 10/05/2025 (DD/MM/YYYY)
+
+# Loads default set of integrations. Do not remove.
+default_config:
+my:
+cloud:
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+  extra_module_url:
+    - /local/community/custom-brand-icons/custom-brand-icons.js
+    - /hacsfiles/material-you-utilities/material-you-utilities.min.js
+
+panel_custom:
+  - name: material-you-panel
+    url_path: material-you-configuration
+    sidebar_title: Material You Utilities
+    sidebar_icon: mdi:material-design
+    module_url: /hacsfiles/material-you-utilities/material-you-utilities.min.js
+
+
+# Raspberry Pi Pico W with Bosch BME680 sensor
+mqtt:
+  sensor:
+    - name: "PiSense Temperature"
+      state_topic: "home/pisense/bme680"
+    - name: "PiSense Humidity"
+      state_topic: "home/pisense/bme680"
+    - name: "PiSense Pressure"
+      state_topic: "home/pisense/bme680"
+    - name: "PiSense Gas Resistance"
+      state_topic: "home/pisense/bme680"
+
+
+conversation:
+  intents:
+    SetTimer:
+      - "Set a timer for {duration}"
+      - "Start a timer for {duration}"
+
+timer:
+  timer_jarvis:
+    duration: "00:01:00"  # Default value
+    name: "Timer Jarvis"
+
+intent_script:
+  SetTimer:
+    speech:
+      text: "Minuteur lancé pour {{ duration }}"
+    action:
+      - service: timer.start
+        data:
+          duration: "{{ duration }}"
+        target:
+          entity_id: timer.timer_jarvis
+      - service: tts.speak
+        data:
+          cache: true
+          media_player_entity_id: media_player.hk_citation_one
+          message: "D'accord, j'ai lancé un minuteur pour {{ duration }}."
+        target:
+          entity_id: tts.piper
