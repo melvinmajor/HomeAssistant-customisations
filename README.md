@@ -12,6 +12,7 @@ Just a bunch of info and YAML files related to my own Home Assistant.
 | :-----------------------------: | :----: | :-------: | :---------: |
 | AirCast                         | Yes    | x         |             |
 | Assist Microphone               | Yes    | x         |             |
+| ESPHome Device Builder          | Yes    | x         |             |
 | File Editor                     | Yes    | x         |             |
 | Mosquitto broker                | Yes    | x         |             |
 | openWakeWord                    | Yes    | x         |             |
@@ -30,6 +31,7 @@ Just a bunch of info and YAML files related to my own Home Assistant.
 | HACS                            | Yes    |           | x           |
 | Home Assistant Swipe Navigation | Yes    |           | x           |
 | Material You Theme              | Yes    |           | x           |
+| Material You Utilities          | Yes    |           | x           |
 | mini-graph-card                 | Yes    |           | x           |
 | Mushroom                        | Yes    |           | x           |
 | RecycleApp                      | Yes    |           | x           |
