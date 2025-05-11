@@ -10,37 +10,54 @@ views:
     subview: false
     cards: []
     badges:
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
+      - type: custom:mushroom-template-badge
         entity: sensor.residual_household_waste
-        color: ''
-        name: Next collect
-        show_entity_picture: true
-        state_content: state
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
+        picture: '{{ state_attr(''sensor.residual_household_waste'', ''entity_picture'') }}'
+        content: >-
+          {{ strptime(states('sensor.residual_household_waste'),
+          '%d/%m/%Y').strftime('%a %d %b') }}
+        tap_action:
+          action: more-info
+      - type: custom:mushroom-template-badge
         entity: sensor.pmd
-        color: ''
-        name: Next collect
-        show_entity_picture: true
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
+        picture: '{{ state_attr(''sensor.pmd'', ''entity_picture'') }}'
+        content: '{{ strptime(states(''sensor.pmd''), ''%d/%m/%Y'').strftime(''%a %d %b'') }}'
+        tap_action:
+          action: more-info
+      - type: custom:mushroom-template-badge
         entity: sensor.paper_cardboard
-        color: ''
-        name: Next collect
-        show_entity_picture: true
+        picture: '{{ state_attr(''sensor.paper_cardboard'', ''entity_picture'') }}'
+        content: >-
+          {{ strptime(states('sensor.paper_cardboard'), '%d/%m/%Y').strftime('%a
+          %d %b') }}
+        tap_action:
+          action: more-info
     type: sections
     sections:
       - type: grid
         cards:
           - type: vertical-stack
             cards:
+              - type: custom:bubble-card
+                card_type: separator
+                icon: mdi:weather-cloudy
+                sub_button:
+                  - entity: weather.forecast_maison
+                    icon: mdi:thermometer
+                    name: Temperature
+                    show_state: true
+                    show_background: false
+                styles: >-
+                  ${card.querySelector('.bubble-name').innerText =
+                  hass.formatEntityState(hass.states['weather.forecast_maison'])}
+
+                  ${card.querySelector('.bubble-sub-button-name-container').innerText
+                  =
+                  hass.states['weather.forecast_maison'].attributes.temperature
+                  + " °C"}
+
+                  ${icon.setAttribute("icon",
+                  getWeatherIcon(hass.states['weather.forecast_maison'].state))}
               - type: custom:bubble-card
                 card_type: separator
                 name: EX30
@@ -66,6 +83,21 @@ views:
                     name: EX30 - Lock state
                 styles: ''
               - type: custom:bubble-card
+                card_type: separator
+                icon: mdi:home
+                sub_button:
+                  - entity: sensor.detecteur_entree_temperature
+                    show_state: true
+                    show_attribute: true
+                    show_last_changed: false
+                    show_background: false
+                styles: |-
+                  .bubble-line {
+                    background: var(--primary-text-color);
+                    opacity: 1;
+                  }
+                name: Home
+              - type: custom:bubble-card
                 card_type: button
                 card_layout: normal
                 button_type: name
@@ -90,7 +122,7 @@ views:
                       action: toggle
                     entity: input_boolean.entrance_light_override
                     show_name: true
-                styles: |
+                styles: |-
                   .card-content {
                     width: 100%;
                     margin: 0 !important;
@@ -112,98 +144,79 @@ views:
                   .bubble-name-container {
                     margin-right: 0px !important;
                   }
-                  .bubble-name-
               - type: custom:bubble-card
-                card_type: separator
-                icon: mdi:home
+                card_type: button
+                button_type: switch
+                entity: light.accueil
+                name: Entrance
+                show_state: true
+                show_name: true
+                show_attribute: true
+                attribute: brightness
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
                 sub_button:
-                  - entity: sensor.detecteur_entree_temperature
-                    show_state: true
-                    show_attribute: true
-                    show_last_changed: false
-                    show_background: false
-                styles: |-
-                  .bubble-line {
-                    background: var(--primary-text-color);
-                    opacity: 1;
-                  }
-                name: Home
-              - type: vertical-stack
+                  - icon: mdi:dots-horizontal
+                icon: phu:bulb-group
+              - type: horizontal-stack
                 cards:
                   - type: custom:bubble-card
                     card_type: button
-                    button_type: switch
-                    entity: light.accueil
-                    name: Entrance
-                    show_state: true
-                    show_name: true
-                    show_attribute: true
-                    attribute: brightness
-                    tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
-                    sub_button:
-                      - icon: mdi:dots-horizontal
-                    icon: phu:bulb-group
-                  - type: horizontal-stack
-                    cards:
-                      - type: custom:bubble-card
-                        card_type: button
-                        button_type: state
-                        entity: binary_sensor.detecteur_entree_mouvement
-                        name: Entrance sensor
-                        show_last_changed: true
-                        show_attribute: false
-                        double_tap_action:
-                          action: none
-                        hold_action:
-                          action: none
-                        button_action:
-                          double_tap_action:
-                            action: none
-                          hold_action:
-                            action: none
-                        styles: ''
-                        icon: phu:motion-sensor
-                      - type: custom:bubble-card
-                        card_type: button
-                        button_type: state
-                        entity: binary_sensor.detecteur_entree_mouvement
-                        name: Hall sensor
-                        show_last_changed: true
-                        show_attribute: false
-                        double_tap_action:
-                          action: none
-                        hold_action:
-                          action: none
-                        button_action:
-                          double_tap_action:
-                            action: none
-                          hold_action:
-                            action: none
-                        styles: ''
-                        icon: phu:motion-sensor
-              - type: custom:bubble-card
-                card_type: button
-                button_type: name
-                name: Living room
-                show_icon: true
-                icon: phu:rooms-living
-                tap_action:
-                  action: navigate
-                  navigation_path: '#livingRoom_Popup'
-                button_action:
-                  tap_action:
-                    action: navigate
-                    navigation_path: '#livingRoom_Popup'
-                card_layout: large
-                sub_button:
-                  - icon: mdi:menu-open
-                    show_background: true
+                    button_type: name
+                    name: Living room
+                    show_icon: true
+                    icon: phu:rooms-living
                     tap_action:
                       action: navigate
                       navigation_path: '#livingRoom_Popup'
+                    button_action:
+                      tap_action:
+                        action: navigate
+                        navigation_path: '#livingRoom_Popup'
+                    card_layout: large
+                    sub_button:
+                      - icon: mdi:menu-open
+                        show_background: true
+                        tap_action:
+                          action: navigate
+                          navigation_path: '#livingRoom_Popup'
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: name
+                    name: TV
+                    show_icon: true
+                    icon: mdi:television
+                    tap_action:
+                      action: navigate
+                      navigation_path: '#tv_Popup'
+                    button_action:
+                      tap_action:
+                        action: navigate
+                        navigation_path: '#tv_Popup'
+                    card_layout: large
+                    sub_button:
+                      - entity: automation.turn_on_tv_scene
+                        state_background: false
+                        icon: mdi:power
+                        tap_action:
+                          action: call-service
+                          target:
+                            entity_id: entity
+                          data:
+                            skip_condition: false
+                          service: automation.trigger
+                      - entity: automation.turn_off_tv_scene
+                        state_background: false
+                        icon: mdi:power-off
+                        tap_action:
+                          action: call-service
+                          target:
+                            entity_id: entity
+                          data:
+                            skip_condition: false
+                          service: automation.trigger
               - type: custom:bubble-card
                 card_type: button
                 button_type: name
@@ -224,41 +237,6 @@ views:
                     tap_action:
                       action: navigate
                       navigation_path: '#office_Popup'
-              - type: custom:bubble-card
-                card_type: button
-                button_type: name
-                name: TV
-                show_icon: true
-                icon: mdi:television
-                tap_action:
-                  action: navigate
-                  navigation_path: '#tv_Popup'
-                button_action:
-                  tap_action:
-                    action: navigate
-                    navigation_path: '#tv_Popup'
-                card_layout: large
-                sub_button:
-                  - entity: automation.turn_on_tv_scene
-                    state_background: false
-                    icon: mdi:power
-                    tap_action:
-                      action: call-service
-                      target:
-                        entity_id: entity
-                      data:
-                        skip_condition: false
-                      service: automation.trigger
-                  - entity: automation.turn_off_tv_scene
-                    state_background: false
-                    icon: mdi:power-off
-                    tap_action:
-                      action: call-service
-                      target:
-                        entity_id: entity
-                      data:
-                        skip_condition: false
-                      service: automation.trigger
               - type: custom:bubble-card
                 card_type: button
                 button_type: name
@@ -310,6 +288,10 @@ views:
                 bg_opacity: '88'
                 shadow_opacity: '0'
                 styles: ''
+                hide_backdrop: false
+                bg_blur: '10'
+                backdrop_blur: '0'
+                bg_color: ''
               - type: custom:bubble-card
                 card_type: separator
                 icon: ''
@@ -540,6 +522,7 @@ views:
                   action: more-info
                 icon: phu:bulbs-classic
                 vertical: false
+                features_position: inline
               - type: custom:bubble-card
                 card_type: separator
                 icon: ''
@@ -655,6 +638,7 @@ views:
                 bg_opacity: '88'
                 shadow_opacity: '0'
                 styles: ''
+                bg_color: ''
               - type: custom:bubble-card
                 card_type: separator
                 icon: ''
@@ -842,7 +826,10 @@ views:
       repeat: no-repeat
       attachment: fixed
       image: /api/image/serve/6a3fcb45598992441700eacac6feac59/original
-    header: {}
+    header:
+      layout: center
+      badges_position: bottom
+      badges_wrap: wrap
   - title: Home
     badges:
       - type: entity
@@ -1092,6 +1079,10 @@ views:
     path: home
     max_columns: 4
     dense_section_placement: false
+    header:
+      layout: center
+      badges_position: bottom
+      badges_wrap: scroll
   - title: IT
     path: IT-server
     icon: mdi:server-minus
@@ -1232,6 +1223,10 @@ views:
                 show_header_toggle: true
     max_columns: 3
     dense_section_placement: false
+    header:
+      layout: center
+      badges_position: bottom
+      badges_wrap: scroll
   - title: Kitchen
     path: kitchen
     type: sections
@@ -1344,6 +1339,10 @@ views:
             view_layout:
               position: sidebar
     max_columns: 2
+    header:
+      layout: center
+      badges_position: bottom
+      badges_wrap: scroll
   - title: Volvo EX30
     path: vehicle
     icon: mdi:car-electric
@@ -1533,3 +1532,7 @@ views:
                         name: Update interval
                     title: Volvo to MQTT
     max_columns: 3
+    header:
+      layout: center
+      badges_position: bottom
+      badges_wrap: scroll
