@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 10/05/2025 (DD/MM/YYYY)
+# Last updated: 18/05/2025 (DD/MM/YYYY)
 
 views:
   - title: Shortcuts
@@ -261,6 +261,37 @@ views:
                     tap_action:
                       action: toggle
                 styles: ''
+              - square: false
+                type: grid
+                cards:
+                  - type: tile
+                    entity: sensor.lave_vaisselle_remaining_program_time
+                    features_position: bottom
+                    vertical: false
+                    name: Dishwasher ends
+                    icon: mdi:dishwasher
+                    state_content: state
+                    visibility:
+                      - condition: state
+                        entity: sensor.lave_vaisselle_remaining_program_time
+                        state_not: unavailable
+                    icon_tap_action:
+                      action: more-info
+                  - type: tile
+                    entity: sensor.lave_vaisselle_program_progress
+                    features_position: bottom
+                    vertical: false
+                    name: Dishwasher progress
+                    state_content: state
+                    visibility:
+                      - condition: state
+                        entity: sensor.lave_vaisselle_program_progress
+                        state_not: unavailable
+                    icon_tap_action:
+                      action: more-info
+                columns: 2
+      - type: grid
+        cards:
           - type: vertical-stack
             cards:
               - type: custom:bubble-card
@@ -472,149 +503,6 @@ views:
             cards:
               - type: custom:bubble-card
                 card_type: pop-up
-                hash: '#office_Popup'
-                button_type: name
-                name: Office
-                show_icon: false
-              - type: custom:bubble-card
-                card_type: separator
-                icon: ''
-                styles: |-
-                  .bubble-line {
-                    background: var(--secondary-text-color);
-                    opacity: 1;
-                  }
-                name: ''
-              - type: custom:bubble-card
-                card_type: media-player
-                entity: media_player.google_nest_audio
-                card_layout: normal
-                hide:
-                  power_button: true
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: toggle
-                double_tap_action:
-                  action: none
-                force_icon: false
-                show_name: true
-                show_state: false
-                name: G Nest Audio
-                icon: phu:nest-audio
-              - type: custom:bubble-card
-                card_type: separator
-                icon: ''
-                styles: |-
-                  .bubble-line {
-                    background: var(--secondary-text-color);
-                    opacity: 1;
-                  }
-                name: Lights
-              - features:
-                  - type: light-brightness
-                  - type: light-color-temp
-                type: tile
-                entity: light.jarvis
-                tap_action:
-                  action: toggle
-                icon_tap_action:
-                  action: more-info
-                icon: phu:bulbs-classic
-                vertical: false
-                features_position: inline
-              - type: custom:bubble-card
-                card_type: separator
-                icon: ''
-                styles: |-
-                  .bubble-line {
-                    background: var(--secondary-text-color);
-                    opacity: 1;
-                  }
-                name: 3D Printer
-                sub_button:
-                  - tap_action:
-                      action: navigate
-                      navigation_path: '#3dprinter_Popup'
-                    show_name: false
-                    icon: mdi:dots-horizontal
-                    show_state: false
-                    show_attribute: false
-              - type: custom:bubble-card
-                card_type: button
-                button_type: state
-                entity: binary_sensor.a1_03919c452905439_etat
-                name: Bambu Lab A1
-                show_name: true
-                force_icon: false
-                show_last_changed: true
-                show_attribute: false
-                double_tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                button_action:
-                  double_tap_action:
-                    action: none
-                  hold_action:
-                    action: none
-                  tap_action:
-                    action: more-info
-                    navigation_path: '#3dprinter_Popup'
-                icon: phu:3dprinter-standby
-                tap_action:
-                  action: more-info
-                  navigation_path: '#3dprinter_Popup'
-              - type: horizontal-stack
-                cards:
-                  - type: custom:bubble-card
-                    card_type: button
-                    button_type: state
-                    entity: sensor.a1_03919c452905439_progression_de_l_impression
-                    name: A1 - Print progress
-                    icon: phu:3dprinter-printing
-                  - type: custom:bubble-card
-                    card_type: button
-                    button_type: state
-                    entity: sensor.a1_03919c452905439_temps_restant
-                    name: A1 - Remaining time
-                    icon: phu:bambulab-alt
-                    force_icon: false
-                    show_last_changed: false
-              - show_state: true
-                show_name: true
-                camera_view: auto
-                type: picture-entity
-                entity: camera.a1_03919c452905439_camera
-                name: Bambu Lab A1
-                camera_image: camera.a1_03919c452905439_camera
-                aspect_ratio: '16:9'
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: pop-up
-                hash: '#3dprinter_Popup'
-                button_type: name
-                name: 3D Printer
-                show_icon: false
-              - type: custom:ha-bambulab-print_control-card
-                printer: 3c9267e47d7aa4e0fc877665539ca33e
-              - type: custom:ha-bambulab-print_status-card
-                printer: 3c9267e47d7aa4e0fc877665539ca33e
-                custom_power: light.chevet
-                style: simple
-              - show_state: true
-                show_name: true
-                camera_view: auto
-                type: picture-entity
-                entity: camera.a1_03919c452905439_camera
-                name: Bambu Lab A1
-                camera_image: camera.a1_03919c452905439_camera
-                aspect_ratio: '16:9'
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: pop-up
                 hash: '#tv_Popup'
                 entity: light.salon
                 show_icon: false
@@ -817,6 +705,149 @@ views:
                         sub_button:
                           - icon: mdi:dots-horizontal
                         icon: phu:bulbs-spot
+          - type: vertical-stack
+            cards:
+              - type: custom:bubble-card
+                card_type: pop-up
+                hash: '#office_Popup'
+                button_type: name
+                name: Office
+                show_icon: false
+              - type: custom:bubble-card
+                card_type: separator
+                icon: ''
+                styles: |-
+                  .bubble-line {
+                    background: var(--secondary-text-color);
+                    opacity: 1;
+                  }
+                name: ''
+              - type: custom:bubble-card
+                card_type: media-player
+                entity: media_player.google_nest_audio
+                card_layout: normal
+                hide:
+                  power_button: true
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: toggle
+                double_tap_action:
+                  action: none
+                force_icon: false
+                show_name: true
+                show_state: false
+                name: G Nest Audio
+                icon: phu:nest-audio
+              - type: custom:bubble-card
+                card_type: separator
+                icon: ''
+                styles: |-
+                  .bubble-line {
+                    background: var(--secondary-text-color);
+                    opacity: 1;
+                  }
+                name: Lights
+              - features:
+                  - type: light-brightness
+                  - type: light-color-temp
+                type: tile
+                entity: light.jarvis
+                tap_action:
+                  action: toggle
+                icon_tap_action:
+                  action: more-info
+                icon: phu:bulbs-classic
+                vertical: false
+                features_position: inline
+              - type: custom:bubble-card
+                card_type: separator
+                icon: ''
+                styles: |-
+                  .bubble-line {
+                    background: var(--secondary-text-color);
+                    opacity: 1;
+                  }
+                name: 3D Printer
+                sub_button:
+                  - tap_action:
+                      action: navigate
+                      navigation_path: '#3dprinter_Popup'
+                    show_name: false
+                    icon: mdi:dots-horizontal
+                    show_state: false
+                    show_attribute: false
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: binary_sensor.a1_03919c452905439_etat
+                name: Bambu Lab A1
+                show_name: true
+                force_icon: false
+                show_last_changed: true
+                show_attribute: false
+                double_tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                button_action:
+                  double_tap_action:
+                    action: none
+                  hold_action:
+                    action: none
+                  tap_action:
+                    action: more-info
+                    navigation_path: '#3dprinter_Popup'
+                icon: phu:3dprinter-standby
+                tap_action:
+                  action: more-info
+                  navigation_path: '#3dprinter_Popup'
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.a1_03919c452905439_progression_de_l_impression
+                    name: A1 - Print progress
+                    icon: phu:3dprinter-printing
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.a1_03919c452905439_temps_restant
+                    name: A1 - Remaining time
+                    icon: phu:bambulab-alt
+                    force_icon: false
+                    show_last_changed: false
+              - show_state: true
+                show_name: true
+                camera_view: auto
+                type: picture-entity
+                entity: camera.a1_03919c452905439_camera
+                name: Bambu Lab A1
+                camera_image: camera.a1_03919c452905439_camera
+                aspect_ratio: '16:9'
+          - type: vertical-stack
+            cards:
+              - type: custom:bubble-card
+                card_type: pop-up
+                hash: '#3dprinter_Popup'
+                button_type: name
+                name: 3D Printer
+                show_icon: false
+              - type: custom:ha-bambulab-print_control-card
+                printer: 3c9267e47d7aa4e0fc877665539ca33e
+              - type: custom:ha-bambulab-print_status-card
+                printer: 3c9267e47d7aa4e0fc877665539ca33e
+                custom_power: light.chevet
+                style: simple
+              - show_state: true
+                show_name: true
+                camera_view: auto
+                type: picture-entity
+                entity: camera.a1_03919c452905439_camera
+                name: Bambu Lab A1
+                camera_image: camera.a1_03919c452905439_camera
+                aspect_ratio: '16:9'
     max_columns: 1
     dense_section_placement: true
     background:
@@ -836,16 +867,12 @@ views:
         show_name: true
         show_state: true
         show_icon: true
-        entity: binary_sensor.detecteur_entree_mouvement
-        name: Entrance - Motion
-        state_content: state
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: binary_sensor.hue_motion_sensor_2_mouvement
-        color: ''
-        name: Hall - Motion
+        entity: sensor.lave_vaisselle_remaining_program_time
+        name: Dishwasher - ends in
+        visibility:
+          - condition: state
+            entity: sensor.lave_vaisselle_operation_state
+            state: Run
       - type: entity
         show_name: true
         show_state: true
@@ -858,12 +885,16 @@ views:
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.lave_vaisselle_remaining_program_time
-        name: Dishwasher - ends in
-        visibility:
-          - condition: state
-            entity: sensor.lave_vaisselle_operation_state
-            state: Run
+        entity: binary_sensor.detecteur_entree_mouvement
+        name: Entrance - Motion
+        state_content: state
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: binary_sensor.hue_motion_sensor_2_mouvement
+        color: ''
+        name: Hall - Motion
     cards: []
     icon: mdi:home
     type: sections
@@ -936,35 +967,43 @@ views:
             icon: mdi:door
           - type: entities
             entities:
+              - entity: light.couloir_cote_chambre
+                name: Entrance 1 - bedroom
+                secondary_info: brightness
+                icon: phu:bulbs-classic
+              - entity: light.couloir_cote_bureau
+                secondary_info: brightness
+                name: Entrance 2 - office
+                icon: phu:bulbs-classic
+              - entity: binary_sensor.detecteur_entree_mouvement
+                secondary_info: last-updated
+                name: Motion sensor 1
+                icon: phu:motion-sensor
+              - entity: binary_sensor.hue_motion_sensor_2_mouvement
+                name: Motion sensor 2
+                icon: phu:motion-sensor
+                secondary_info: last-changed
               - entity: sensor.detecteur_entree_batterie
                 name: Motion sensor 1 battery
                 secondary_info: none
               - entity: sensor.hue_motion_sensor_2_batterie
                 name: Motion sensor 2 battery
               - entity: sensor.detecteur_entree_eclairement
-                name: Illuminance level
+                name: Illuminance level 1
                 secondary_info: none
                 icon: phu:motion-sensor-luminance-alt
+              - entity: sensor.hue_motion_sensor_2_eclairement
+                secondary_info: none
+                name: Illuminance level 2
+                icon: phu:motion-sensor-luminance-alt
               - entity: sensor.detecteur_entree_temperature
-                name: Room temperature
+                name: Room temperature 1
                 icon: phu:motion-sensor-temperature
                 secondary_info: last-updated
-              - entity: binary_sensor.detecteur_entree_mouvement
+              - entity: sensor.hue_motion_sensor_2_temperature
+                name: Room temperature 2
                 secondary_info: last-updated
-                name: Motion sensor
-                icon: phu:motion-sensor
-              - entity: binary_sensor.hue_motion_sensor_2_mouvement
-                name: Motion sensor 2
-                icon: phu:motion-sensor
-                secondary_info: last-changed
-              - entity: light.couloir_cote_chambre
-                name: Entrance - bedroom
-                secondary_info: brightness
-                icon: phu:bulbs-classic
-              - entity: light.couloir_cote_bureau
-                secondary_info: brightness
-                name: Entrance - office
-                icon: phu:bulbs-classic
+                icon: phu:motion-sensor-temperature
             state_color: true
       - type: grid
         cards:
@@ -1248,7 +1287,7 @@ views:
         show_state: true
         show_icon: true
         entity: sensor.lave_vaisselle_remaining_program_time
-        name: Dishwasher - Remaining time
+        name: Dishwasher - ends
         visibility:
           - condition: state
             entity: sensor.lave_vaisselle_remaining_program_time
@@ -1261,8 +1300,8 @@ views:
         name: Dishwasher - Progress
         visibility:
           - condition: state
-            entity: sensor.lave_vaisselle_operation_state
-            state: Run
+            entity: sensor.lave_vaisselle_program_progress
+            state_not: unavailable
     sections:
       - type: grid
         cards:
@@ -1360,13 +1399,6 @@ views:
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.volvo_ex30my24_electric_range
-        color: ''
-        name: Estimated range
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
         entity: sensor.volvo_ex30my24_charging_connection_status
         color: ''
         name: Charging status
@@ -1390,12 +1422,18 @@ views:
         show_state: true
         show_icon: true
         entity: sensor.volvo_ex30my24_estimated_charging_finish_time
-        color: ''
-        name: Charge estimated to finish in
+        name: 'Charge end estimation '
         visibility:
           - condition: state
             entity: sensor.volvo_ex30my24_charging_system_status
             state_not: Idle
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.volvo_ex30my24_electric_range
+        color: ''
+        name: Estimated range
     type: sections
     sections:
       - type: grid
