@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 18/05/2025 (DD/MM/YYYY)
+# Last updated: 15/07/2025 (DD/MM/YYYY)
 
 views:
   - title: Shortcuts
@@ -86,7 +86,14 @@ views:
                 card_type: separator
                 icon: mdi:home
                 sub_button:
-                  - entity: sensor.detecteur_entree_temperature
+                  - name: temperature
+                    entity: sensor.healthy_home_coach_temperature_sensor
+                    show_state: true
+                    show_attribute: true
+                    show_last_changed: false
+                    show_background: false
+                  - name: humidity
+                    entity: sensor.healthy_home_coach_humidity_sensor
                     show_state: true
                     show_attribute: true
                     show_last_changed: false
