@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 15/07/2025 (DD/MM/YYYY)
+# Last updated: 23/07/2025 (DD/MM/YYYY)
 
 views:
   - title: Shortcuts
@@ -58,6 +58,12 @@ views:
 
                   ${icon.setAttribute("icon",
                   getWeatherIcon(hass.states['weather.forecast_maison'].state))}
+                modules: []
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  main_shadow: false
+                  icon_shadow: true
               - type: custom:bubble-card
                 card_type: separator
                 name: EX30
@@ -151,6 +157,14 @@ views:
                   .bubble-name-container {
                     margin-right: 0px !important;
                   }
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  border: bubble
+                  icon_background: dark
+                  main_shadow: false
+                  icon_shadow: false
+                  opacity: 0.6
               - type: custom:bubble-card
                 card_type: button
                 button_type: switch
@@ -167,6 +181,14 @@ views:
                 sub_button:
                   - icon: mdi:dots-horizontal
                 icon: phu:bulb-group
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  main_shadow: false
+                  icon_shadow: false
+                  opacity: 0.6
               - type: horizontal-stack
                 cards:
                   - type: custom:bubble-card
@@ -189,6 +211,12 @@ views:
                         tap_action:
                           action: navigate
                           navigation_path: '#livingRoom_Popup'
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -224,6 +252,12 @@ views:
                           data:
                             skip_condition: false
                           service: automation.trigger
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
               - type: custom:bubble-card
                 card_type: button
                 button_type: name
@@ -244,6 +278,12 @@ views:
                     tap_action:
                       action: navigate
                       navigation_path: '#office_Popup'
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  border: bubble
+                  icon_background: dark
+                  opacity: 0.6
               - type: custom:bubble-card
                 card_type: button
                 button_type: name
@@ -268,6 +308,12 @@ views:
                     tap_action:
                       action: toggle
                 styles: ''
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
               - square: false
                 type: grid
                 cards:
@@ -884,24 +930,32 @@ views:
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.detecteur_entree_temperature
+        entity: sensor.healthy_home_coach_temperature_sensor
         name: Interior temperature
         state_content: state
         show_entity_picture: false
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: binary_sensor.detecteur_entree_mouvement
-        name: Entrance - Motion
-        state_content: state
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: binary_sensor.hue_motion_sensor_2_mouvement
-        color: ''
-        name: Hall - Motion
+      - type: custom:mushroom-template-badge
+        entity: sensor.residual_household_waste
+        picture: '{{ state_attr(''sensor.residual_household_waste'', ''entity_picture'') }}'
+        content: >-
+          {{ strptime(states('sensor.residual_household_waste'),
+          '%d/%m/%Y').strftime('%a %d %b') }}
+        tap_action:
+          action: more-info
+      - type: custom:mushroom-template-badge
+        entity: sensor.pmd
+        picture: '{{ state_attr(''sensor.pmd'', ''entity_picture'') }}'
+        content: '{{ strptime(states(''sensor.pmd''), ''%d/%m/%Y'').strftime(''%a %d %b'') }}'
+        tap_action:
+          action: more-info
+      - type: custom:mushroom-template-badge
+        entity: sensor.paper_cardboard
+        picture: '{{ state_attr(''sensor.paper_cardboard'', ''entity_picture'') }}'
+        content: >-
+          {{ strptime(states('sensor.paper_cardboard'), '%d/%m/%Y').strftime('%a
+          %d %b') }}
+        tap_action:
+          action: more-info
     cards: []
     icon: mdi:home
     type: sections
@@ -914,10 +968,10 @@ views:
             show_temperature: true
             show_current_condition: true
             show_attributes: true
-            show_time: false
+            show_time: true
             show_time_seconds: false
-            show_day: false
-            show_date: false
+            show_day: true
+            show_date: true
             show_humidity: true
             show_pressure: true
             show_wind_direction: true
@@ -955,92 +1009,216 @@ views:
             forecast_type: hourly
       - type: grid
         cards:
-          - show_name: true
-            show_icon: true
-            show_state: true
-            type: glance
-            entities:
-              - entity: sensor.residual_household_waste
-                name: Residual waste
-              - entity: sensor.pmd
-                name: Plastic
-              - entity: sensor.paper_cardboard
-                name: Paper/Cardboard
-            state_color: false
-            columns: 3
-          - type: heading
-            heading: Entrance
-            heading_style: title
+          - type: custom:bubble-card
+            card_type: button
+            button_type: name
+            modules:
+              - frosted_glass
+              - room_card
+            room_card:
+              square_icon: false
+            name: Entrance
             icon: mdi:door
-          - type: entities
-            entities:
-              - entity: light.couloir_cote_chambre
+            sub_button:
+              - entity: light.accueil
                 name: Entrance 1 - bedroom
-                secondary_info: brightness
-                icon: phu:bulbs-classic
-              - entity: light.couloir_cote_bureau
-                secondary_info: brightness
-                name: Entrance 2 - office
-                icon: phu:bulbs-classic
+                icon: phu:bulb-group
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
               - entity: binary_sensor.detecteur_entree_mouvement
-                secondary_info: last-updated
-                name: Motion sensor 1
-                icon: phu:motion-sensor
+                show_state: false
+                name: Motion sensor 1 - bedroom
+                state_background: false
               - entity: binary_sensor.hue_motion_sensor_2_mouvement
-                name: Motion sensor 2
-                icon: phu:motion-sensor
-                secondary_info: last-changed
-              - entity: sensor.detecteur_entree_batterie
-                name: Motion sensor 1 battery
-                secondary_info: none
-              - entity: sensor.hue_motion_sensor_2_batterie
-                name: Motion sensor 2 battery
-              - entity: sensor.detecteur_entree_eclairement
-                name: Illuminance level 1
-                secondary_info: none
-                icon: phu:motion-sensor-luminance-alt
-              - entity: sensor.hue_motion_sensor_2_eclairement
-                secondary_info: none
-                name: Illuminance level 2
-                icon: phu:motion-sensor-luminance-alt
-              - entity: sensor.detecteur_entree_temperature
-                name: Room temperature 1
-                icon: phu:motion-sensor-temperature
-                secondary_info: last-updated
-              - entity: sensor.hue_motion_sensor_2_temperature
-                name: Room temperature 2
-                secondary_info: last-updated
-                icon: phu:motion-sensor-temperature
-            state_color: true
+                name: Motion sensor 2 - office
+                state_background: false
+            rows: '3'
+            card_layout: large-sub-buttons-grid
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+            styles: |-
+              .bubble-sub-button {
+                height: 46px !important;
+                width: 46px !important;
+              }
+              .bubble-sub-button-icon {
+                --mdc-icon-size: inherit !important;
+              }
+          - type: custom:bubble-card
+            card_type: button
+            button_type: name
+            name: Living room
+            icon: phu:rooms-living
+            modules:
+              - frosted_glass
+              - room_card
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+            card_layout: large-sub-buttons-grid
+            rows: '3'
+            button_action: {}
+            sub_button:
+              - entity: light.salon
+                icon: phu:bulb-general-group
+                name: All living room lights
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+              - entity: light.salon_sans_spot
+                icon: phu:rooms-lounge
+                name: Living room (without Spot)
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+              - entity: light.spot
+                name: Spot only
+                icon: phu:hue-spot-group-v2
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+              - name: blank
+                state_background: false
+                show_background: false
+              - entity: light.friday
+                name: Floor lamp
+                icon: phu:ikea-paparlamp
+                tap_action:
+                  action: toggle
+            styles: |-
+              .bubble-sub-button {
+                height: 46px !important;
+                width: 46px !important;
+              }
+              .bubble-sub-button-icon {
+                --mdc-icon-size: inherit !important;
+              }
+          - type: custom:bubble-card
+            card_type: button
+            button_type: name
+            name: TV
+            icon: mdi:television
+            modules:
+              - frosted_glass
+              - room_card
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+            card_layout: large-sub-buttons-grid
+            rows: '3'
+            sub_button:
+              - entity: automation.turn_on_tv_scene
+                state_background: false
+                icon: mdi:power
+                name: Turn on TV scene
+                tap_action:
+                  action: perform-action
+                  perform_action: automation.trigger
+                  target:
+                    entity_id: automation.turn_on_tv_scene
+                  data:
+                    skip_condition: true
+              - entity: automation.turn_off_tv_scene
+                name: Turn off TV scene
+                icon: mdi:power-off
+                state_background: false
+                tap_action:
+                  action: perform-action
+                  perform_action: automation.trigger
+                  target:
+                    entity_id: automation.turn_off_tv_scene
+                  data:
+                    skip_condition: true
+              - entity: media_player.google_tv_2
+                icon: mdi:television-box
+                name: Google TV
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+              - show_icon: true
+                state_background: false
+                show_background: false
+                show_name: false
+                show_state: false
+                name: blank
+              - entity: light.hue_play_bar
+                name: Hue Play Bar
+                icon: phu:play-bar-v-two-out
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+              - entity: light.spot
+                name: Spot
+                icon: phu:hue-spot-group-v2
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+              - entity: light.hue_ambiance_luster_1
+                name: Mushroom
+                icon: mdi:mushroom
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+            styles: |-
+              .bubble-sub-button {
+                height: 46px !important;
+                width: 46px !important;
+              }
+              .bubble-sub-button-icon {
+                --mdc-icon-size: inherit !important;
+              }
+          - type: custom:bubble-card
+            card_type: button
+            button_type: name
+            name: Office
+            icon: mdi:desk
+            modules:
+              - frosted_glass
+              - room_card
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+            card_layout: large-sub-buttons-grid
+            rows: '3'
+            sub_button:
+              - entity: light.jarvis
+                name: Jarvis
+                icon: phu:bulbs-sultan
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+              - entity: light.chevet
+                icon: phu:bambulab-alt
+                name: 3D Printer
+                light_background: false
+                state_background: true
+                tap_action:
+                  action: toggle
+            styles: |-
+              .bubble-sub-button {
+                height: 46px !important;
+                width: 46px !important;
+              }
+              .bubble-sub-button-icon {
+                --mdc-icon-size: inherit !important;
+              }
       - type: grid
         cards:
-          - type: heading
-            heading: Living room
-            heading_style: title
-            icon: phu:rooms-living
-          - type: entities
-            entities:
-              - entity: light.plafond_salon
-                name: Ceiling
-                secondary_info: brightness
-                icon: phu:bulbs-filament
-              - entity: light.lanterne_gauche
-                secondary_info: brightness
-                icon: phu:bulb-candle
-                name: Wall - Left
-              - entity: light.lanterne_droite
-                secondary_info: brightness
-                icon: phu:bulb-candle
-                name: Wall - Right
-              - entity: media_player.hk_citation_one
-              - entity: light.friday
-                icon: mdi:floor-lamp
-                name: Floor lamp
-              - entity: light.hue_ambiance_luster_1
-                icon: mdi:mushroom
-                name: Mushroom
-            show_header_toggle: false
-            state_color: true
           - show_state: true
             show_name: true
             camera_view: auto
@@ -1050,55 +1228,6 @@ views:
             name: Google Nest Cam - Living room
             image: /api/image/serve/6be493b22bba97857d5f36daff76faaa/512x512
             aspect_ratio: '16:9'
-          - type: heading
-            heading: TV
-            heading_style: title
-            icon: mdi:television
-          - type: entities
-            entities:
-              - entity: media_player.lg_webos_tv_qned866re
-                secondary_info: none
-                icon: ''
-              - entity: media_player.hk_citation_multibeam_1100_2678
-                name: HK Citation Multibeam 1100
-                icon: phu:sonos-playbar
-              - entity: media_player.google_tv_2
-                icon: ''
-              - entity: light.hue_play_gauche
-                name: Hue Play - Left
-                secondary_info: brightness
-                icon: phu:play-bar-one
-              - entity: light.hue_play_droite
-                name: Hue Play - Right
-                secondary_info: brightness
-                icon: phu:play-bar-one
-              - entity: light.spot_gauche
-                name: Spot - Left
-                secondary_info: brightness
-                icon: phu:bulbs-spot
-              - entity: light.spot_droite
-                name: Spot - Right
-                secondary_info: brightness
-                icon: phu:bulbs-spot
-            show_header_toggle: false
-            state_color: true
-      - type: grid
-        cards:
-          - type: heading
-            heading: Office
-            heading_style: title
-            icon: mdi:desk
-          - type: entities
-            entities:
-              - entity: light.jarvis
-                secondary_info: brightness
-                icon: phu:bulbs-classic
-              - entity: media_player.google_nest_audio
-                icon: phu:nest-audio
-              - entity: light.chevet
-                icon: phu:plug-eu
-            state_color: true
-            show_header_toggle: false
           - type: heading
             heading: Cleaning robot
             heading_style: title
@@ -1123,7 +1252,7 @@ views:
                 name: Total cleaning time
             state_color: true
     path: home
-    max_columns: 4
+    max_columns: 3
     dense_section_placement: false
     header:
       layout: center
@@ -1152,39 +1281,112 @@ views:
             heading: Printer
             heading_style: title
             icon: mdi:printer-outline
-          - type: entities
-            entities:
-              - entity: sensor.hp_officejet_pro_8020_series
-                name: Printer status
-                secondary_info: last-changed
-                icon: ''
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: sensor.hp_officejet_pro_8020_series
+            card_layout: large-sub-buttons-grid
+            sub_button:
               - entity: sensor.hp_officejet_pro_8020_series_black_cartridge
+                icon: mdi:water
+                show_background: true
+                show_name: true
                 name: Black cartridge
+                show_state: true
+                state_background: false
               - entity: sensor.hp_officejet_pro_8020_series_cyan_cartridge
+                icon: mdi:water
+                show_background: true
+                show_name: true
                 name: Cyan cartridge
+                show_state: true
+                state_background: false
               - entity: sensor.hp_officejet_pro_8020_series_magenta_cartridge
+                icon: mdi:water
+                show_background: true
+                show_name: true
                 name: Magenta cartridge
+                show_state: true
+                state_background: false
               - entity: sensor.hp_officejet_pro_8020_series_yellow_cartridge
+                icon: mdi:water
+                show_background: true
+                show_name: true
                 name: Yellow cartridge
-            title: HP OfficeJet Pro 8022e
-            state_color: true
+                show_state: true
+                state_background: false
+            name: HP OfficeJet Pro 8022e
+            show_icon: true
+            icon: mdi:printer
+            button_action:
+              hold_action:
+                action: none
+              tap_action:
+                action: none
+            modules:
+              - frosted_glass
+              - room_card
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+            styles: |-
+              .bubble-sub-button {
+                width: inherit !important;
+              }
+              .bubble-name-container {
+                  width: 150px;
+              }
+            show_last_updated: false
+            show_last_changed: false
+            rows: '3'
+            scrolling_effect: true
+            show_attribute: false
+            attribute: state_reason
+            show_state: false
+          - type: markdown
+            content: >-
+              **Magenta, Cyan, Yellow:** 912, 912XL
+
+              **Black:** 912, 912XL, 917XL
+
+              [HP
+              Shop](https://www.hp.com/be-fr/shop/ink-toner-paper-finder/8022e)
+            text_only: true
           - type: heading
             heading: 3D Printer
             heading_style: title
             icon: phu:bambulab-alt
-          - features:
-              - type: toggle
-            type: tile
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
             entity: light.chevet
-            features_position: inline
-            vertical: false
-            name: 3D Printer
-            show_entity_picture: false
             icon: phu:bambulab-alt
-            icon_tap_action:
+            use_accent_color: false
+            force_icon: false
+            show_state: true
+            show_last_changed: false
+            show_attribute: false
+            tap_action:
               action: more-info
-            hide_state: false
-            state_content: state
+            button_action:
+              hold_action:
+                action: none
+            modules:
+              - frosted_glass
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+            sub_button:
+              - entity: light.chevet
+                show_name: false
+                icon: mdi:power
+                light_background: true
+                state_background: true
+                show_background: true
+                tap_action:
+                  action: toggle
           - type: custom:ha-bambulab-print_control-card
             printer: 3c9267e47d7aa4e0fc877665539ca33e
           - type: custom:ha-bambulab-print_status-card
@@ -1200,24 +1402,40 @@ views:
             cards:
               - type: horizontal-stack
                 cards:
-                  - show_name: true
-                    show_icon: true
-                    type: button
-                    tap_action:
-                      action: toggle
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: switch
                     entity: button.source_start_plc_pairing
+                    card_layout: large
                     name: Start PLC pairing
-                    show_state: false
-                    icon_height: 32px
-                  - show_name: true
-                    show_icon: true
-                    show_state: true
-                    type: glance
-                    entities:
-                      - entity: >-
-                          binary_sensor.rax120jarvis_gateway_etat_du_reseau_etendu_wan
-                        name: Network state
-                    state_color: true
+                    force_icon: false
+                    icon: mdi:plus-network-outline
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: >-
+                      binary_sensor.rax120jarvis_gateway_etat_du_reseau_etendu_wan
+                    name: Network state
+                    icon: mdi:router-wireless-settings
+                    force_icon: false
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    button_action:
+                      hold_action:
+                        action: none
+                    show_last_changed: false
+                    show_last_updated: false
+                    show_attribute: false
               - type: history-graph
                 entities:
                   - entity: sensor.rax120jarvis_gateway_vitesse_de_telechargement
@@ -1228,6 +1446,42 @@ views:
                 logarithmic_scale: false
                 title: Router bandwith usage
                 hours_to_show: 8
+          - type: heading
+            heading: Philips hue devices state
+            heading_style: title
+            icon: phu:hue-only
+          - type: entities
+            entities:
+              - entity: sensor.detecteur_entree_batterie
+                name: Motion sensor 1 battery
+                secondary_info: none
+              - entity: sensor.hue_motion_sensor_2_batterie
+                name: Motion sensor 2 battery
+              - entity: sensor.detecteur_entree_eclairement
+                name: Illuminance level 1
+                secondary_info: none
+                icon: phu:motion-sensor-luminance-alt
+              - entity: sensor.hue_motion_sensor_2_eclairement
+                secondary_info: none
+                name: Illuminance level 2
+                icon: phu:motion-sensor-luminance-alt
+              - entity: sensor.detecteur_entree_temperature
+                name: Room temperature 1
+                icon: phu:motion-sensor-temperature
+                secondary_info: last-updated
+              - entity: sensor.hue_motion_sensor_2_temperature
+                name: Room temperature 2
+                secondary_info: last-updated
+                icon: phu:motion-sensor-temperature
+              - entity: sensor.hue_tap_dial_switch_1_batterie
+                name: Tap Dial Switch
+              - entity: sensor.hue_smart_button_1_batterie
+                name: Smart button entrance
+              - entity: sensor.hue_smart_button_2_batterie
+                name: Smart button office
+              - entity: sensor.hue_smart_button_3_batterie
+                name: Smart button bedroom
+            state_color: true
       - type: grid
         cards:
           - type: heading
@@ -1496,6 +1750,7 @@ views:
                     content: >-
                       The `circle` is showing the last location. The `line` is
                       the history of the last 24 hours.
+                    text_only: true
       - type: grid
         cards:
           - type: vertical-stack

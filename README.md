@@ -4,7 +4,7 @@
 
 ## The project
 
-Just a bunch of info and YAML files related to my own Home Assistant.
+Just a bunch of info and YAML files related to my own Home Assistant installation.
 
 **Current HACS and Home Assistant modules installed:**
 
@@ -37,6 +37,13 @@ Just a bunch of info and YAML files related to my own Home Assistant.
 | RecycleApp                      | Yes    |           | x           |
 | UI Lovelace Minimalist          | Yes    |           | x           |
 | Weather Chart Card              | Yes    |           | x           |
+
+**Specifically for Bubble Card:**
+
+Submodules have been installed to further enhance the _bubble card_ module:
+
+* [Frosted Glass](https://github.com/Clooos/Bubble-Card/discussions/1672)
+* [Room Card](https://github.com/Clooos/Bubble-Card/discussions/1700)
 
 ## Built with
 
