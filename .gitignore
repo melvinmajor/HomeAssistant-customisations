@@ -1,0 +1,9 @@
+# Git ignore of HomeAssistant-customisations
+# Made by Melvin Campos Casares
+# See repository at https://github.com/melvinmajor/HomeAssistant-customisations
+
+# IDE folders and files
+*.code-workspace
+
+# Other unnecessary files
+tmp.txt
