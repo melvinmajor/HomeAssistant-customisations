@@ -1,7 +1,7 @@
 ## Home Assistant configuration.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 15/07/2025 (DD/MM/YYYY)
+# Last updated: 28/09/2025 (DD/MM/YYYY)
 
 # Loads default set of integrations. Do not remove.
 default_config:
@@ -11,6 +11,11 @@ cloud:
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+
+logger:
+  default: info
+  logs:
+    homeassistant.components.automation: warning
 
 
 # Load frontend themes from the themes folder
@@ -40,6 +45,22 @@ template:
         attributes:
           modules: "{{ trigger.event.data.modules }}"
           last_updated: "{{ trigger.event.data.last_updated }}"
+
+
+# Raspberry Pi 4 localhost GPIO
+switch:
+  - platform: remote_rpi_gpio
+    host: 127.0.0.1
+    ports:
+      17: FanSHIM LED R
+      27: FanSHIM LED G
+      22: FanSHIM LED B
+      18: FanSHIM Fan        # simple on/off
+binary_sensor:
+  - platform: remote_rpi_gpio
+    host: 127.0.0.1
+    ports:
+      23: FanSHIM Button
 
 
 # Raspberry Pi Pico W with Bosch BME680 sensor

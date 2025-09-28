@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 23/07/2025 (DD/MM/YYYY)
+# Last updated: 28/09/2025 (DD/MM/YYYY)
 
 views:
   - title: Shortcuts
@@ -66,14 +66,9 @@ views:
                   icon_shadow: true
               - type: custom:bubble-card
                 card_type: separator
-                name: EX30
+                name: Car
                 icon: phu:volvo
                 sub_button:
-                  - entity: sensor.volvo_ex30my24_electric_range
-                    show_icon: false
-                    show_background: false
-                    show_state: true
-                    name: EX30 - Estimated range
                   - entity: sensor.volvo_ex30my24_battery_charge_level
                     show_name: false
                     show_state: true
@@ -88,6 +83,7 @@ views:
                   - entity: lock.volvo_ex30my24_lock_status
                     name: EX30 - Lock state
                 styles: ''
+                card_layout: large
               - type: custom:bubble-card
                 card_type: separator
                 icon: mdi:home
@@ -189,6 +185,8 @@ views:
                   main_shadow: false
                   icon_shadow: false
                   opacity: 0.6
+                liquid_glass_light:
+                  showBorder: false
               - type: horizontal-stack
                 cards:
                   - type: custom:bubble-card
@@ -217,6 +215,9 @@ views:
                       icon_background: dark
                       border: bubble
                       opacity: 0.6
+                    scrolling_effect: false
+                    liquid_glass_light:
+                      showBorder: true
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -258,6 +259,9 @@ views:
                       icon_background: dark
                       border: bubble
                       opacity: 0.6
+                    scrolling_effect: false
+                    liquid_glass_light:
+                      showBorder: true
               - type: custom:bubble-card
                 card_type: button
                 button_type: name
@@ -314,35 +318,19 @@ views:
                   icon_background: dark
                   border: bubble
                   opacity: 0.6
-              - square: false
-                type: grid
-                cards:
-                  - type: tile
+              - type: tile
+                entity: sensor.lave_vaisselle_remaining_program_time
+                features_position: bottom
+                vertical: false
+                name: Dishwasher ends
+                icon: mdi:dishwasher
+                state_content: state
+                visibility:
+                  - condition: state
                     entity: sensor.lave_vaisselle_remaining_program_time
-                    features_position: bottom
-                    vertical: false
-                    name: Dishwasher ends
-                    icon: mdi:dishwasher
-                    state_content: state
-                    visibility:
-                      - condition: state
-                        entity: sensor.lave_vaisselle_remaining_program_time
-                        state_not: unavailable
-                    icon_tap_action:
-                      action: more-info
-                  - type: tile
-                    entity: sensor.lave_vaisselle_program_progress
-                    features_position: bottom
-                    vertical: false
-                    name: Dishwasher progress
-                    state_content: state
-                    visibility:
-                      - condition: state
-                        entity: sensor.lave_vaisselle_program_progress
-                        state_not: unavailable
-                    icon_tap_action:
-                      action: more-info
-                columns: 2
+                    state_not: unavailable
+                icon_tap_action:
+                  action: more-info
       - type: grid
         cards:
           - type: vertical-stack
@@ -602,7 +590,7 @@ views:
                       action: toggle
                     entity: media_player.lg_webos_tv_qned866re
                   - name: Barre son
-                    entity: media_player.hk_citation_multibeam_1100_2678
+                    entity: media_player.hk_citation_multibeam_1100
                     icon: phu:sonos-playbar
                     tap_action:
                       action: toggle
@@ -640,7 +628,7 @@ views:
                   }
               - type: custom:bubble-card
                 card_type: media-player
-                entity: media_player.hk_citation_multibeam_1100_2678
+                entity: media_player.hk_citation_multibeam_1100
                 show_name: false
                 hide:
                   power_button: true
@@ -934,34 +922,40 @@ views:
         name: Interior temperature
         state_content: state
         show_entity_picture: false
-      - type: custom:mushroom-template-badge
-        entity: sensor.residual_household_waste
-        picture: '{{ state_attr(''sensor.residual_household_waste'', ''entity_picture'') }}'
-        content: >-
-          {{ strptime(states('sensor.residual_household_waste'),
-          '%d/%m/%Y').strftime('%a %d %b') }}
-        tap_action:
-          action: more-info
-      - type: custom:mushroom-template-badge
-        entity: sensor.pmd
-        picture: '{{ state_attr(''sensor.pmd'', ''entity_picture'') }}'
-        content: '{{ strptime(states(''sensor.pmd''), ''%d/%m/%Y'').strftime(''%a %d %b'') }}'
-        tap_action:
-          action: more-info
-      - type: custom:mushroom-template-badge
-        entity: sensor.paper_cardboard
-        picture: '{{ state_attr(''sensor.paper_cardboard'', ''entity_picture'') }}'
-        content: >-
-          {{ strptime(states('sensor.paper_cardboard'), '%d/%m/%Y').strftime('%a
-          %d %b') }}
-        tap_action:
-          action: more-info
     cards: []
     icon: mdi:home
     type: sections
     sections:
       - type: grid
         cards:
+          - type: custom:bubble-card
+            card_type: calendar
+            event_action:
+              tap_action:
+                action: more-info
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            entities:
+              - entity: calendar.21_rue_du_hainaut_1420_braine_l_alleud
+                color: primary
+            show_end: false
+            show_progress: true
+            show_place: false
+            sub_button: []
+            card_layout: large
+            modules:
+              - frosted_glass
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+              main_shadow: false
+              icon_shadow: false
+            grid_options:
+              columns: 12
+              rows: 2
           - type: custom:weather-chart-card
             entity: weather.forecast_maison
             show_main: true
@@ -1258,6 +1252,443 @@ views:
       layout: center
       badges_position: bottom
       badges_wrap: scroll
+  - title: Kitchen
+    path: kitchen
+    type: sections
+    cards: []
+    icon: mdi:fridge
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.lave_vaisselle_duration
+        name: Dishwasher - Program duration
+        visibility:
+          - condition: state
+            entity: sensor.lave_vaisselle_duration
+            state_not: unavailable
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.lave_vaisselle_remaining_program_time
+        name: Dishwasher - ends
+        visibility:
+          - condition: state
+            entity: sensor.lave_vaisselle_remaining_program_time
+            state_not: unavailable
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.lave_vaisselle_program_progress
+        name: Dishwasher - Progress
+        visibility:
+          - condition: state
+            entity: sensor.lave_vaisselle_program_progress
+            state_not: unavailable
+    sections:
+      - type: grid
+        cards:
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: sensor.lave_vaisselle_operation_state
+            modules:
+              - frosted_glass
+              - room_card
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+            card_layout: large-sub-buttons-grid
+            rows: '3'
+            icon: mdi:dishwasher
+            name: Dishwasher
+            show_state: false
+            button_action:
+              tap_action:
+                action: none
+              hold_action:
+                action: none
+            styles: |-
+              .bubble-sub-button {
+                height: 46px !important;
+                width: 46px !important;
+              }
+              .bubble-sub-button-icon {
+                --mdc-icon-size: inherit !important;
+              }
+            sub_button:
+              - entity: switch.lave_vaisselle_power
+                icon: mdi:power
+                name: Dishwasher power
+                tap_action:
+                  action: toggle
+              - entity: switch.lave_vaisselle_childlock
+                name: Child lock
+                icon: mdi:account-child
+          - show_name: true
+            show_icon: false
+            show_state: true
+            type: glance
+            entities:
+              - name: Current state
+                entity: sensor.lave_vaisselle_operation_state
+              - name: Remote control
+                entity: binary_sensor.lave_vaisselle_remote_control
+              - name: Remote start
+                entity: binary_sensor.lave_vaisselle_remote_start
+      - type: grid
+        cards:
+          - type: heading
+            heading: Dishwasher programs
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: switch.lave_vaisselle_program_eco50
+                name: Eco (4h55) 50°
+                icon: mdi:sprout
+              - entity: switch.lave_vaisselle_program_auto2
+                name: Auto (2h15)
+                icon: mdi:auto-mode
+              - entity: switch.lave_vaisselle_program_kurz60
+                name: Quick (1h30) 60°
+                icon: mdi:clock-fast
+              - entity: switch.lave_vaisselle_program_quick45
+                name: Quick glass (30min) 45°
+                icon: mdi:cup
+              - entity: switch.lave_vaisselle_program_nightwash
+                name: Night Wash (4h) 50°
+                icon: mdi:weather-night
+              - type: custom:fold-entity-row
+                head:
+                  type: section
+                  label: Other programs
+                entities:
+                  - entity: switch.lave_vaisselle_program_quick65
+                    name: Quick (1h) 65°
+                    icon: mdi:clock-fast
+                  - entity: switch.lave_vaisselle_program_intensiv70
+                    name: Intensive (2h15) 70°
+                    icon: mdi:stove
+                  - entity: switch.lave_vaisselle_program_intensivpower
+                    name: Intensive Power (2h40) 70°
+                    icon: mdi:stove
+                  - entity: switch.lave_vaisselle_program_super60
+                    name: Super (2h20) 60°
+                    icon: mdi:size-xl
+                  - entity: switch.lave_vaisselle_program_machinecare
+                    name: Machine Care
+                    icon: mdi:dishwasher-alert
+            show_header_toggle: false
+            state_color: true
+            view_layout:
+              position: sidebar
+    max_columns: 2
+    header:
+      layout: center
+      badges_position: bottom
+      badges_wrap: scroll
+  - title: Volvo EX30
+    path: vehicle
+    icon: phu:volvo
+    cards: []
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.volvo_ex30my24_charging_connection_status
+        color: ''
+        name: Charging status
+        visibility:
+          - condition: state
+            entity: sensor.volvo_ex30my24_charging_connection_status
+            state_not: Disconnected
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.volvo_ex30my24_charging_system_status
+        color: ''
+        name: Charging system status
+        visibility:
+          - condition: state
+            entity: sensor.volvo_ex30my24_charging_system_status
+            state_not: Idle
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.volvo_ex30my24_estimated_charging_finish_time
+        name: 'Charge end estimation '
+        visibility:
+          - condition: state
+            entity: sensor.volvo_ex30my24_charging_system_status
+            state_not: Idle
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: custom:bubble-card
+            card_type: separator
+            name: Car info
+            icon: phu:volvo
+            sub_button:
+              - entity: sensor.volvo_ex30my24_electric_range
+                show_state: true
+                state_background: false
+                name: Estimated range
+                tap_action:
+                  action: none
+            modules:
+              - frosted_glass
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+          - type: vertical-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - type: gauge
+                    entity: sensor.volvo_ex30my24_battery_charge_level
+                    name: Battery level
+                    unit: '%'
+                    min: 0
+                    max: 100
+                    needle: true
+                    severity:
+                      green: 40
+                      yellow: 20
+                      red: 0
+                  - show_name: false
+                    show_icon: true
+                    type: button
+                    tap_action:
+                      action: toggle
+                    entity: switch.volvo_ex30my24_climate_status
+                    show_state: true
+                    name: EX30 - AC
+                    icon_height: 48px
+                  - show_name: false
+                    show_icon: true
+                    type: button
+                    tap_action:
+                      action: toggle
+                    entity: lock.volvo_ex30my24_lock_status
+                    icon_height: 48px
+                    name: EX30 - Lock state
+                    show_state: true
+              - type: vertical-stack
+                cards:
+                  - type: map
+                    entities:
+                      - entity: device_tracker.volvo_ex30my24_location
+                        name: EX30
+                    theme_mode: auto
+                    default_zoom: 17
+                    aspect_ratio: '16:9'
+                    hours_to_show: 24
+                  - type: markdown
+                    content: >-
+                      The `circle` is showing the last location. The `line` is
+                      the history of the last 24 hours.
+                    text_only: true
+      - type: grid
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.volvo_ex30my24_odometer
+                    name: Odometer
+                    tap_action:
+                      action: none
+                    button_action:
+                      tap_action:
+                        action: none
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    card_layout: normal
+                    scrolling_effect: false
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.volvo_ex30my24_average_energy_consumption
+                    name: Avg. consumption
+                    tap_action:
+                      action: none
+                    button_action:
+                      tap_action:
+                        action: none
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    card_layout: normal
+                    scrolling_effect: false
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: sensor.volvo_ex30my24_service_warning_status
+                name: Service warning status
+                button_action: {}
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                card_layout: normal
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.volvo_ex30my24_time_to_service
+                    name: Time to Srv
+                    tap_action:
+                      action: none
+                    button_action:
+                      tap_action:
+                        action: none
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    card_layout: normal
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.volvo_ex30my24_km_to_service
+                    name: Distance to Srv
+                    tap_action:
+                      action: none
+                    button_action:
+                      tap_action:
+                        action: none
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    card_layout: normal
+      - type: grid
+        cards:
+          - type: heading
+            heading: Status and MQTT
+            heading_style: title
+            icon: mdi:list-status
+          - type: vertical-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.volvo_ex30my24_tyre_front_left
+                    name: Front left
+                    button_action:
+                      hold_action:
+                        action: none
+                    card_layout: normal
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.volvo_ex30my24_tyre_front_right
+                    name: Front right
+                    button_action:
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    card_layout: normal
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.volvo_ex30my24_tyre_rear_left
+                    name: Rear left
+                    button_action:
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    card_layout: normal
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.volvo_ex30my24_tyre_rear_right
+                    name: Rear right
+                    button_action:
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    card_layout: normal
+              - type: vertical-stack
+                cards:
+                  - type: entities
+                    entities:
+                      - entity: text.volvo_otp
+                      - entity: sensor.volvo_ex30my24_api_backend_status
+                        name: API Backend status
+                      - entity: sensor.volvo_ex30my24_last_data_update
+                        name: Last data update
+                        icon: mdi:calendar
+                      - entity: button.volvo_ex30my24_update_data
+                        secondary_info: none
+                        name: Force update data
+                      - entity: number.volvo_ex30my24_update_interval
+                        name: Update interval
+                    title: Volvo to MQTT
+    max_columns: 3
+    header:
+      layout: center
+      badges_position: bottom
+      badges_wrap: scroll
   - title: IT
     path: IT-server
     icon: mdi:server-minus
@@ -1272,11 +1703,99 @@ views:
         show_entity_picture: false
         state_content: state
         icon: phu:nighthawk
+      - type: custom:mushroom-template-badge
+        icon: mdi:harddisk
+        color: >
+          {% set usage = (states('sensor.system_monitor_drive_used') | float / 
+                          (states('sensor.system_monitor_drive_used') | float + states('sensor.system_monitor_drive_free') | float) * 100) %}
+          {% if usage < 60 %} green {% elif usage < 80 %} orange {% else %} red
+          {% endif %}
+        label: >
+          HA SSD ({{ ((states('sensor.system_monitor_drive_used') | float /
+          (states('sensor.system_monitor_drive_used') | float +
+          states('sensor.ssd_total') | float)) * 100) | round(1) }}% used)
+        content: >
+          {{ states('sensor.system_monitor_drive_used') }} GB / {{
+          states('sensor.ssd_total') }} GB
     background: {}
     type: sections
     sections:
       - type: grid
         cards:
+          - type: heading
+            heading: Raspberry Pi 4
+            heading_style: title
+            icon: mdi:raspberry-pi
+          - type: horizontal-stack
+            cards:
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: sensor.system_monitor_temperature_cpu
+                show_state: true
+                scrolling_effect: true
+                show_icon: true
+                show_name: true
+                show_attribute: false
+                show_last_updated: false
+                show_last_changed: false
+                force_icon: false
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  main_shadow: false
+                  icon_shadow: false
+                button_action:
+                  hold_action:
+                    action: none
+                name: CPU temp
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: sensor.system_monitor_cpu_usage
+                show_state: true
+                scrolling_effect: true
+                show_icon: true
+                show_name: true
+                show_attribute: false
+                show_last_updated: false
+                show_last_changed: false
+                force_icon: false
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  main_shadow: false
+                  icon_shadow: false
+                button_action:
+                  hold_action:
+                    action: none
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: sensor.system_monitor_ram_usage
+                show_state: true
+                scrolling_effect: true
+                show_icon: true
+                show_name: true
+                show_attribute: false
+                show_last_updated: false
+                show_last_changed: false
+                force_icon: false
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  main_shadow: false
+                  icon_shadow: false
+                icon: mdi:memory
+                button_action:
+                  hold_action:
+                    action: none
           - type: heading
             heading: Printer
             heading_style: title
@@ -1510,328 +2029,24 @@ views:
                   - entity: update.home_assistant_supervisor_update
                     name: HA Supervisor
                   - entity: update.hacs_update
+                    name: HACS
                   - entity: update.recycleapp_update
+                    name: RecycleApp
                   - entity: update.aircast_update
+                    name: AirCast
                   - entity: update.mosquitto_broker_update
                     name: MQTT - Mosquitto broker
                   - entity: update.volvo2mqtt_update
                     name: Volvo2Mqtt
                   - entity: update.bambu_lab_update
                     name: Bambu Lab
+                  - entity: update.pigpio_mise_a_jour
+                    name: pigpio
                 title: Home Assistant
                 state_color: false
                 show_header_toggle: true
     max_columns: 3
     dense_section_placement: false
-    header:
-      layout: center
-      badges_position: bottom
-      badges_wrap: scroll
-  - title: Kitchen
-    path: kitchen
-    type: sections
-    cards: []
-    icon: mdi:fridge
-    badges:
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: sensor.lave_vaisselle_duration
-        name: Dishwasher - Program duration
-        visibility:
-          - condition: state
-            entity: sensor.lave_vaisselle_duration
-            state_not: unavailable
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: sensor.lave_vaisselle_remaining_program_time
-        name: Dishwasher - ends
-        visibility:
-          - condition: state
-            entity: sensor.lave_vaisselle_remaining_program_time
-            state_not: unavailable
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: sensor.lave_vaisselle_program_progress
-        name: Dishwasher - Progress
-        visibility:
-          - condition: state
-            entity: sensor.lave_vaisselle_program_progress
-            state_not: unavailable
-    sections:
-      - type: grid
-        cards:
-          - type: heading
-            heading: Dishwasher
-            heading_style: title
-            icon: mdi:dishwasher
-          - type: entities
-            entities:
-              - entity: switch.lave_vaisselle_power
-                name: Power
-                icon: mdi:dishwasher
-              - entity: sensor.lave_vaisselle_operation_state
-                name: Current state
-                secondary_info: last-changed
-              - entity: binary_sensor.lave_vaisselle_door
-                name: Door state
-                secondary_info: none
-              - entity: switch.lave_vaisselle_childlock
-                icon: mdi:account-child
-                name: Child lock
-              - entity: binary_sensor.lave_vaisselle_remote_control
-                name: Remote control
-              - entity: binary_sensor.lave_vaisselle_remote_start
-                name: Remote start
-            show_header_toggle: false
-            state_color: false
-            view_layout:
-              position: main
-      - type: grid
-        cards:
-          - type: heading
-            heading: Dishwasher programs
-            heading_style: title
-          - type: entities
-            entities:
-              - entity: switch.lave_vaisselle_program_eco50
-                name: Eco (4h55) 50°
-                icon: mdi:sprout
-              - entity: switch.lave_vaisselle_program_auto2
-                name: Auto (2h15)
-                icon: mdi:auto-mode
-              - entity: switch.lave_vaisselle_program_kurz60
-                name: Quick (1h30) 60°
-                icon: mdi:clock-fast
-              - entity: switch.lave_vaisselle_program_quick45
-                name: Quick glass (30min) 45°
-                icon: mdi:cup
-              - entity: switch.lave_vaisselle_program_nightwash
-                name: Night Wash (4h) 50°
-                icon: mdi:weather-night
-              - type: custom:fold-entity-row
-                head:
-                  type: section
-                  label: Other programs
-                entities:
-                  - entity: switch.lave_vaisselle_program_quick65
-                    name: Quick (1h) 65°
-                    icon: mdi:clock-fast
-                  - entity: switch.lave_vaisselle_program_intensiv70
-                    name: Intensive (2h15) 70°
-                    icon: mdi:stove
-                  - entity: switch.lave_vaisselle_program_intensivpower
-                    name: Intensive Power (2h40) 70°
-                    icon: mdi:stove
-                  - entity: switch.lave_vaisselle_program_super60
-                    name: Super (2h20) 60°
-                    icon: mdi:size-xl
-                  - entity: switch.lave_vaisselle_program_machinecare
-                    name: Machine Care
-                    icon: mdi:dishwasher-alert
-            show_header_toggle: false
-            state_color: true
-            view_layout:
-              position: sidebar
-    max_columns: 2
-    header:
-      layout: center
-      badges_position: bottom
-      badges_wrap: scroll
-  - title: Volvo EX30
-    path: vehicle
-    icon: mdi:car-electric
-    cards: []
-    badges:
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: sensor.volvo_ex30my24_odometer
-        color: ''
-        name: Odometer
-        show_entity_picture: false
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: sensor.volvo_ex30my24_charging_connection_status
-        color: ''
-        name: Charging status
-        visibility:
-          - condition: state
-            entity: sensor.volvo_ex30my24_charging_connection_status
-            state_not: Disconnected
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: sensor.volvo_ex30my24_charging_system_status
-        color: ''
-        name: Charging system status
-        visibility:
-          - condition: state
-            entity: sensor.volvo_ex30my24_charging_system_status
-            state_not: Idle
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: sensor.volvo_ex30my24_estimated_charging_finish_time
-        name: 'Charge end estimation '
-        visibility:
-          - condition: state
-            entity: sensor.volvo_ex30my24_charging_system_status
-            state_not: Idle
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: sensor.volvo_ex30my24_electric_range
-        color: ''
-        name: Estimated range
-    type: sections
-    sections:
-      - type: grid
-        cards:
-          - type: heading
-            heading: Car info
-            heading_style: title
-            icon: phu:volvo
-          - type: vertical-stack
-            cards:
-              - type: horizontal-stack
-                cards:
-                  - type: gauge
-                    entity: sensor.volvo_ex30my24_battery_charge_level
-                    name: Battery level
-                    unit: '%'
-                    min: 0
-                    max: 100
-                    needle: true
-                    severity:
-                      green: 40
-                      yellow: 20
-                      red: 0
-                  - show_name: false
-                    show_icon: true
-                    type: button
-                    tap_action:
-                      action: toggle
-                    entity: switch.volvo_ex30my24_climate_status
-                    show_state: true
-                    name: EX30 - AC
-                    icon_height: 48px
-                  - show_name: false
-                    show_icon: true
-                    type: button
-                    tap_action:
-                      action: toggle
-                    entity: lock.volvo_ex30my24_lock_status
-                    icon_height: 48px
-                    name: EX30 - Lock state
-                    show_state: true
-              - type: vertical-stack
-                cards:
-                  - type: map
-                    entities:
-                      - entity: device_tracker.volvo_ex30my24_location
-                        name: EX30
-                    theme_mode: auto
-                    default_zoom: 17
-                    aspect_ratio: '16:9'
-                    hours_to_show: 24
-                  - type: markdown
-                    content: >-
-                      The `circle` is showing the last location. The `line` is
-                      the history of the last 24 hours.
-                    text_only: true
-      - type: grid
-        cards:
-          - type: vertical-stack
-            cards:
-              - show_name: true
-                show_icon: true
-                show_state: true
-                type: glance
-                entities:
-                  - entity: sensor.volvo_ex30my24_average_energy_consumption
-                    name: Average consumption
-                  - entity: sensor.volvo_ex30my24_average_speed
-                    name: Average speed
-                columns: 2
-              - show_name: true
-                show_icon: true
-                show_state: true
-                type: glance
-                entities:
-                  - entity: sensor.volvo_ex30my24_service_warning_status
-                    name: Warning status
-                  - entity: sensor.volvo_ex30my24_time_to_service
-                    name: Time before
-                  - entity: sensor.volvo_ex30my24_km_to_service
-                    name: Distance before
-                columns: 3
-                state_color: true
-              - type: horizontal-stack
-                cards:
-                  - show_state: false
-                    show_name: false
-                    camera_view: auto
-                    type: picture-entity
-                    entity: image.volvo_ex30my24_exterior_image
-                    theme: Material Rounded Transparent Card
-                  - show_state: false
-                    show_name: false
-                    camera_view: auto
-                    type: picture-entity
-                    entity: image.volvo_ex30my24_interior_image
-                    theme: Material Rounded Transparent Card
-      - type: grid
-        cards:
-          - type: heading
-            heading: Status and MQTT
-            heading_style: title
-            icon: mdi:list-status
-          - type: vertical-stack
-            cards:
-              - show_name: true
-                show_icon: true
-                show_state: true
-                type: glance
-                entities:
-                  - entity: sensor.volvo_ex30my24_tyre_front_left
-                    name: Front left
-                  - entity: sensor.volvo_ex30my24_tyre_front_right
-                    name: Front right
-                  - entity: sensor.volvo_ex30my24_tyre_rear_left
-                    name: Rear left
-                  - entity: sensor.volvo_ex30my24_tyre_rear_right
-                    name: Rear right
-                state_color: true
-                columns: 4
-              - type: vertical-stack
-                cards:
-                  - type: entities
-                    entities:
-                      - entity: text.volvo_otp
-                      - entity: sensor.volvo_ex30my24_api_backend_status
-                        name: API Backend status
-                      - entity: sensor.volvo_ex30my24_last_data_update
-                        name: Last data update
-                        icon: mdi:calendar
-                      - entity: button.volvo_ex30my24_update_data
-                        secondary_info: none
-                        name: Force update data
-                      - entity: number.volvo_ex30my24_update_interval
-                        name: Update interval
-                    title: Volvo to MQTT
-    max_columns: 3
     header:
       layout: center
       badges_position: bottom

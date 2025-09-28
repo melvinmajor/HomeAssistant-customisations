@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 10/05/2025 (DD/MM/YYYY)
+# Last updated: 28/09/2025 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -25,7 +25,7 @@
     domain: sensor
     below: 40
   - condition: time
-    after: '23:30:00'
+    after: '23:00:00'
     before: sensor.sun_next_dawn
   - condition: state
     entity_id: input_boolean.visitor_override
@@ -133,7 +133,7 @@
       before: sensor.sun_next_rising
     - condition: time
       after: sensor.sun_next_setting
-      before: '23:30:00'
+      before: '23:00:00'
   - condition: state
     entity_id: input_boolean.visitor_override
     state: 'off'
@@ -626,4 +626,30 @@
     target:
       entity_id: media_player.hk_citation_one
     enabled: true
+  mode: single
+- id: '1759051652362'
+  alias: FanSHIM ventilation
+  description: Control FanSHIM fan with hysteresis based on CPU temperature
+  triggers:
+  - entity_id: sensor.system_monitor_temperature_cpu
+    trigger: state
+  actions:
+  - choose:
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.system_monitor_temperature_cpu
+        above: 65
+      sequence:
+      - target:
+          entity_id: switch.fanshim_fan
+        action: switch.turn_on
+        data: {}
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.system_monitor_temperature_cpu
+        below: 50
+      sequence:
+      - target:
+          entity_id: switch.fanshim_fan
+        action: switch.turn_off
   mode: single

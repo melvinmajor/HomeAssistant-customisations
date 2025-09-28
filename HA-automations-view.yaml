@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 10/05/2025 (DD/MM/YYYY)
+# Last updated: 28/09/2025 (DD/MM/YYYY)
 
 views:
   - title: Automations
@@ -187,6 +187,20 @@ views:
             show_attribute: true
             show_last_changed: false
             icon: mdi:cat
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.fanshim_ventilation
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: ''
       - type: grid
         cards:
           - type: heading
