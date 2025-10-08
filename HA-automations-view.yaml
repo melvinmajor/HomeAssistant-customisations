@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 28/09/2025 (DD/MM/YYYY)
+# Last updated: 08/10/2025 (DD/MM/YYYY)
 
 views:
   - title: Automations
@@ -12,20 +12,6 @@ views:
             heading: House automations
             heading_style: title
             icon: mdi:home-automation
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.tag_white_circle_is_scanned
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: mdi:robot
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -43,6 +29,19 @@ views:
             card_type: button
             button_type: state
             entity: automation.turn_off_tv_scene
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.entrance_light_motion_at_day_office_side
             double_tap_action:
               action: none
             hold_action:
@@ -132,79 +131,7 @@ views:
       - type: grid
         cards:
           - type: heading
-            heading: System automations
-            heading_style: title
-            icon: mdi:home-assistant
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.set_ha_theme_at_startup
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ''
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.reset_kill_switch
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ''
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_boolean.visitor_override
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: mdi:account-group
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_boolean.entrance_light_override
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: mdi:account-group
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_boolean.cat_night_override
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: mdi:cat
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.fanshim_ventilation
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ''
-      - type: grid
-        cards:
-          - type: heading
-            heading: Smart buttons automation
+            heading: Smart buttons automations
             heading_style: title
             icon: phu:button
           - type: custom:bubble-card
@@ -273,6 +200,105 @@ views:
                 action: none
               hold_action:
                 action: none
+          - type: heading
+            heading: Tags automation
+            heading_style: title
+            icon: mdi:nfc-tap
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.tag_white_circle_is_scanned
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: mdi:robot
+      - type: grid
+        cards:
+          - type: heading
+            heading: System automations and helpers
+            heading_style: title
+            icon: mdi:home-assistant
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.set_ha_theme_at_startup
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: ''
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.reset_kill_switch
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: ''
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.fanshim_ventilation
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: ''
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_select.default_dashboard
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: ''
+            button_type: switch
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_boolean.visitor_override
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:account-group
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_boolean.entrance_light_override
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:account-group
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_boolean.cat_night_override
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:cat
     type: sections
     cards: []
     max_columns: 3

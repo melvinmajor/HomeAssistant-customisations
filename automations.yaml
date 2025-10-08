@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 28/09/2025 (DD/MM/YYYY)
+# Last updated: 08/10/2025 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -53,17 +53,12 @@
     domain: light
   mode: single
 - id: '1726612427289'
-  alias: Entrance light motion at day
+  alias: Entrance light motion at day - bed side
   description: ''
   triggers:
   - type: motion
     device_id: 5b6f139d3f1050a8fff847fb0ac42759
     entity_id: d93219cc0a03ac6de549a144ed36d7d0
-    domain: binary_sensor
-    trigger: device
-  - type: motion
-    device_id: a95dcf5ffbb3936d36d049d2eba4426b
-    entity_id: 438a5301a4ecbdded495aab15f43c71e
     domain: binary_sensor
     trigger: device
   conditions:
@@ -75,7 +70,7 @@
     device_id: 5b6f139d3f1050a8fff847fb0ac42759
     entity_id: a3cd70ff433582b7533af5e4b8ee4ed9
     domain: sensor
-    below: 9
+    above: 9
   - condition: state
     entity_id: input_boolean.entrance_light_override
     state: 'off'
@@ -84,8 +79,8 @@
     entity_id: input_boolean.cat_night_override
   actions:
   - type: turn_on
-    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
-    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    device_id: 698e12b8043b3bea237b1a922ef86228
+    entity_id: 0cbd7a6da9f98a41c52ff05816115824
     domain: light
     brightness_pct: 100
   - delay:
@@ -94,8 +89,8 @@
       seconds: 0
       milliseconds: 0
   - type: turn_off
-    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
-    entity_id: 233951028fd7fcb570a5c2e3d6fce425
+    device_id: 698e12b8043b3bea237b1a922ef86228
+    entity_id: 0cbd7a6da9f98a41c52ff05816115824
     domain: light
   mode: single
 - id: '1728485170366'
@@ -638,7 +633,7 @@
     - conditions:
       - condition: numeric_state
         entity_id: sensor.system_monitor_temperature_cpu
-        above: 65
+        above: 70
       sequence:
       - target:
           entity_id: switch.fanshim_fan
@@ -647,9 +642,50 @@
     - conditions:
       - condition: numeric_state
         entity_id: sensor.system_monitor_temperature_cpu
-        below: 50
+        below: 55
       sequence:
       - target:
           entity_id: switch.fanshim_fan
         action: switch.turn_off
+  mode: single
+- id: '1759594849705'
+  alias: Entrance light motion at day - office side
+  description: ''
+  triggers:
+  - type: motion
+    device_id: a95dcf5ffbb3936d36d049d2eba4426b
+    entity_id: 438a5301a4ecbdded495aab15f43c71e
+    domain: binary_sensor
+    trigger: device
+  conditions:
+  - condition: time
+    after: sensor.sun_next_rising
+    before: sensor.sun_next_setting
+  - type: is_illuminance
+    condition: device
+    device_id: a95dcf5ffbb3936d36d049d2eba4426b
+    entity_id: 9d293e9f54a9ee2eda14874bd7a419b4
+    domain: sensor
+    above: 10
+  - condition: state
+    entity_id: input_boolean.entrance_light_override
+    state: 'off'
+  - condition: state
+    state: 'off'
+    entity_id: input_boolean.cat_night_override
+  actions:
+  - type: turn_on
+    device_id: f50b6d4492615b4a4264f537bec680ca
+    entity_id: 3385be7839c6553d2cff2620c7bb80d9
+    domain: light
+    brightness_pct: 100
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: f50b6d4492615b4a4264f537bec680ca
+    entity_id: 3385be7839c6553d2cff2620c7bb80d9
+    domain: light
   mode: single

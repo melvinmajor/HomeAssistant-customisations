@@ -1,8 +1,83 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 28/09/2025 (DD/MM/YYYY)
+# Last updated: 08/10/2025 (DD/MM/YYYY)
 
+decluttering_templates:
+  home_navbar:
+    card:
+      type: custom:navbar-card
+      routes:
+        - url: /custom-dashboard/shortcuts
+          icon: mdi:lifebuoy
+          label: Shortcuts
+        - url: /custom-dashboard/home
+          icon: mdi:home
+          label: Home
+          hold_action:
+            action: navigate
+            navigation_path: /config/devices/dashboard
+        - url: /custom-dashboard/kitchen
+          icon: mdi:fridge
+          label: Kitchen
+        - url: /custom-dashboard/vehicle
+          icon: phu:volvo
+          label: Vehicle
+        - icon: mdi:server-minus
+          label: IT
+          url: /custom-dashboard/IT-server
+        - icon: mdi:dots-horizontal
+          label: More
+          tap_action:
+            action: open-popup
+          popup:
+            - icon: mdi:cog
+              url: /config/dashboard
+              label: Configuration
+            - url: /hacs/dashboard
+              icon: phu:smarthome-solver
+              label: HACS
+            - icon: mdi:power
+              tap_action:
+                action: call-service
+                service: homeassistant.restart
+                service_data: {}
+                confirmation:
+                  text: Are you sure you want to restart Home Assistant?
+              label: Restart HA
+            - icon: mdi:update
+              url: /config/updates
+              label: |
+                [[[
+                  const updates = parseInt(states['sensor.updates']?.state) || 0;
+                  return updates > 0 ? `Updates (${updates} available)` : 'No updates';
+                ]]]
+          badge:
+            show: |
+              [[[
+                return (parseInt(states['sensor.updates']?.state) || 0) > 0;
+              ]]]
+      mobile:
+        mode: floating
+        show_popup_label_backgrounds: true
+        show_labels: popup_only
+        position: bottom
+      desktop:
+        show_labels: popup_only
+        show_popup_label_backgrounds: true
+        position: bottom
+      media_player:
+        entity: media_player.spotify_melvin_campos_casares
+        album_cover_background: true
+      layout:
+        auto_padding:
+          enabled: true
+          desktop_px: 30
+          mobile_px: 10
+      styles: |
+        .navbar.mobile.bottom {
+          bottom: 5px;
+        }
 views:
   - title: Shortcuts
     path: shortcuts
@@ -66,8 +141,7 @@ views:
                   icon_shadow: true
               - type: custom:bubble-card
                 card_type: separator
-                name: Car
-                icon: phu:volvo
+                icon: mdi:car-electric
                 sub_button:
                   - entity: sensor.volvo_ex30my24_battery_charge_level
                     show_name: false
@@ -82,7 +156,9 @@ views:
                     name: EX30 - AC
                   - entity: lock.volvo_ex30my24_lock_status
                     name: EX30 - Lock state
-                styles: ''
+                    show_state: true
+                    show_icon: false
+                    show_name: false
                 card_layout: large
               - type: custom:bubble-card
                 card_type: separator
@@ -187,6 +263,10 @@ views:
                   opacity: 0.6
                 liquid_glass_light:
                   showBorder: false
+                styles: |-
+                  .bubble-button-card-container {
+                    background: RGBA(0, 0, 0, 0.2);
+                  }
               - type: horizontal-stack
                 cards:
                   - type: custom:bubble-card
@@ -218,6 +298,10 @@ views:
                     scrolling_effect: false
                     liquid_glass_light:
                       showBorder: true
+                    styles: |-
+                      .bubble-button-card-container {
+                        background: RGBA(0, 0, 0, 0.2);
+                      }
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -262,6 +346,10 @@ views:
                     scrolling_effect: false
                     liquid_glass_light:
                       showBorder: true
+                    styles: |-
+                      .bubble-button-card-container {
+                        background: RGBA(0, 0, 0, 0.2);
+                      }
               - type: custom:bubble-card
                 card_type: button
                 button_type: name
@@ -288,6 +376,10 @@ views:
                   border: bubble
                   icon_background: dark
                   opacity: 0.6
+                styles: |-
+                  .bubble-button-card-container {
+                    background: RGBA(0, 0, 0, 0.2);
+                  }
               - type: custom:bubble-card
                 card_type: button
                 button_type: name
@@ -307,17 +399,41 @@ views:
                     entity: sensor.a1_03919c452905439_temps_restant
                     show_state: true
                     icon: mdi:timelapse
+                    hide_when_parent_unavailable: false
+                    visibility:
+                      - condition: state
+                        entity: sensor.a1_03919c452905439_etat_de_l_impression
+                        state_not: offline
+                      - condition: state
+                        entity: sensor.a1_03919c452905439_etat_de_l_impression
+                        state_not: idle
                   - entity: light.chevet
                     icon: phu:bambulab-alt
                     tap_action:
                       action: toggle
-                styles: ''
+                styles: |-
+                  .bubble-button-card-container {
+                    background: RGBA(0, 0, 0, 0.2);
+                  }
                 modules:
                   - frosted_glass
+                  - icon_border_progress
                 frosted_glass:
                   icon_background: dark
                   border: bubble
                   opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
+                icon_border_progress:
+                  - button: sub-button-1
+                    source: sensor.a1_03919c452905439_progression_de_l_impression
+                    invert: false
+                    interpolate_colors: false
+                    condition:
+                      - condition: numeric_state
+                        entity_id: sensor.a1_03919c452905439_progression_de_l_impression
+                        below: 100
               - type: tile
                 entity: sensor.lave_vaisselle_remaining_program_time
                 features_position: bottom
@@ -331,6 +447,10 @@ views:
                     state_not: unavailable
                 icon_tap_action:
                   action: more-info
+      - type: grid
+        cards:
+          - type: custom:decluttering-card
+            template: home_navbar
       - type: grid
         cards:
           - type: vertical-stack
@@ -892,7 +1012,7 @@ views:
     max_columns: 1
     dense_section_placement: true
     background:
-      opacity: 33
+      opacity: 50
       alignment: center
       size: cover
       repeat: no-repeat
@@ -1079,9 +1199,12 @@ views:
                   action: toggle
                 hold_action:
                   action: more-info
-              - name: blank
+              - show_icon: true
                 state_background: false
                 show_background: false
+                show_name: false
+                show_state: false
+                name: blank
               - entity: light.friday
                 name: Floor lamp
                 icon: phu:ikea-paparlamp
@@ -1245,6 +1368,10 @@ views:
               - entity: sensor.r5_d4_temps_total_de_nettoyage
                 name: Total cleaning time
             state_color: true
+      - type: grid
+        cards:
+          - type: custom:decluttering-card
+            template: home_navbar
     path: home
     max_columns: 3
     dense_section_placement: false
@@ -1386,6 +1513,10 @@ views:
             state_color: true
             view_layout:
               position: sidebar
+      - type: grid
+        cards:
+          - type: custom:decluttering-card
+            template: home_navbar
     max_columns: 2
     header:
       layout: center
@@ -1684,6 +1815,10 @@ views:
                       - entity: number.volvo_ex30my24_update_interval
                         name: Update interval
                     title: Volvo to MQTT
+      - type: grid
+        cards:
+          - type: custom:decluttering-card
+            template: home_navbar
     max_columns: 3
     header:
       layout: center
@@ -1734,7 +1869,7 @@ views:
                 entity: sensor.system_monitor_temperature_cpu
                 show_state: true
                 scrolling_effect: true
-                show_icon: true
+                show_icon: false
                 show_name: true
                 show_attribute: false
                 show_last_updated: false
@@ -1757,7 +1892,7 @@ views:
                 entity: sensor.system_monitor_cpu_usage
                 show_state: true
                 scrolling_effect: true
-                show_icon: true
+                show_icon: false
                 show_name: true
                 show_attribute: false
                 show_last_updated: false
@@ -1773,13 +1908,14 @@ views:
                 button_action:
                   hold_action:
                     action: none
+                name: ''
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
                 entity: sensor.system_monitor_ram_usage
                 show_state: true
                 scrolling_effect: true
-                show_icon: true
+                show_icon: false
                 show_name: true
                 show_attribute: false
                 show_last_updated: false
@@ -1796,6 +1932,7 @@ views:
                 button_action:
                   hold_action:
                     action: none
+                name: ''
           - type: heading
             heading: Printer
             heading_style: title
@@ -2045,6 +2182,10 @@ views:
                 title: Home Assistant
                 state_color: false
                 show_header_toggle: true
+      - type: grid
+        cards:
+          - type: custom:decluttering-card
+            template: home_navbar
     max_columns: 3
     dense_section_placement: false
     header:
