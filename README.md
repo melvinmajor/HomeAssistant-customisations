@@ -6,6 +6,18 @@
 
 Just a bunch of info and YAML files related to my own Home Assistant installation.
 
+**Quick overview of how the dashboards looks like:**
+
+* Shortcut page and `menu` > `...` expanded (shown here on mobile):
+
+<img src="doc/shortcutView.jpg" width="250px"> <img src="doc/shortcutView_menuExpanded.jpg" width="250px">
+
+* Home, Kitchen, Car and IT pages (shown here on desktop/tablet):
+
+<img src="doc/homeViewDesktop.gif" width="650px">
+
+### Modules
+
 **Current HACS and Home Assistant modules installed:**
 
 | Module name                     | Active | HA Add-on | HACS Plugin |
