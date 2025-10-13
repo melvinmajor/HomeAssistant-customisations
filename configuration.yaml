@@ -1,7 +1,7 @@
 ## Home Assistant configuration.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 08/10/2025 (DD/MM/YYYY)
+# Last updated: 13/10/2025 (DD/MM/YYYY)
 
 # Loads default set of integrations. Do not remove.
 default_config:
@@ -45,20 +45,14 @@ template:
         attributes:
           modules: "{{ trigger.event.data.modules }}"
           last_updated: "{{ trigger.event.data.last_updated }}"
-    # Normal template sensors
+    # Update sensors
   - sensor:
-      - name: "Updates"
-        unit_of_measurement: "updates"
-        state: >
-          {{ expand('group.updates') | selectattr('state', 'eq', 'on') | list | count }}
-      - name: "Updates Label"
-        state: >
-          {% set updates = states('sensor.updates') | int(0) %}
-          {% if updates > 0 %}
-            Updates ({{ updates }} available)
-          {% else %}
-            No updates
-          {% endif %}
+    - name: "Updates"
+      unique_id: updates_count
+      icon: mdi:update
+      unit_of_measurement: "updates"
+      state: >
+        {{ expand(states.update) | selectattr('state', 'eq', 'on') | list | count }}
 
 
 # Raspberry Pi 4 localhost GPIO
@@ -81,12 +75,16 @@ binary_sensor:
 mqtt:
   sensor:
     - name: "PiSense Temperature"
+      unique_id: pisense_temperature
       state_topic: "home/pisense/bme680"
     - name: "PiSense Humidity"
+      unique_id: pisense_humidity
       state_topic: "home/pisense/bme680"
     - name: "PiSense Pressure"
+      unique_id: pisense_pressure
       state_topic: "home/pisense/bme680"
     - name: "PiSense Gas Resistance"
+      unique_id: pisense_gasresistance
       state_topic: "home/pisense/bme680"
 
 

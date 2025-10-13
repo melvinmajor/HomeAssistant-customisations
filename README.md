@@ -10,7 +10,7 @@ Just a bunch of info and YAML files related to my own Home Assistant installatio
 
 * Shortcut page and `menu` > `...` expanded (shown here on mobile):
 
-<img src="doc/shortcutView.jpg" width="250px"> <img src="doc/shortcutView_menuExpanded.jpg" width="250px">
+<img src="doc/shortcutView.gif" width="300px">
 
 * Home, Kitchen, Car and IT pages (shown here on desktop/tablet):
 
