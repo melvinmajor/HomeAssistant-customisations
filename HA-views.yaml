@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 08/10/2025 (DD/MM/YYYY)
+# Last updated: 19/11/2025 (DD/MM/YYYY)
 
 decluttering_templates:
   home_navbar:
@@ -434,19 +434,56 @@ views:
                       - condition: numeric_state
                         entity_id: sensor.a1_03919c452905439_progression_de_l_impression
                         below: 100
-              - type: tile
-                entity: sensor.lave_vaisselle_remaining_program_time
-                features_position: bottom
-                vertical: false
+          - type: vertical-stack
+            cards:
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
                 name: Dishwasher ends
                 icon: mdi:dishwasher
-                state_content: state
+                card_layout: large
+                sub_button:
+                  - name: Progress
+                    entity: sensor.lave_vaisselle_program_progress
+                    show_state: true
+                    icon: mdi:timelapse
+                    visibility: []
+                    show_background: false
+                styles: |-
+                  .bubble-button-card-container {
+                    background: RGBA(0, 0, 0, 0.2);
+                  }
+                modules:
+                  - frosted_glass
+                  - icon_border_progress
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
+                icon_border_progress:
+                  - button: sub-button-1
+                    source: sensor.lave_vaisselle_program_progress
+                    invert: false
+                    interpolate_colors: false
+                    condition:
+                      - condition: numeric_state
+                        entity_id: sensor.lave_vaisselle_program_progress
+                        below: 100
+                entity: sensor.lave_vaisselle_remaining_program_time
                 visibility:
                   - condition: state
                     entity: sensor.lave_vaisselle_remaining_program_time
                     state_not: unavailable
-                icon_tap_action:
-                  action: more-info
+                button_action:
+                  hold_action:
+                    action: none
+            visibility:
+              - condition: state
+                entity: sensor.lave_vaisselle_remaining_program_time
+                state_not: unavailable
       - type: grid
         cards:
           - type: custom:decluttering-card

@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 08/10/2025 (DD/MM/YYYY)
+# Last updated: 19/11/2025 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -387,15 +387,24 @@
     trigger: device
   conditions: []
   actions:
-  - action: input_boolean.turn_on
-    metadata: {}
-    data: {}
-    target:
-      entity_id: input_boolean.cat_night_override
-  - type: turn_off
-    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
-    entity_id: 233951028fd7fcb570a5c2e3d6fce425
-    domain: light
+  - if:
+    - condition: device
+      type: is_off
+      device_id: 6f0852884dafbe9f1ada05edf3b08223
+      entity_id: 953bd8165b2a49b3297222f615420b83
+      domain: light
+    then:
+    - action: light.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: light.hue_filament_bulb_1
+    else:
+    - action: light.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: light.hue_filament_bulb_1
   mode: single
 - id: '1742765822605'
   alias: Smart Button bedroom long press
@@ -409,11 +418,26 @@
     trigger: device
   conditions: []
   actions:
-  - action: input_boolean.turn_off
-    metadata: {}
-    data: {}
-    target:
+  - if:
+    - condition: state
       entity_id: input_boolean.cat_night_override
+      state: 'off'
+    then:
+    - action: input_boolean.toggle
+      metadata: {}
+      data: {}
+      target:
+        entity_id: input_boolean.cat_night_override
+    - type: turn_off
+      device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
+      entity_id: 233951028fd7fcb570a5c2e3d6fce425
+      domain: light
+    else:
+    - action: input_boolean.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: input_boolean.cat_night_override
   mode: single
 - id: '1744552564977'
   alias: Turn on TV scene
