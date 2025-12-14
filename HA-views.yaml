@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 19/11/2025 (DD/MM/YYYY)
+# Last updated: 14/12/2025 (DD/MM/YYYY)
 
 decluttering_templates:
   home_navbar:
@@ -143,22 +143,24 @@ views:
                 card_type: separator
                 icon: mdi:car-electric
                 sub_button:
-                  - entity: sensor.volvo_ex30my24_battery_charge_level
+                  - entity: sensor.volvo_ex30_batterie
                     show_name: false
                     show_state: true
                     show_background: false
                     name: EX30 - battery level
                     tap_action:
                       action: none
-                  - entity: switch.volvo_ex30my24_climate_status
+                  - entity: button.volvo_ex30_start_climatization
                     show_name: false
                     show_state: false
-                    name: EX30 - AC
-                  - entity: lock.volvo_ex30my24_lock_status
-                    name: EX30 - Lock state
-                    show_state: true
-                    show_icon: false
+                    name: EX30 - AC On
+                    icon: mdi:air-conditioner
+                  - entity: button.volvo_ex30_stop_climatization
+                    name: EX30 - AC Off
+                    show_state: false
+                    show_icon: true
                     show_name: false
+                    icon: mdi:fan-off
                 card_layout: large
               - type: custom:bubble-card
                 card_type: separator
@@ -1038,9 +1040,144 @@ views:
                 printer: 3c9267e47d7aa4e0fc877665539ca33e
                 custom_power: light.chevet
                 style: simple
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: switch
+                    entity: sensor.a1_03919c452905439_etape_actuelle
+                    show_state: true
+                    force_icon: false
+                    show_icon: true
+                    name: Stage
+                    icon: mdi:printer-3d
+                    button_action:
+                      tap_action:
+                        action: more-info
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                      - icon_color
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      main_shadow: false
+                      icon_shadow: false
+                      sub_shadow: false
+                      opacity: 0.6
+                    icon_color:
+                      use_hex: true
+                      color_hex: '#FFD700'
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: switch
+                    entity: sensor.a1_03919c452905439_progression_de_l_impression
+                    show_state: true
+                    force_icon: false
+                    show_icon: true
+                    name: Progress
+                    icon: mdi:progress-star-four-points
+                    button_action:
+                      tap_action:
+                        action: more-info
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                      - icon_border_progress
+                      - icon_color
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    card_layout: large
+                    icon_border_progress:
+                      - button: main
+                        source: sensor.a1_03919c452905439_progression_de_l_impression
+                        interpolate_colors: false
+                    icon_color:
+                      use_hex: true
+                      color_hex: '#1E90FF'
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: switch
+                    entity: binary_sensor.a1_03919c452905439_etat
+                    show_state: true
+                    force_icon: false
+                    show_icon: true
+                    name: Status
+                    icon: mdi:cog
+                    button_action:
+                      tap_action:
+                        action: more-info
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                      - icon_color
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    icon_color:
+                      use_hex: true
+                      color_hex: '#69BE28'
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: switch
+                    entity: sensor.a1_03919c452905439_temps_restant
+                    show_state: true
+                    force_icon: false
+                    show_icon: true
+                    name: Time left
+                    icon: mdi:timer-sand
+                    button_action:
+                      tap_action:
+                        action: more-info
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                      - icon_color
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    icon_color:
+                      use_hex: true
+                      color_hex: '#1E90FF'
+              - type: custom:bubble-card
+                card_type: button
+                button_type: switch
+                entity: binary_sensor.a1_03919c452905439_erreurs_hms
+                show_state: true
+                force_icon: false
+                show_icon: true
+                color_type: icon
+                name: HMS Errors
+                icon: mdi:information-outline
+                button_action:
+                  tap_action:
+                    action: more-info
+                  hold_action:
+                    action: none
+                modules:
+                  - frosted_glass
+                  - icon_color
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                icon_color:
+                  use_hex: true
+                  color_hex: '#FF4500'
               - show_state: true
                 show_name: true
                 camera_view: auto
+                fit_mode: cover
                 type: picture-entity
                 entity: camera.a1_03919c452905439_camera
                 name: Bambu Lab A1
@@ -1568,34 +1705,48 @@ views:
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.volvo_ex30my24_charging_connection_status
-        color: ''
+        entity: sensor.volvo_ex30_charging_connection_status
         name: Charging status
         visibility:
           - condition: state
-            entity: sensor.volvo_ex30my24_charging_connection_status
-            state_not: Disconnected
+            entity: sensor.volvo_ex30_charging_connection_status
+            state_not: disconnected
+        icon: mdi:ev-plug-ccs2
+        show_entity_picture: false
+        color: orange
       - type: entity
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.volvo_ex30my24_charging_system_status
-        color: ''
+        entity: sensor.volvo_ex30_charging_status
         name: Charging system status
         visibility:
           - condition: state
-            entity: sensor.volvo_ex30my24_charging_system_status
-            state_not: Idle
+            entity: sensor.volvo_ex30_charging_status
+            state_not: idle
+        color: orange
       - type: entity
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.volvo_ex30my24_estimated_charging_finish_time
-        name: 'Charge end estimation '
+        entity: sensor.volvo_ex30_estimated_charging_time
         visibility:
           - condition: state
-            entity: sensor.volvo_ex30my24_charging_system_status
-            state_not: Idle
+            entity: sensor.volvo_ex30_estimated_charging_time
+            state_not: '1'
+        name: Estimated charging time
+        color: orange
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.volvo_ex30_charging_power
+        visibility:
+          - condition: state
+            entity: sensor.volvo_ex30_charging_power
+            state_not: '0'
+        name: Power
+        color: orange
     type: sections
     sections:
       - type: grid
@@ -1605,12 +1756,13 @@ views:
             name: Car info
             icon: phu:volvo
             sub_button:
-              - entity: sensor.volvo_ex30my24_electric_range
+              - entity: sensor.volvo_ex30_distance_to_empty_battery
                 show_state: true
                 state_background: false
                 name: Estimated range
                 tap_action:
                   action: none
+                icon: mdi:map-marker-distance
             modules:
               - frosted_glass
             frosted_glass:
@@ -1622,8 +1774,7 @@ views:
               - type: horizontal-stack
                 cards:
                   - type: gauge
-                    entity: sensor.volvo_ex30my24_battery_charge_level
-                    name: Battery level
+                    entity: sensor.volvo_ex30_batterie
                     unit: '%'
                     min: 0
                     max: 100
@@ -1632,29 +1783,54 @@ views:
                       green: 40
                       yellow: 20
                       red: 0
+                    name: Battery
                   - show_name: false
                     show_icon: true
                     type: button
                     tap_action:
                       action: toggle
-                    entity: switch.volvo_ex30my24_climate_status
-                    show_state: true
-                    name: EX30 - AC
+                    entity: button.volvo_ex30_flash
+                    show_state: false
                     icon_height: 48px
+                    icon: phu:tesla-flash
+                    name: Flash
                   - show_name: false
                     show_icon: true
                     type: button
                     tap_action:
                       action: toggle
-                    entity: lock.volvo_ex30my24_lock_status
+                    entity: button.volvo_ex30_honk_flash
                     icon_height: 48px
-                    name: EX30 - Lock state
-                    show_state: true
+                    name: Honk & Flash
+                    show_state: false
+                    icon: phu:tesla-horn
+                  - type: vertical-stack
+                    cards:
+                      - show_name: false
+                        show_icon: true
+                        type: button
+                        tap_action:
+                          action: toggle
+                        entity: button.volvo_ex30_start_climatization
+                        icon_height: 36px
+                        name: AC On
+                        show_state: false
+                        icon: mdi:air-conditioner
+                      - show_name: false
+                        show_icon: true
+                        type: button
+                        tap_action:
+                          action: toggle
+                        entity: button.volvo_ex30_stop_climatization
+                        icon_height: 36px
+                        name: AC Off
+                        show_state: false
+                        icon: mdi:fan-off
               - type: vertical-stack
                 cards:
                   - type: map
                     entities:
-                      - entity: device_tracker.volvo_ex30my24_location
+                      - entity: device_tracker.volvo_ex30_location
                         name: EX30
                     theme_mode: auto
                     default_zoom: 17
@@ -1669,12 +1845,16 @@ views:
         cards:
           - type: vertical-stack
             cards:
+              - type: heading
+                icon: mdi:car-info
+                heading_style: title
+                heading: Car info
               - type: horizontal-stack
                 cards:
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
-                    entity: sensor.volvo_ex30my24_odometer
+                    entity: sensor.volvo_ex30_odometer
                     name: Odometer
                     tap_action:
                       action: none
@@ -1685,16 +1865,22 @@ views:
                         action: none
                     modules:
                       - frosted_glass
+                      - icon_color
                     frosted_glass:
                       icon_background: dark
                       border: bubble
                       opacity: 0.6
                     card_layout: normal
                     scrolling_effect: false
+                    icon: mdi:counter
+                    icon_color:
+                      use_hex: true
+                      color_hex: '#FFAA00'
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
-                    entity: sensor.volvo_ex30my24_average_energy_consumption
+                    entity: >-
+                      sensor.volvo_ex30_trip_automatic_average_energy_consumption
                     name: Avg. consumption
                     tap_action:
                       action: none
@@ -1705,31 +1891,42 @@ views:
                         action: none
                     modules:
                       - frosted_glass
+                      - icon_color
                     frosted_glass:
                       icon_background: dark
                       border: bubble
                       opacity: 0.6
                     card_layout: normal
-                    scrolling_effect: false
+                    scrolling_effect: true
+                    show_icon: true
+                    icon: mdi:car-electric
+                    icon_color:
+                      color_hex: '#FFAA00'
+                      use_hex: true
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
-                entity: sensor.volvo_ex30my24_service_warning_status
+                entity: sensor.volvo_ex30_service
                 name: Service warning status
                 button_action: {}
                 modules:
                   - frosted_glass
+                  - icon_color
                 frosted_glass:
                   icon_background: dark
                   border: bubble
                   opacity: 0.6
                 card_layout: normal
+                icon: mdi:car-wrench
+                icon_color:
+                  use_hex: true
+                  color_hex: '#FFAA00'
               - type: horizontal-stack
                 cards:
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
-                    entity: sensor.volvo_ex30my24_time_to_service
+                    entity: sensor.volvo_ex30_time_to_service
                     name: Time to Srv
                     tap_action:
                       action: none
@@ -1740,15 +1937,20 @@ views:
                         action: none
                     modules:
                       - frosted_glass
+                      - icon_color
                     frosted_glass:
                       icon_background: dark
                       border: bubble
                       opacity: 0.6
                     card_layout: normal
+                    icon: mdi:wrench-clock
+                    icon_color:
+                      color_hex: '#FFAA00'
+                      use_hex: true
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
-                    entity: sensor.volvo_ex30my24_km_to_service
+                    entity: sensor.volvo_ex30_distance_to_service
                     name: Distance to Srv
                     tap_action:
                       action: none
@@ -1759,25 +1961,74 @@ views:
                         action: none
                     modules:
                       - frosted_glass
+                      - icon_color
                     frosted_glass:
                       icon_background: dark
                       border: bubble
                       opacity: 0.6
                     card_layout: normal
-      - type: grid
-        cards:
-          - type: heading
-            heading: Status and MQTT
-            heading_style: title
-            icon: mdi:list-status
-          - type: vertical-stack
-            cards:
+                    icon: mdi:wrench-clock
+                    icon_color:
+                      color_hex: '#FFAA00'
+                      use_hex: true
+              - type: heading
+                icon: mdi:car-connected
+                heading_style: subtitle
+                heading: Car details
               - type: horizontal-stack
                 cards:
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
-                    entity: sensor.volvo_ex30my24_tyre_front_left
+                    entity: binary_sensor.volvo_ex30_washer_fluid
+                    name: Washer fluid
+                    icon: mdi:wiper-wash
+                    button_action:
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                      - icon_color
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    card_layout: normal
+                    icon_color:
+                      color_hex: '#FFAA00'
+                      use_hex: true
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: binary_sensor.volvo_ex30_brake_fluid
+                    name: Brake fluid
+                    icon: mdi:car-brake-fluid-level
+                    button_action:
+                      hold_action:
+                        action: none
+                    modules:
+                      - frosted_glass
+                      - icon_color
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    card_layout: normal
+                    icon_color:
+                      use_hex: true
+                      color_hex: '#FFAA00'
+          - type: vertical-stack
+            cards:
+              - type: heading
+                icon: mdi:tire
+                heading_style: subtitle
+                heading: Tires
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: binary_sensor.volvo_ex30_tire_front_left
                     name: Front left
                     button_action:
                       hold_action:
@@ -1785,78 +2036,82 @@ views:
                     card_layout: normal
                     modules:
                       - frosted_glass
+                      - icon_color
                     frosted_glass:
                       icon_background: dark
                       border: bubble
                       opacity: 0.6
+                    icon: mdi:car-tire-alert
+                    icon_color:
+                      use_hex: true
+                      color_hex: '#FFAA00'
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
-                    entity: sensor.volvo_ex30my24_tyre_front_right
+                    entity: binary_sensor.volvo_ex30_tire_front_right
                     name: Front right
                     button_action:
                       hold_action:
                         action: none
                     modules:
                       - frosted_glass
+                      - icon_color
                     frosted_glass:
                       icon_background: dark
                       border: bubble
                       opacity: 0.6
                     card_layout: normal
+                    icon: mdi:car-tire-alert
+                    icon_color:
+                      color_hex: '#FFAA00'
+                      use_hex: true
               - type: horizontal-stack
                 cards:
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
-                    entity: sensor.volvo_ex30my24_tyre_rear_left
+                    entity: binary_sensor.volvo_ex30_tire_rear_left
                     name: Rear left
                     button_action:
                       hold_action:
                         action: none
                     modules:
                       - frosted_glass
+                      - icon_color
                     frosted_glass:
                       icon_background: dark
                       border: bubble
                       opacity: 0.6
                     card_layout: normal
+                    icon: mdi:car-tire-alert
+                    icon_color:
+                      use_hex: true
+                      color_hex: '#FFAA00'
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
-                    entity: sensor.volvo_ex30my24_tyre_rear_right
+                    entity: binary_sensor.volvo_ex30_tire_rear_right
                     name: Rear right
                     button_action:
                       hold_action:
                         action: none
                     modules:
                       - frosted_glass
+                      - icon_color
                     frosted_glass:
                       icon_background: dark
                       border: bubble
                       opacity: 0.6
                     card_layout: normal
-              - type: vertical-stack
-                cards:
-                  - type: entities
-                    entities:
-                      - entity: text.volvo_otp
-                      - entity: sensor.volvo_ex30my24_api_backend_status
-                        name: API Backend status
-                      - entity: sensor.volvo_ex30my24_last_data_update
-                        name: Last data update
-                        icon: mdi:calendar
-                      - entity: button.volvo_ex30my24_update_data
-                        secondary_info: none
-                        name: Force update data
-                      - entity: number.volvo_ex30my24_update_interval
-                        name: Update interval
-                    title: Volvo to MQTT
+                    icon: mdi:car-tire-alert
+                    icon_color:
+                      color_hex: '#FFAA00'
+                      use_hex: true
       - type: grid
         cards:
           - type: custom:decluttering-card
             template: home_navbar
-    max_columns: 3
+    max_columns: 2
     header:
       layout: center
       badges_position: bottom

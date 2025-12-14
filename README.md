@@ -32,8 +32,10 @@ Just a bunch of info and YAML files related to my own Home Assistant installatio
 | Piper                           | Yes    | x         |             |
 | Samba share                     | Yes    | x         |             |
 | Speech-to-Phrase                | Yes    | x         |             |
+| System Monitor                  | Yes    | x         |             |
 | Terminal & SSH                  | **No** | x         |             |
-| Volvo2Mqtt                      | Yes    | x         |             |
+| Volvo                           | Yes    | x         |             |
+| Volvo2Mqtt                      | **No** | x         |             |
 | Alexa Media Player              | Yes    |           | x           |
 | Bambu Lab                       | Yes    |           | x           |
 | Big Slider Card                 | Yes    |           | x           |
@@ -61,6 +63,7 @@ Submodules have been installed to further enhance the _bubble card_ module:
 * [Frosted Glass](https://github.com/Clooos/Bubble-Card/discussions/1672)
 * [Room Card](https://github.com/Clooos/Bubble-Card/discussions/1700)
 * [Icon Border Progress](https://github.com/Clooos/Bubble-Card/discussions/1525)
+* [Customize the icon color (by Dimi27)](https://github.com/Clooos/Bubble-Card/discussions/1514)
 
 **Add-on repositories:**
 
