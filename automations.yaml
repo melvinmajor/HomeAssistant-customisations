@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 19/11/2025 (DD/MM/YYYY)
+# Last updated: 24/12/2025 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -299,10 +299,9 @@
   triggers:
   - device_id: 0bff05a6fed12c3d9c54d2a63eb3f9f0
     domain: hue
-    type: initial_press
+    type: short_release
     subtype: 1
     unique_id: 53a34185-8e07-4623-ae2c-b5c16b4d1372
-    metadata: {}
     trigger: device
   conditions: []
   actions:
@@ -338,7 +337,7 @@
   triggers:
   - device_id: 4bb9d02b853f1661bcee1f1b2abb6b4c
     domain: hue
-    type: long_press
+    type: long_release
     subtype: 1
     unique_id: 6dd0ada0-2691-4d96-89cb-310614912f35
     trigger: device
@@ -355,7 +354,7 @@
   triggers:
   - device_id: 0bff05a6fed12c3d9c54d2a63eb3f9f0
     domain: hue
-    type: long_press
+    type: long_release
     subtype: 1
     unique_id: 53a34185-8e07-4623-ae2c-b5c16b4d1372
     trigger: device
@@ -381,7 +380,7 @@
   triggers:
   - device_id: 2c9ac640dc4f7ed7f33bc50865f2c438
     domain: hue
-    type: initial_press
+    type: short_release
     subtype: 1
     unique_id: 4f6cf236-e21e-4eb3-bc78-80e0d2d3f116
     trigger: device
