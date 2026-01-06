@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 14/12/2025 (DD/MM/YYYY)
+# Last updated: 06/01/2026 (DD/MM/YYYY)
 
 decluttering_templates:
   home_navbar:
@@ -72,8 +72,8 @@ decluttering_templates:
       layout:
         auto_padding:
           enabled: true
-          desktop_px: 30
-          mobile_px: 10
+          desktop_px: 100
+          mobile_px: 60
       styles: |
         .navbar.mobile.bottom {
           bottom: 5px;
@@ -239,6 +239,51 @@ views:
                   main_shadow: false
                   icon_shadow: false
                   opacity: 0.6
+              - type: custom:mushroom-template-card
+                primary: |
+                  {{ states('sensor.air_quality_summary') }}
+                secondary: >
+                  CO₂ {{
+                  states('sensor.healthy_home_coach_carbon_dioxide_sensor') }}
+                  ppm · {{ states('sensor.healthy_home_coach_noise') }} dB · AQI
+                  {{ states('sensor.healthy_home_coach_air_quality') }}
+                icon: |
+                  {{ state_attr('sensor.air_quality_summary', 'icon') }}
+                multiline_secondary: true
+                vertical: true
+                features_position: bottom
+                grid_options:
+                  columns: full
+                card_mod:
+                  style: >
+                    {% set co2 =
+                    states('sensor.healthy_home_coach_carbon_dioxide_sensor') |
+                    int(0) %}
+
+                    ha-card {
+                      border-radius: 14px;
+                      padding: 12px;
+                      color: white;
+                      --icon-color: white;
+                      transition: all 0.4s ease;
+                    }
+
+                    /* Dynamic colors */ ha-card {
+                      {% if co2 < 800 %}
+                        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                      {% elif co2 < 1200 %}
+                        background: linear-gradient(135deg, #FF9800, #EF6C00);
+                      {% else %}
+                        background: linear-gradient(135deg, #F44336, #C62828);
+                        animation: pulse 2.2s ease-in-out infinite;
+                      {% endif %}
+                    }
+
+                    /* Animation */ @keyframes pulse {
+                      0%   { transform: scale(1); opacity: 1; }
+                      50%  { transform: scale(1.015); opacity: 0.92; }
+                      100% { transform: scale(1); opacity: 1; }
+                    }
               - type: custom:bubble-card
                 card_type: button
                 button_type: switch
@@ -532,6 +577,51 @@ views:
                     opacity: 1;
                   }
                 name: ''
+              - type: custom:mushroom-template-card
+                primary: |
+                  {{ states('sensor.air_quality_summary') }}
+                secondary: >
+                  CO₂ {{
+                  states('sensor.healthy_home_coach_carbon_dioxide_sensor') }}
+                  ppm · {{ states('sensor.healthy_home_coach_noise') }} dB · AQI
+                  {{ states('sensor.healthy_home_coach_air_quality') }}
+                icon: |
+                  {{ state_attr('sensor.air_quality_summary', 'icon') }}
+                multiline_secondary: true
+                vertical: true
+                features_position: bottom
+                grid_options:
+                  columns: full
+                card_mod:
+                  style: >
+                    {% set co2 =
+                    states('sensor.healthy_home_coach_carbon_dioxide_sensor') |
+                    int(0) %}
+
+                    ha-card {
+                      border-radius: 14px;
+                      padding: 12px;
+                      color: white;
+                      --icon-color: white;
+                      transition: all 0.4s ease;
+                    }
+
+                    /* Dynamic colors */ ha-card {
+                      {% if co2 < 800 %}
+                        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                      {% elif co2 < 1200 %}
+                        background: linear-gradient(135deg, #FF9800, #EF6C00);
+                      {% else %}
+                        background: linear-gradient(135deg, #F44336, #C62828);
+                        animation: pulse 2.2s ease-in-out infinite;
+                      {% endif %}
+                    }
+
+                    /* Animation */ @keyframes pulse {
+                      0%   { transform: scale(1); opacity: 1; }
+                      50%  { transform: scale(1.015); opacity: 0.92; }
+                      100% { transform: scale(1); opacity: 1; }
+                    }
               - type: custom:bubble-card
                 card_type: media-player
                 entity: media_player.hk_citation_one
@@ -1223,81 +1313,6 @@ views:
       - type: grid
         cards:
           - type: custom:bubble-card
-            card_type: calendar
-            event_action:
-              tap_action:
-                action: more-info
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            entities:
-              - entity: calendar.21_rue_du_hainaut_1420_braine_l_alleud
-                color: primary
-            show_end: false
-            show_progress: true
-            show_place: false
-            sub_button: []
-            card_layout: large
-            modules:
-              - frosted_glass
-            frosted_glass:
-              icon_background: dark
-              border: bubble
-              opacity: 0.6
-              main_shadow: false
-              icon_shadow: false
-            grid_options:
-              columns: 12
-              rows: 2
-          - type: custom:weather-chart-card
-            entity: weather.forecast_maison
-            show_main: true
-            show_temperature: true
-            show_current_condition: true
-            show_attributes: true
-            show_time: true
-            show_time_seconds: false
-            show_day: true
-            show_date: true
-            show_humidity: true
-            show_pressure: true
-            show_wind_direction: true
-            show_wind_speed: true
-            show_sun: true
-            show_feels_like: false
-            show_dew_point: false
-            show_wind_gust_speed: false
-            show_visibility: false
-            show_last_changed: true
-            use_12hour_format: false
-            icons_size: 25
-            animated_icons: true
-            icon_style: style1
-            autoscroll: false
-            forecast:
-              precipitation_type: rainfall
-              show_probability: true
-              labels_font_size: '11'
-              precip_bar_size: '100'
-              style: style2
-              show_wind_forecast: true
-              condition_icons: true
-              round_temp: false
-              type: daily
-              number_of_forecasts: '0'
-              disable_animation: false
-            units:
-              pressure: hPa
-              speed: km/h
-          - show_current: false
-            show_forecast: true
-            type: weather-forecast
-            entity: weather.forecast_maison
-            forecast_type: hourly
-      - type: grid
-        cards:
-          - type: custom:bubble-card
             card_type: button
             button_type: name
             modules:
@@ -1508,6 +1523,177 @@ views:
               .bubble-sub-button-icon {
                 --mdc-icon-size: inherit !important;
               }
+      - type: grid
+        cards:
+          - type: custom:bubble-card
+            card_type: calendar
+            event_action:
+              tap_action:
+                action: more-info
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            entities:
+              - entity: calendar.21_rue_du_hainaut_1420_braine_l_alleud
+                color: primary
+            show_end: false
+            show_progress: true
+            show_place: false
+            sub_button: []
+            card_layout: large
+            modules:
+              - frosted_glass
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+              main_shadow: false
+              icon_shadow: false
+            grid_options:
+              columns: 12
+              rows: 2
+          - type: custom:weather-chart-card
+            entity: weather.forecast_maison
+            show_main: true
+            show_temperature: true
+            show_current_condition: true
+            show_attributes: true
+            show_time: true
+            show_time_seconds: false
+            show_day: true
+            show_date: true
+            show_humidity: true
+            show_pressure: true
+            show_wind_direction: true
+            show_wind_speed: true
+            show_sun: true
+            show_feels_like: false
+            show_dew_point: false
+            show_wind_gust_speed: false
+            show_visibility: false
+            show_last_changed: true
+            use_12hour_format: false
+            icons_size: 25
+            animated_icons: true
+            icon_style: style1
+            autoscroll: false
+            forecast:
+              precipitation_type: rainfall
+              show_probability: true
+              labels_font_size: '11'
+              precip_bar_size: '100'
+              style: style2
+              show_wind_forecast: true
+              condition_icons: true
+              round_temp: false
+              type: daily
+              number_of_forecasts: '0'
+              disable_animation: false
+            units:
+              pressure: hPa
+              speed: km/h
+          - show_current: false
+            show_forecast: true
+            type: weather-forecast
+            entity: weather.forecast_maison
+            forecast_type: hourly
+          - type: custom:mushroom-template-card
+            primary: |
+              {{ states('sensor.air_quality_summary') }}
+            secondary: >
+              CO₂ {{ states('sensor.healthy_home_coach_carbon_dioxide_sensor')
+              }} ppm · {{ states('sensor.healthy_home_coach_noise') }} dB · AQI
+              {{ states('sensor.healthy_home_coach_air_quality') }}
+            icon: |
+              {{ state_attr('sensor.air_quality_summary', 'icon') }}
+            tap_action:
+              action: more-info
+            multiline_secondary: true
+            vertical: true
+            features_position: bottom
+            card_mod:
+              style: >
+                {% set co2 =
+                states('sensor.healthy_home_coach_carbon_dioxide_sensor') |
+                int(0) %}
+
+                ha-card {
+                  border-radius: 14px;
+                  padding: 12px;
+                  color: white;
+                  --icon-color: white;
+                  transition: all 0.4s ease;
+                }
+
+                /* Dynamic colors */ ha-card {
+                  {% if co2 < 800 %}
+                    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                  {% elif co2 < 1200 %}
+                    background: linear-gradient(135deg, #FF9800, #EF6C00);
+                  {% else %}
+                    background: linear-gradient(135deg, #F44336, #C62828);
+                    animation: pulse 2.2s ease-in-out infinite;
+                  {% endif %}
+                }
+
+                /* Animation */ @keyframes pulse {
+                  0%   { transform: scale(1); opacity: 1; }
+                  50%  { transform: scale(1.015); opacity: 0.92; }
+                  100% { transform: scale(1); opacity: 1; }
+                }
+          - type: custom:mushroom-template-card
+            primary: |
+              {{ states('sensor.aqi_summary') }}
+            secondary: |
+              AQI : {{ states('sensor.healthy_home_coach_air_quality') }}
+            icon: |
+              {{ state_attr('sensor.aqi_summary', 'icon') }}
+            tap_action:
+              action: more-info
+            vertical: true
+            features_position: bottom
+            multiline_secondary: true
+            card_mod:
+              style: >
+                {% set aqi = states('sensor.healthy_home_coach_air_quality') |
+                int(0) %}
+
+
+                ha-card {
+                  border-radius: 14px;
+                  padding: 12px;
+                  color: white;
+                  --icon-color: white;
+                  transition: all 0.4s ease;
+                }
+
+
+                /* Dynamic colors */
+
+                ha-card {
+                  {% if aqi <= 2 %}
+                    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                  {% elif aqi == 3 %}
+                    background: linear-gradient(135deg, #8BC34A, #558B2F);
+                  {% elif aqi == 4 %}
+                    background: linear-gradient(135deg, #FF9800, #EF6C00);
+                  {% elif aqi == 5 %}
+                    background: linear-gradient(135deg, #F44336, #C62828);
+                  {% else %}
+                    background: linear-gradient(135deg, #6A1B9A, #4A148C);
+                    animation: pulse 2.2s ease-in-out infinite;
+                  {% endif %}
+                }
+
+
+                /* Animation */
+
+                @keyframes pulse {
+                  0%   { transform: scale(1); opacity: 1; }
+                  50%  { transform: scale(1.015); opacity: 0.92; }
+                  100% { transform: scale(1); opacity: 1; }
+                }
       - type: grid
         cards:
           - show_state: true
