@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 24/12/2025 (DD/MM/YYYY)
+# Last updated: 29/01/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -711,4 +711,120 @@
     device_id: f50b6d4492615b4a4264f537bec680ca
     entity_id: 3385be7839c6553d2cff2620c7bb80d9
     domain: light
+  mode: single
+- id: '1769681478513'
+  alias: Put the trash out - Reminder 1
+  description: ''
+  triggers:
+  - trigger: time
+    at: '20:00:00'
+    enabled: true
+  conditions:
+  - condition: template
+    value_template: "{{\n    states('sensor.paper_cardboard') == now().date().isoformat()\n
+      \   or states('sensor.pmd') == now().date().isoformat()\n    or states('sensor.residual_household_waste')
+      == now().date().isoformat()\n}}"
+    enabled: true
+  actions:
+  - action: media_player.play_media
+    metadata: {}
+    target:
+      device_id: 2f63efcfe824bf68a927171be0f7389b
+    data:
+      media:
+        media_content_id: media-source://media_source/local/homepod_notification.mp3
+        media_content_type: audio/mpeg
+        metadata:
+          title: homepod_notification.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+          browse_entity_id: media_player.hk_citation_one
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - action: media_player.play_media
+    metadata: {}
+    target:
+      device_id: 2f63efcfe824bf68a927171be0f7389b
+    data:
+      media:
+        media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Poubelle-Rappel1.mp3
+        media_content_type: audio/mpeg
+        metadata:
+          title: Siwis-FR-Poubelle-Rappel1.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+          - media_content_type: ''
+            media_content_id: media-source://media_source/local/TTS-saved-renders
+          browse_entity_id: media_player.hk_citation_one
+  mode: single
+- id: '1769681600513'
+  alias: Put the trash out - Reminder 2
+  description: ''
+  triggers:
+  - trigger: time
+    at: '22:00:00'
+    enabled: true
+  conditions:
+  - condition: template
+    value_template: "{{\n    states('sensor.paper_cardboard') == now().date().isoformat()\n
+      \   or states('sensor.pmd') == now().date().isoformat()\n    or states('sensor.residual_household_waste')
+      == now().date().isoformat()\n}}"
+    enabled: true
+  actions:
+  - action: media_player.play_media
+    metadata: {}
+    target:
+      device_id: 2f63efcfe824bf68a927171be0f7389b
+    data:
+      media:
+        media_content_id: media-source://media_source/local/homepod_notification.mp3
+        media_content_type: audio/mpeg
+        metadata:
+          title: homepod_notification.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+          browse_entity_id: media_player.hk_citation_one
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - action: media_player.play_media
+    metadata: {}
+    target:
+      device_id: 2f63efcfe824bf68a927171be0f7389b
+    data:
+      media:
+        media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Poubelle-Rappel2.mp3
+        media_content_type: audio/mpeg
+        metadata:
+          title: Siwis-FR-Poubelle-Rappel2.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+          - media_content_type: ''
+            media_content_id: media-source://media_source/local/TTS-saved-renders
+          browse_entity_id: media_player.hk_citation_one
   mode: single
