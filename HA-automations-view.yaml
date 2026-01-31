@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 29/01/2026 (DD/MM/YYYY)
+# Last updated: 31/01/2026 (DD/MM/YYYY)
 
 views:
   - title: Automations
@@ -131,7 +131,7 @@ views:
       - type: grid
         cards:
           - type: heading
-            heading: Smart buttons automations
+            heading: Smart buttons and switch automations
             heading_style: title
             icon: phu:button
           - type: custom:bubble-card
@@ -177,7 +177,7 @@ views:
           - type: custom:bubble-card
             card_type: button
             button_type: state
-            entity: automation.smart_button_bedroom_short_press
+            entity: automation.dimmer_switch_bedroom_on_off
             double_tap_action:
               action: none
             hold_action:
@@ -187,10 +187,13 @@ views:
                 action: none
               hold_action:
                 action: none
+            sub_button:
+              main: []
+              bottom: []
           - type: custom:bubble-card
             card_type: button
             button_type: state
-            entity: automation.smart_button_bedroom_long_press
+            entity: automation.dimmer_switch_bedroom_increase_brightness
             double_tap_action:
               action: none
             hold_action:
@@ -200,14 +203,13 @@ views:
                 action: none
               hold_action:
                 action: none
-          - type: heading
-            heading: Tags automation
-            heading_style: title
-            icon: mdi:nfc-tap
+            sub_button:
+              main: []
+              bottom: []
           - type: custom:bubble-card
             card_type: button
             button_type: state
-            entity: automation.tag_white_circle_is_scanned
+            entity: automation.dimmer_switch_bedroom_decrease_brightness
             double_tap_action:
               action: none
             hold_action:
@@ -217,7 +219,41 @@ views:
                 action: none
               hold_action:
                 action: none
-            icon: mdi:robot
+            sub_button:
+              main: []
+              bottom: []
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.dimmer_switch_bedroom_hue_button_short_press
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            sub_button:
+              main: []
+              bottom: []
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.dimmer_switch_bedroom_hue_button_long_press
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            sub_button:
+              main: []
+              bottom: []
       - type: grid
         cards:
           - type: heading
@@ -256,6 +292,24 @@ views:
             sub_button:
               main: []
               bottom: []
+          - type: heading
+            heading: Tags automation
+            heading_style: title
+            icon: mdi:nfc-tap
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.tag_white_circle_is_scanned
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: mdi:robot
       - type: grid
         cards:
           - type: heading

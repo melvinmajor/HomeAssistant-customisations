@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 06/01/2026 (DD/MM/YYYY)
+# Last updated: 31/01/2026 (DD/MM/YYYY)
 
 decluttering_templates:
   home_navbar:
@@ -817,6 +817,10 @@ views:
                 shadow_opacity: '0'
                 styles: ''
                 bg_color: ''
+                button_type: name
+                sub_button:
+                  main: []
+                  bottom: []
               - type: custom:bubble-card
                 card_type: separator
                 icon: ''
@@ -833,26 +837,28 @@ views:
                 show_icon: false
                 show_name: false
                 sub_button:
-                  - name: TV
-                    icon: mdi:television
-                    tap_action:
-                      action: toggle
-                    entity: media_player.lg_webos_tv_qned866re
-                  - name: Barre son
-                    entity: media_player.hk_citation_multibeam_1100
-                    icon: phu:sonos-playbar
-                    tap_action:
-                      action: toggle
-                  - name: Google TV
-                    icon: phu:google-logo-circle
-                    tap_action:
-                      action: toggle
-                    entity: remote.google_tv
-                  - name: Xbox
-                    icon: phu:xbox
-                    tap_action:
-                      action: toggle
-                    entity: media_player.xboxseriesx_mcc_2
+                  main:
+                    - name: TV
+                      icon: mdi:television
+                      tap_action:
+                        action: toggle
+                      entity: media_player.lg_webos_tv_qned866re
+                    - name: Barre son
+                      entity: media_player.hk_citation_multibeam_1100_7927
+                      icon: phu:sonos-playbar
+                      tap_action:
+                        action: toggle
+                    - name: Google TV
+                      icon: phu:google-logo-circle
+                      tap_action:
+                        action: toggle
+                      entity: remote.google_tv
+                    - name: Xbox
+                      icon: phu:xbox
+                      tap_action:
+                        action: toggle
+                      entity: media_player.xboxseriesx_mcc_2
+                  bottom: []
                 styles: |
                   .card-content {
                     width: 100%;
@@ -875,9 +881,10 @@ views:
                   .bubble-name-container {
                     margin-right: 0px !important;
                   }
+                rows: 1
               - type: custom:bubble-card
                 card_type: media-player
-                entity: media_player.hk_citation_multibeam_1100
+                entity: media_player.hk_citation_multibeam_1100_7927
                 show_name: false
                 hide:
                   power_button: true
@@ -885,6 +892,9 @@ views:
                 double_tap_action:
                   action: none
                 icon: mdi:cast-audio-variant
+                sub_button:
+                  main: []
+                  bottom: []
               - type: custom:bubble-card
                 card_type: separator
                 icon: ''
@@ -1523,6 +1533,21 @@ views:
               .bubble-sub-button-icon {
                 --mdc-icon-size: inherit !important;
               }
+          - type: tile
+            entity: light.hue_filament_bulb_1
+            name: Bedroom
+            icon: phu:bulb-filament-candle
+            show_entity_picture: false
+            hide_state: false
+            vertical: false
+            tap_action:
+              action: toggle
+            features:
+              - type: light-brightness
+              - type: light-color-temp
+            features_position: inline
+            grid_options:
+              columns: full
       - type: grid
         cards:
           - type: custom:bubble-card
@@ -1749,16 +1774,6 @@ views:
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.lave_vaisselle_duration
-        name: Dishwasher - Program duration
-        visibility:
-          - condition: state
-            entity: sensor.lave_vaisselle_duration
-            state_not: unavailable
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
         entity: sensor.lave_vaisselle_remaining_program_time
         name: Dishwasher - ends
         visibility:
@@ -1778,6 +1793,26 @@ views:
     sections:
       - type: grid
         cards:
+          - show_name: true
+            show_icon: false
+            show_state: true
+            type: glance
+            entities:
+              - name: Current state
+                entity: sensor.lave_vaisselle_operation_state
+              - name: Remote control
+                entity: binary_sensor.lave_vaisselle_remote_control
+              - name: Remote start
+                entity: binary_sensor.lave_vaisselle_remote_start
+          - show_name: true
+            show_icon: false
+            show_state: true
+            type: glance
+            entities:
+              - name: Salt empty
+                entity: sensor.lave_vaisselle_salt_nearly_empty
+              - entity: sensor.lave_vaisselle_rinse_aid_nearly_empty
+                name: Rinse aid dispenser empty
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -1790,7 +1825,7 @@ views:
               border: bubble
               opacity: 0.6
             card_layout: large-sub-buttons-grid
-            rows: '3'
+            rows: 4.172
             icon: mdi:dishwasher
             name: Dishwasher
             show_state: false
@@ -1808,25 +1843,20 @@ views:
                 --mdc-icon-size: inherit !important;
               }
             sub_button:
-              - entity: switch.lave_vaisselle_power
-                icon: mdi:power
-                name: Dishwasher power
-                tap_action:
-                  action: toggle
-              - entity: switch.lave_vaisselle_childlock
-                name: Child lock
-                icon: mdi:account-child
-          - show_name: true
-            show_icon: false
-            show_state: true
-            type: glance
-            entities:
-              - name: Current state
-                entity: sensor.lave_vaisselle_operation_state
-              - name: Remote control
-                entity: binary_sensor.lave_vaisselle_remote_control
-              - name: Remote start
-                entity: binary_sensor.lave_vaisselle_remote_start
+              main:
+                - entity: switch.lave_vaisselle_power
+                  icon: mdi:power
+                  name: Dishwasher power
+                  tap_action:
+                    action: toggle
+                - entity: switch.lave_vaisselle_childlock
+                  name: Child lock
+                  icon: mdi:account-child
+              bottom: []
+            grid_options:
+              columns: 12
+              rows: 3
+        column_span: 1
       - type: grid
         cards:
           - type: heading
@@ -1834,41 +1864,23 @@ views:
             heading_style: title
           - type: entities
             entities:
-              - entity: switch.lave_vaisselle_program_eco50
-                name: Eco (4h55) 50°
-                icon: mdi:sprout
-              - entity: switch.lave_vaisselle_program_auto2
-                name: Auto (2h15)
-                icon: mdi:auto-mode
-              - entity: switch.lave_vaisselle_program_kurz60
-                name: Quick (1h30) 60°
-                icon: mdi:clock-fast
-              - entity: switch.lave_vaisselle_program_quick45
-                name: Quick glass (30min) 45°
-                icon: mdi:cup
-              - entity: switch.lave_vaisselle_program_nightwash
-                name: Night Wash (4h) 50°
-                icon: mdi:weather-night
+              - entity: select.lave_vaisselle_selected_program
+                name: Program
+                icon: mdi:dishwasher
+              - entity: switch.lave_vaisselle_vario_speed
+                name: Speed mode
+                icon: mdi:speedometer
               - type: custom:fold-entity-row
                 head:
                   type: section
                   label: Other programs
                 entities:
-                  - entity: switch.lave_vaisselle_program_quick65
-                    name: Quick (1h) 65°
-                    icon: mdi:clock-fast
-                  - entity: switch.lave_vaisselle_program_intensiv70
+                  - entity: switch.lave_vaisselle_intensive_zone
                     name: Intensive (2h15) 70°
-                    icon: mdi:stove
-                  - entity: switch.lave_vaisselle_program_intensivpower
-                    name: Intensive Power (2h40) 70°
-                    icon: mdi:stove
-                  - entity: switch.lave_vaisselle_program_super60
-                    name: Super (2h20) 60°
-                    icon: mdi:size-xl
-                  - entity: switch.lave_vaisselle_program_machinecare
-                    name: Machine Care
-                    icon: mdi:dishwasher-alert
+                    icon: mdi:auto-mode
+                  - entity: switch.lave_vaisselle_half_load
+                    name: Eco (4h55) 50°
+                    icon: mdi:sprout
             show_header_toggle: false
             state_color: true
             view_layout:
@@ -1877,11 +1889,11 @@ views:
         cards:
           - type: custom:decluttering-card
             template: home_navbar
-    max_columns: 2
     header:
       layout: center
       badges_position: bottom
       badges_wrap: scroll
+    max_columns: 2
   - title: Volvo EX30
     path: vehicle
     icon: phu:volvo

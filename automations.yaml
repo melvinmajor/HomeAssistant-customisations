@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 29/01/2026 (DD/MM/YYYY)
+# Last updated: 31/01/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -375,14 +375,14 @@
     domain: light
   mode: single
 - id: '1742765551091'
-  alias: Smart Button bedroom short press
+  alias: Dimmer switch bedroom on off
   description: ''
   triggers:
-  - device_id: 2c9ac640dc4f7ed7f33bc50865f2c438
+  - device_id: 200cd1b52901736487c1d08f52348aa0
     domain: hue
     type: short_release
     subtype: 1
-    unique_id: 4f6cf236-e21e-4eb3-bc78-80e0d2d3f116
+    unique_id: cef71ad2-f277-44d1-af6b-1e9fe86a93e9
     trigger: device
   conditions: []
   actions:
@@ -406,14 +406,14 @@
         entity_id: light.hue_filament_bulb_1
   mode: single
 - id: '1742765822605'
-  alias: Smart Button bedroom long press
+  alias: Dimmer switch bedroom hue button short press
   description: ''
   triggers:
-  - device_id: 2c9ac640dc4f7ed7f33bc50865f2c438
+  - device_id: 200cd1b52901736487c1d08f52348aa0
     domain: hue
-    type: long_release
-    subtype: 1
-    unique_id: 4f6cf236-e21e-4eb3-bc78-80e0d2d3f116
+    type: short_release
+    subtype: 4
+    unique_id: 3b38ae2e-c174-4674-9f6a-b42462841da5
     trigger: device
   conditions: []
   actions:
@@ -827,4 +827,121 @@
           - media_content_type: ''
             media_content_id: media-source://media_source/local/TTS-saved-renders
           browse_entity_id: media_player.hk_citation_one
+  mode: single
+- id: '1769868523617'
+  alias: Dimmer switch bedroom increase brightness
+  description: ''
+  triggers:
+  - device_id: 200cd1b52901736487c1d08f52348aa0
+    domain: hue
+    type: initial_press
+    subtype: 2
+    id: short_press
+    trigger: device
+  - device_id: 200cd1b52901736487c1d08f52348aa0
+    domain: hue
+    type: repeat
+    subtype: 2
+    id: hold
+    trigger: device
+  - device_id: 200cd1b52901736487c1d08f52348aa0
+    domain: hue
+    type: long_release
+    subtype: 2
+    unique_id: b729fe0d-04c9-43f2-975f-35913524db1b
+    trigger: device
+    id: release
+  conditions:
+  - condition: device
+    type: is_on
+    device_id: 6f0852884dafbe9f1ada05edf3b08223
+    entity_id: 953bd8165b2a49b3297222f615420b83
+    domain: light
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: short_press
+      sequence:
+      - device_id: 6f0852884dafbe9f1ada05edf3b08223
+        domain: light
+        entity_id: 953bd8165b2a49b3297222f615420b83
+        type: brightness_increase
+    - conditions:
+      - condition: trigger
+        id: hold
+      sequence:
+      - device_id: 6f0852884dafbe9f1ada05edf3b08223
+        domain: light
+        entity_id: 953bd8165b2a49b3297222f615420b83
+        type: brightness_increase
+  mode: restart
+- id: '1769868571829'
+  alias: Dimmer switch bedroom decrease brightness
+  description: ''
+  triggers:
+  - device_id: 200cd1b52901736487c1d08f52348aa0
+    domain: hue
+    type: initial_press
+    subtype: 3
+    id: short_press
+    trigger: device
+  - device_id: 200cd1b52901736487c1d08f52348aa0
+    domain: hue
+    type: repeat
+    subtype: 3
+    id: hold
+    trigger: device
+  - device_id: 200cd1b52901736487c1d08f52348aa0
+    domain: hue
+    type: long_release
+    subtype: 3
+    id: release
+    trigger: device
+  conditions:
+  - condition: device
+    type: is_on
+    device_id: 6f0852884dafbe9f1ada05edf3b08223
+    entity_id: 953bd8165b2a49b3297222f615420b83
+    domain: light
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: short_press
+      sequence:
+      - device_id: 6f0852884dafbe9f1ada05edf3b08223
+        domain: light
+        entity_id: 953bd8165b2a49b3297222f615420b83
+        type: brightness_decrease
+    - conditions:
+      - condition: trigger
+        id: hold
+      sequence:
+      - device_id: 6f0852884dafbe9f1ada05edf3b08223
+        domain: light
+        entity_id: 953bd8165b2a49b3297222f615420b83
+        type: brightness_decrease
+  mode: restart
+- id: '1769870157720'
+  alias: Dimmer switch bedroom hue button long press
+  description: ''
+  triggers:
+  - device_id: 200cd1b52901736487c1d08f52348aa0
+    domain: hue
+    type: long_release
+    subtype: 4
+    unique_id: 3b38ae2e-c174-4674-9f6a-b42462841da5
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    data:
+      transition: 1
+    target:
+      entity_id:
+      - light.accueil
+      - light.jarvis
+      - light.salon_tv
   mode: single
