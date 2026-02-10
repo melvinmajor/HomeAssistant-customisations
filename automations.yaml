@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 31/01/2026 (DD/MM/YYYY)
+# Last updated: 10/02/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -719,12 +719,21 @@
   - trigger: time
     at: '20:00:00'
     enabled: true
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
   conditions:
   - condition: template
-    value_template: "{{\n    states('sensor.paper_cardboard') == now().date().isoformat()\n
-      \   or states('sensor.pmd') == now().date().isoformat()\n    or states('sensor.residual_household_waste')
-      == now().date().isoformat()\n}}"
     enabled: true
+    value_template: "{% set today = now().date() %}\n{% set paper = strptime(states('sensor.paper_cardboard'),
+      '%d/%m/%Y', today) %}\n{% set pmd = strptime(states('sensor.pmd'), '%d/%m/%Y',
+      today) %}\n{% set residual = strptime(states('sensor.residual_household_waste'),
+      '%d/%m/%Y', today) %}\n\n{{\n  paper.date() - timedelta(days=1) == today\n  or
+      pmd.date() - timedelta(days=1) == today\n  or residual.date() - timedelta(days=1)
+      == today\n}}"
   actions:
   - action: media_player.play_media
     metadata: {}
@@ -777,11 +786,20 @@
   - trigger: time
     at: '22:00:00'
     enabled: true
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
   conditions:
   - condition: template
-    value_template: "{{\n    states('sensor.paper_cardboard') == now().date().isoformat()\n
-      \   or states('sensor.pmd') == now().date().isoformat()\n    or states('sensor.residual_household_waste')
-      == now().date().isoformat()\n}}"
+    value_template: "{% set today = now().date() %}\n{% set paper = strptime(states('sensor.paper_cardboard'),
+      '%d/%m/%Y', today) %}\n{% set pmd = strptime(states('sensor.pmd'), '%d/%m/%Y',
+      today) %}\n{% set residual = strptime(states('sensor.residual_household_waste'),
+      '%d/%m/%Y', today) %}\n\n{{\n  paper.date() - timedelta(days=1) == today\n  or
+      pmd.date() - timedelta(days=1) == today\n  or residual.date() - timedelta(days=1)
+      == today\n}}"
     enabled: true
   actions:
   - action: media_player.play_media
