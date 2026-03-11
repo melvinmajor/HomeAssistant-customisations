@@ -26,30 +26,34 @@ Just a bunch of info and YAML files related to my own Home Assistant installatio
 | Assist Microphone               | Yes    | x         |             |
 | ESPHome Device Builder          | Yes    | x         |             |
 | File Editor                     | Yes    | x         |             |
+| Matter Server                   | Yes    | x         |             |
 | Mosquitto broker                | Yes    | x         |             |
+| OpenThread Border Router        | **No** | x         |             |
 | openWakeWord                    | Yes    | x         |             |
 | pigpio                          | Yes    | x         |             |
 | Piper                           | Yes    | x         |             |
-| Samba share                     | Yes    | x         |             |
+| Samba share                     | **No** | x         |             |
 | Speech-to-Phrase                | Yes    | x         |             |
-| System Monitor                  | Yes    | x         |             |
 | Terminal & SSH                  | **No** | x         |             |
 | Volvo                           | Yes    | x         |             |
-| Volvo2Mqtt                      | **No** | x         |             |
 | Alexa Media Player              | Yes    |           | x           |
 | Bambu Lab                       | Yes    |           | x           |
 | Big Slider Card                 | Yes    |           | x           |
 | Bubble Card                     | Yes    |           | x           |
+| Bubble Card Tools               | Yes    |           | x           |
 | card-mod                        | Yes    |           | x           |
 | Custom brand icons              | Yes    |           | x           |
 | Decluttering Card               | Yes    |           | x           |
 | Default Dashboard               | Yes    |           | x           |
+| F1 Sensor                       | Yes    |           | x           |
 | fold-entity-row                 | Yes    |           | x           |
 | HACS                            | Yes    |           | x           |
 | Home Assistant Swipe Navigation | Yes    |           | x           |
+| LLM Vision                      | Yes    |           | x           |
 | Material You Theme              | Yes    |           | x           |
 | Material You Utilities          | Yes    |           | x           |
 | mini-graph-card                 | Yes    |           | x           |
+| Modern Circular Gauge           | Yes    |           | x           |
 | Mushroom                        | Yes    |           | x           |
 | Navbard card                    | Yes    |           | x           |
 | RecycleApp                      | Yes    |           | x           |
@@ -71,7 +75,7 @@ Some HA add-ons are installed from external repositories, outside of HACS:
 
 * [HassOS Configurator (GitHub)](https://github.com/adamoutler/HassOSConfigurator) - for _'HassOS I2C Configurator'_, used to enable Raspberry Pi I2C bus. Once enabled, no need to keep it anymore.
 * [Poeschl Home Assistant Add-ons (GitHub)](https://github.com/Poeschl-HomeAssistant-Addons/repository) - for _'pigpio'_
-* [volvo2mqtt (GitHub)](https://github.com/Dielee/volvo2mqtt) - for _'Volvo2Mqtt'_
+* [volvo2mqtt (GitHub)](https://github.com/Dielee/volvo2mqtt) - for _'Volvo2Mqtt'_ (not used anymore, replaced by the official Volvo module as my car is finally supported)
 
 ## Built with
 

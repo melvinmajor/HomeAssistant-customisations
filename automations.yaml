@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 10/02/2026 (DD/MM/YYYY)
+# Last updated: 12/03/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -962,4 +962,15 @@
       - light.accueil
       - light.jarvis
       - light.salon_tv
+      - light.friday
   mode: single
+- id: '1771093293977'
+  alias: F1 Track Status Light
+  description: ''
+  use_blueprint:
+    path: EvertJob/f1.yaml
+    input:
+      session_status_sensor: sensor.f1_session_status
+      track_status_sensor: sensor.f1_track_status
+      media_player: media_player.google_tv
+      light_entity: light.hue_play_bar

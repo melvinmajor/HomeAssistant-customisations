@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 31/01/2026 (DD/MM/YYYY)
+# Last updated: 12/03/2026 (DD/MM/YYYY)
 
 decluttering_templates:
   home_navbar:
@@ -412,11 +412,13 @@ views:
                     navigation_path: '#office_Popup'
                 card_layout: large
                 sub_button:
-                  - icon: mdi:menu-open
-                    show_background: true
-                    tap_action:
-                      action: navigate
-                      navigation_path: '#office_Popup'
+                  main:
+                    - icon: mdi:menu-open
+                      show_background: true
+                      tap_action:
+                        action: navigate
+                        navigation_path: '#office_Popup'
+                  bottom: []
                 modules:
                   - frosted_glass
                 frosted_glass:
@@ -442,25 +444,36 @@ views:
                     navigation_path: '#3dprinter_Popup'
                 card_layout: large
                 sub_button:
-                  - name: Remaining time
-                    entity: sensor.a1_03919c452905439_temps_restant
-                    show_state: true
-                    icon: mdi:timelapse
-                    hide_when_parent_unavailable: false
-                    visibility:
-                      - condition: state
-                        entity: sensor.a1_03919c452905439_etat_de_l_impression
-                        state_not: offline
-                      - condition: state
-                        entity: sensor.a1_03919c452905439_etat_de_l_impression
-                        state_not: idle
-                  - entity: light.chevet
-                    icon: phu:bambulab-alt
-                    tap_action:
-                      action: toggle
+                  main:
+                    - name: Remaining time
+                      entity: sensor.a1_03919c452905439_temps_restant
+                      show_state: true
+                      icon: mdi:timelapse
+                      hide_when_parent_unavailable: false
+                      visibility:
+                        - condition: state
+                          entity: sensor.a1_03919c452905439_etat_de_l_impression
+                          state_not: offline
+                        - condition: state
+                          entity: sensor.a1_03919c452905439_etat_de_l_impression
+                          state_not: idle
+                        - condition: state
+                          entity: sensor.a1_03919c452905439_temps_restant
+                          state_not: unavailable
+                    - entity: light.3d_printer
+                      icon: phu:bambu-lab-alt
+                      tap_action:
+                        action: toggle
+                      state_background: true
+                      light_background: false
+                      show_state: false
+                  bottom: []
                 styles: |-
                   .bubble-button-card-container {
-                    background: RGBA(0, 0, 0, 0.2);
+                    background: rgba(0, 0, 0, 0.2);
+                  }
+                  .bubble-sub-button-2.background-on {
+                    background-color: rgb(0, 174, 66);
                   }
                 modules:
                   - frosted_glass
@@ -481,6 +494,9 @@ views:
                       - condition: numeric_state
                         entity_id: sensor.a1_03919c452905439_progression_de_l_impression
                         below: 100
+                rows: 1.188
+                slider_fill_orientation: left
+                slider_value_position: right
           - type: vertical-stack
             cards:
               - type: custom:bubble-card
@@ -821,6 +837,9 @@ views:
                 sub_button:
                   main: []
                   bottom: []
+                slider_fill_orientation: left
+                slider_value_position: right
+                light_slider_type: brightness
               - type: custom:bubble-card
                 card_type: separator
                 icon: ''
@@ -855,9 +874,7 @@ views:
                       entity: remote.google_tv
                     - name: Xbox
                       icon: phu:xbox
-                      tap_action:
-                        action: toggle
-                      entity: media_player.xboxseriesx_mcc_2
+                      entity: sensor.rearwardbread21_now_playing
                   bottom: []
                 styles: |
                   .card-content {
@@ -882,6 +899,8 @@ views:
                     margin-right: 0px !important;
                   }
                 rows: 1
+                slider_fill_orientation: left
+                slider_value_position: right
               - type: custom:bubble-card
                 card_type: media-player
                 entity: media_player.hk_citation_multibeam_1100_7927
@@ -1115,9 +1134,12 @@ views:
                     button_type: state
                     entity: sensor.a1_03919c452905439_temps_restant
                     name: A1 - Remaining time
-                    icon: phu:bambulab-alt
+                    icon: phu:bambu-lab-alt
                     force_icon: false
                     show_last_changed: false
+                    sub_button:
+                      main: []
+                      bottom: []
               - show_state: true
                 show_name: true
                 camera_view: auto
@@ -1509,22 +1531,24 @@ views:
               border: bubble
               opacity: 0.6
             card_layout: large-sub-buttons-grid
-            rows: '3'
             sub_button:
-              - entity: light.jarvis
-                name: Jarvis
-                icon: phu:bulbs-sultan
-                tap_action:
-                  action: toggle
-                hold_action:
-                  action: more-info
-              - entity: light.chevet
-                icon: phu:bambulab-alt
-                name: 3D Printer
-                light_background: false
-                state_background: true
-                tap_action:
-                  action: toggle
+              main:
+                - entity: light.jarvis
+                  name: Jarvis
+                  icon: phu:bulbs-sultan
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - entity: light.3d_printer
+                  icon: phu:bambu-lab-alt
+                  name: 3D Printer
+                  light_background: false
+                  state_background: true
+                  tap_action:
+                    action: toggle
+                  content_layout: icon-left
+              bottom: []
             styles: |-
               .bubble-sub-button {
                 height: 46px !important;
@@ -1533,6 +1557,13 @@ views:
               .bubble-sub-button-icon {
                 --mdc-icon-size: inherit !important;
               }
+              .bubble-sub-button-2.background-on {
+                background-color: rgb(0, 174, 66);
+              }
+            grid_options:
+              columns: 12
+              rows: 3
+            rows: 4.172
           - type: tile
             entity: light.hue_filament_bulb_1
             name: Bedroom
@@ -1560,12 +1591,16 @@ views:
               hold_action:
                 action: none
             entities:
-              - entity: calendar.21_rue_du_hainaut_1420_braine_l_alleud
+              - entity: calendar.home
                 color: primary
+              - entity: calendar.f1_race_season_calendar
+                color: red
             show_end: false
             show_progress: true
             show_place: false
-            sub_button: []
+            sub_button:
+              main: []
+              bottom: []
             card_layout: large
             modules:
               - frosted_glass
@@ -1577,7 +1612,7 @@ views:
               icon_shadow: false
             grid_options:
               columns: 12
-              rows: 2
+              rows: 3
           - type: custom:weather-chart-card
             entity: weather.forecast_maison
             show_main: true
@@ -1870,6 +1905,8 @@ views:
               - entity: switch.lave_vaisselle_vario_speed
                 name: Speed mode
                 icon: mdi:speedometer
+              - entity: select.lave_vaisselle_active_program
+                name: Choose again program to start it
               - type: custom:fold-entity-row
                 head:
                   type: section
@@ -1954,15 +1991,16 @@ views:
             name: Car info
             icon: phu:volvo
             sub_button:
-              - entity: sensor.volvo_ex30_distance_to_empty_battery
-                show_state: true
-                state_background: false
-                name: Estimated range
-                tap_action:
-                  action: none
-                icon: mdi:map-marker-distance
-            modules:
-              - frosted_glass
+              main:
+                - entity: sensor.volvo_ex30_distance_to_empty_battery
+                  show_state: true
+                  state_background: false
+                  name: Estimated range
+                  tap_action:
+                    action: none
+                  icon: mdi:map-marker-distance
+              bottom: []
+            modules: []
             frosted_glass:
               icon_background: dark
               border: bubble
@@ -1971,18 +2009,50 @@ views:
             cards:
               - type: horizontal-stack
                 cards:
-                  - type: gauge
+                  - type: custom:modern-circular-gauge
                     entity: sensor.volvo_ex30_batterie
-                    unit: '%'
-                    min: 0
-                    max: 100
-                    needle: true
-                    severity:
-                      green: 40
-                      yellow: 20
-                      red: 0
+                    show_icon: true
+                    gauge_type: standard
+                    smooth_segments: true
+                    header_position: bottom
                     name: Battery
-                  - show_name: false
+                    needle: true
+                    start_from_zero: true
+                    show_in_graph: false
+                    adaptive_graph_range: false
+                    segments:
+                      - from: 50
+                        color:
+                          - 0
+                          - 107
+                          - 61
+                      - from: 40
+                        color:
+                          - 6
+                          - 156
+                          - 86
+                      - color:
+                          - 255
+                          - 152
+                          - 14
+                        from: 30
+                      - color:
+                          - 255
+                          - 104
+                          - 30
+                        from: 20
+                      - from: 10
+                        color:
+                          - 211
+                          - 33
+                          - 44
+                    secondary: {}
+                    show_seconds: false
+                    show_state: true
+                    show_unit: true
+                    show_header: false
+                    tertiary: {}
+                  - show_name: true
                     show_icon: true
                     type: button
                     tap_action:
@@ -1992,7 +2062,7 @@ views:
                     icon_height: 48px
                     icon: phu:tesla-flash
                     name: Flash
-                  - show_name: false
+                  - show_name: true
                     show_icon: true
                     type: button
                     tap_action:
@@ -2010,7 +2080,7 @@ views:
                         tap_action:
                           action: toggle
                         entity: button.volvo_ex30_start_climatization
-                        icon_height: 36px
+                        icon_height: 42px
                         name: AC On
                         show_state: false
                         icon: mdi:air-conditioner
@@ -2020,7 +2090,7 @@ views:
                         tap_action:
                           action: toggle
                         entity: button.volvo_ex30_stop_climatization
-                        icon_height: 36px
+                        icon_height: 42px
                         name: AC Off
                         show_state: false
                         icon: mdi:fan-off
@@ -2506,8 +2576,8 @@ views:
           - type: custom:bubble-card
             card_type: button
             button_type: state
-            entity: light.chevet
-            icon: phu:bambulab-alt
+            entity: light.3d_printer
+            icon: phu:bambu-lab-alt
             use_accent_color: false
             force_icon: false
             show_state: true
@@ -2525,19 +2595,26 @@ views:
               border: bubble
               opacity: 0.6
             sub_button:
-              - entity: light.chevet
-                show_name: false
-                icon: mdi:power
-                light_background: true
-                state_background: true
-                show_background: true
-                tap_action:
-                  action: toggle
+              main:
+                - entity: light.3d_printer
+                  show_name: false
+                  icon: mdi:power
+                  light_background: true
+                  state_background: true
+                  show_background: true
+                  tap_action:
+                    action: toggle
+              bottom: []
+            styles: |-
+              .bubble-sub-button.background-on {
+                background-color: rgb(0, 174, 66);
+              }
           - type: custom:ha-bambulab-print_control-card
             printer: 3c9267e47d7aa4e0fc877665539ca33e
           - type: custom:ha-bambulab-print_status-card
             printer: 3c9267e47d7aa4e0fc877665539ca33e
             style: simple
+            custom_power: light.3d_printer
       - type: grid
         cards:
           - type: heading
@@ -2593,6 +2670,23 @@ views:
                 title: Router bandwith usage
                 hours_to_show: 8
           - type: heading
+            heading: Jarvis
+            heading_style: title
+            icon: phu:nas
+          - type: vertical-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: update.plex_media_server_jarvis_plex_server
+                    name: Media Server
+                    secondary_info: last-changed
+                  - entity: sensor.jarvis_plex_server
+                    name: Number of watchers on Jarvis
+                state_color: true
+                title: Plex
+      - type: grid
+        cards:
+          - type: heading
             heading: Philips hue devices state
             heading_style: title
             icon: phu:hue-only
@@ -2628,23 +2722,6 @@ views:
               - entity: sensor.hue_smart_button_3_batterie
                 name: Smart button bedroom
             state_color: true
-      - type: grid
-        cards:
-          - type: heading
-            heading: Jarvis
-            heading_style: title
-            icon: phu:nas
-          - type: vertical-stack
-            cards:
-              - type: entities
-                entities:
-                  - entity: update.plex_media_server_jarvis_plex_server
-                    name: Media Server
-                    secondary_info: last-changed
-                  - entity: sensor.jarvis_plex_server
-                    name: Number of watchers on Jarvis
-                state_color: true
-                title: Plex
           - type: vertical-stack
             cards:
               - type: entities
@@ -2657,18 +2734,6 @@ views:
                     name: HA Supervisor
                   - entity: update.hacs_update
                     name: HACS
-                  - entity: update.recycleapp_update
-                    name: RecycleApp
-                  - entity: update.aircast_update
-                    name: AirCast
-                  - entity: update.mosquitto_broker_update
-                    name: MQTT - Mosquitto broker
-                  - entity: update.volvo2mqtt_update
-                    name: Volvo2Mqtt
-                  - entity: update.bambu_lab_update
-                    name: Bambu Lab
-                  - entity: update.pigpio_mise_a_jour
-                    name: pigpio
                 title: Home Assistant
                 state_color: false
                 show_header_toggle: true

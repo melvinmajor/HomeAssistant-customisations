@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 31/01/2026 (DD/MM/YYYY)
+# Last updated: 12/03/2026 (DD/MM/YYYY)
 
 views:
   - title: Automations
@@ -293,7 +293,7 @@ views:
               main: []
               bottom: []
           - type: heading
-            heading: Tags automation
+            heading: Tags automations
             heading_style: title
             icon: mdi:nfc-tap
           - type: custom:bubble-card
@@ -310,6 +310,29 @@ views:
               hold_action:
                 action: none
             icon: mdi:robot
+          - type: heading
+            heading: Other automations
+            heading_style: title
+            icon: mdi:transit-connection-variant
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.f1_track_status_light
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: ''
+            sub_button:
+              main: []
+              bottom: []
+            slider_fill_orientation: left
+            slider_value_position: right
       - type: grid
         cards:
           - type: heading
