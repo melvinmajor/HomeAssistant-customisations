@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 12/03/2026 (DD/MM/YYYY)
+# Last updated: 15/03/2026 (DD/MM/YYYY)
 
 views:
   - title: Automations
@@ -25,6 +25,9 @@ views:
                 action: none
               hold_action:
                 action: none
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -38,6 +41,9 @@ views:
                 action: none
               hold_action:
                 action: none
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -276,6 +282,9 @@ views:
             sub_button:
               main: []
               bottom: []
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -292,6 +301,9 @@ views:
             sub_button:
               main: []
               bottom: []
+            grid_options:
+              columns: 6
+              rows: auto
           - type: heading
             heading: Tags automations
             heading_style: title
@@ -367,6 +379,9 @@ views:
               hold_action:
                 action: none
             icon: ''
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -381,6 +396,9 @@ views:
               hold_action:
                 action: none
             icon: ''
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             entity: input_select.default_dashboard
@@ -390,6 +408,9 @@ views:
             show_last_changed: false
             icon: ''
             button_type: switch
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             entity: input_boolean.visitor_override
@@ -398,6 +419,9 @@ views:
             show_attribute: true
             show_last_changed: false
             icon: mdi:account-group
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             entity: input_boolean.entrance_light_override
@@ -406,6 +430,14 @@ views:
             show_attribute: true
             show_last_changed: false
             icon: mdi:account-group
+            grid_options:
+              columns: 6
+              rows: auto
+            button_type: switch
+            sub_button:
+              main: []
+              bottom: []
+            name: Entrance Override
           - type: custom:bubble-card
             card_type: button
             entity: input_boolean.cat_night_override
@@ -414,6 +446,9 @@ views:
             show_attribute: true
             show_last_changed: false
             icon: mdi:cat
+            grid_options:
+              columns: 6
+              rows: auto
     type: sections
     cards: []
     max_columns: 4

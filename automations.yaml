@@ -713,7 +713,7 @@
     domain: light
   mode: single
 - id: '1769681478513'
-  alias: Put the trash out - Reminder 1
+  alias: Trash out - 8PM
   description: ''
   triggers:
   - trigger: time
@@ -780,7 +780,7 @@
           browse_entity_id: media_player.hk_citation_one
   mode: single
 - id: '1769681600513'
-  alias: Put the trash out - Reminder 2
+  alias: Trash out - 10PM
   description: ''
   triggers:
   - trigger: time

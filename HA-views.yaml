@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 12/03/2026 (DD/MM/YYYY)
+# Last updated: 15/03/2026 (DD/MM/YYYY)
 
 decluttering_templates:
   home_navbar:
@@ -67,8 +67,16 @@ decluttering_templates:
         show_popup_label_backgrounds: true
         position: bottom
       media_player:
-        entity: media_player.spotify_melvin_campos_casares
         album_cover_background: true
+        players:
+          - entity: media_player.spotify_melvin_campos_casares
+            icon: ''
+          - entity: media_player.google_tv
+            title: Google TV
+            icon: mdi:youtube-tv
+            tap_action:
+              action: more-info
+              entity: media_player.google_tv_2
       layout:
         auto_padding:
           enabled: true
@@ -78,6 +86,8 @@ decluttering_templates:
         .navbar.mobile.bottom {
           bottom: 5px;
         }
+      haptic:
+        tap_action: true
 views:
   - title: Shortcuts
     path: shortcuts
@@ -1355,21 +1365,23 @@ views:
             name: Entrance
             icon: mdi:door
             sub_button:
-              - entity: light.accueil
-                name: Entrance 1 - bedroom
-                icon: phu:bulb-group
-                tap_action:
-                  action: toggle
-                hold_action:
-                  action: more-info
-              - entity: binary_sensor.detecteur_entree_mouvement
-                show_state: false
-                name: Motion sensor 1 - bedroom
-                state_background: false
-              - entity: binary_sensor.hue_motion_sensor_2_mouvement
-                name: Motion sensor 2 - office
-                state_background: false
-            rows: '3'
+              main:
+                - entity: light.accueil
+                  name: Entrance 1 - bedroom
+                  icon: phu:bulb-group
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - entity: binary_sensor.detecteur_entree_mouvement
+                  show_state: false
+                  name: Motion sensor 1 - bedroom
+                  state_background: false
+                - entity: binary_sensor.hue_motion_sensor_2_mouvement
+                  name: Motion sensor 2 - office
+                  state_background: false
+              bottom: []
+            rows: 4.172
             card_layout: large-sub-buttons-grid
             frosted_glass:
               icon_background: dark
@@ -1383,141 +1395,9 @@ views:
               .bubble-sub-button-icon {
                 --mdc-icon-size: inherit !important;
               }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: name
-            name: Living room
-            icon: phu:rooms-living
-            modules:
-              - frosted_glass
-              - room_card
-            frosted_glass:
-              icon_background: dark
-              border: bubble
-              opacity: 0.6
-            card_layout: large-sub-buttons-grid
-            rows: '3'
-            button_action: {}
-            sub_button:
-              - entity: light.salon
-                icon: phu:bulb-general-group
-                name: All living room lights
-                tap_action:
-                  action: toggle
-                hold_action:
-                  action: more-info
-              - entity: light.salon_sans_spot
-                icon: phu:rooms-lounge
-                name: Living room (without Spot)
-                tap_action:
-                  action: toggle
-                hold_action:
-                  action: more-info
-              - entity: light.spot
-                name: Spot only
-                icon: phu:hue-spot-group-v2
-                tap_action:
-                  action: toggle
-                hold_action:
-                  action: more-info
-              - show_icon: true
-                state_background: false
-                show_background: false
-                show_name: false
-                show_state: false
-                name: blank
-              - entity: light.friday
-                name: Floor lamp
-                icon: phu:ikea-paparlamp
-                tap_action:
-                  action: toggle
-            styles: |-
-              .bubble-sub-button {
-                height: 46px !important;
-                width: 46px !important;
-              }
-              .bubble-sub-button-icon {
-                --mdc-icon-size: inherit !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: name
-            name: TV
-            icon: mdi:television
-            modules:
-              - frosted_glass
-              - room_card
-            frosted_glass:
-              icon_background: dark
-              border: bubble
-              opacity: 0.6
-            card_layout: large-sub-buttons-grid
-            rows: '3'
-            sub_button:
-              - entity: automation.turn_on_tv_scene
-                state_background: false
-                icon: mdi:power
-                name: Turn on TV scene
-                tap_action:
-                  action: perform-action
-                  perform_action: automation.trigger
-                  target:
-                    entity_id: automation.turn_on_tv_scene
-                  data:
-                    skip_condition: true
-              - entity: automation.turn_off_tv_scene
-                name: Turn off TV scene
-                icon: mdi:power-off
-                state_background: false
-                tap_action:
-                  action: perform-action
-                  perform_action: automation.trigger
-                  target:
-                    entity_id: automation.turn_off_tv_scene
-                  data:
-                    skip_condition: true
-              - entity: media_player.google_tv_2
-                icon: mdi:television-box
-                name: Google TV
-                tap_action:
-                  action: toggle
-                hold_action:
-                  action: more-info
-              - show_icon: true
-                state_background: false
-                show_background: false
-                show_name: false
-                show_state: false
-                name: blank
-              - entity: light.hue_play_bar
-                name: Hue Play Bar
-                icon: phu:play-bar-v-two-out
-                tap_action:
-                  action: toggle
-                hold_action:
-                  action: more-info
-              - entity: light.spot
-                name: Spot
-                icon: phu:hue-spot-group-v2
-                tap_action:
-                  action: toggle
-                hold_action:
-                  action: more-info
-              - entity: light.hue_ambiance_luster_1
-                name: Mushroom
-                icon: mdi:mushroom
-                tap_action:
-                  action: toggle
-                hold_action:
-                  action: more-info
-            styles: |-
-              .bubble-sub-button {
-                height: 46px !important;
-                width: 46px !important;
-              }
-              .bubble-sub-button-icon {
-                --mdc-icon-size: inherit !important;
-              }
+            grid_options:
+              columns: 6
+              rows: 3
           - type: custom:bubble-card
             card_type: button
             button_type: name
@@ -1561,9 +1441,154 @@ views:
                 background-color: rgb(0, 174, 66);
               }
             grid_options:
-              columns: 12
+              columns: 6
               rows: 3
             rows: 4.172
+          - type: custom:bubble-card
+            card_type: button
+            button_type: name
+            name: Living room
+            icon: phu:rooms-living
+            modules:
+              - frosted_glass
+              - room_card
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+            card_layout: large-sub-buttons-grid
+            rows: 4.172
+            button_action: {}
+            sub_button:
+              main:
+                - entity: light.salon
+                  icon: phu:bulb-general-group
+                  name: All living room lights
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - entity: light.salon_sans_spot
+                  icon: phu:rooms-lounge
+                  name: Living room (without Spot)
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - entity: light.spot
+                  name: Spot only
+                  icon: phu:hue-spot-group-v2
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - show_icon: true
+                  state_background: false
+                  show_background: false
+                  show_name: false
+                  show_state: false
+                  name: blank
+                - entity: light.friday
+                  name: Floor lamp
+                  icon: phu:ikea-paparlamp
+                  tap_action:
+                    action: toggle
+              bottom: []
+            styles: |-
+              .bubble-sub-button {
+                height: 46px !important;
+                width: 46px !important;
+              }
+              .bubble-sub-button-icon {
+                --mdc-icon-size: inherit !important;
+              }
+            grid_options:
+              columns: 6
+              rows: 3
+          - type: custom:bubble-card
+            card_type: button
+            button_type: name
+            name: TV
+            icon: mdi:television
+            modules:
+              - frosted_glass
+              - room_card
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+            card_layout: large-sub-buttons-grid
+            rows: 4.172
+            sub_button:
+              main:
+                - entity: automation.turn_on_tv_scene
+                  state_background: false
+                  icon: mdi:power
+                  name: Turn on TV scene
+                  tap_action:
+                    action: perform-action
+                    perform_action: automation.trigger
+                    target:
+                      entity_id: automation.turn_on_tv_scene
+                    data:
+                      skip_condition: true
+                - entity: automation.turn_off_tv_scene
+                  name: Turn off TV scene
+                  icon: mdi:power-off
+                  state_background: false
+                  tap_action:
+                    action: perform-action
+                    perform_action: automation.trigger
+                    target:
+                      entity_id: automation.turn_off_tv_scene
+                    data:
+                      skip_condition: true
+                - entity: media_player.google_tv_2
+                  icon: mdi:television-box
+                  name: Google TV
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - show_icon: true
+                  state_background: false
+                  show_background: false
+                  show_name: false
+                  show_state: false
+                  name: blank
+                - entity: light.hue_play_bar
+                  name: Hue Play Bar
+                  icon: phu:play-bar-v-two-out
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - entity: light.spot
+                  name: Spot
+                  icon: phu:hue-spot-group-v2
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - entity: light.hue_ambiance_luster_1
+                  name: Mushroom
+                  icon: mdi:mushroom
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+              bottom: []
+            styles: |-
+              .bubble-sub-button {
+                height: 46px !important;
+                width: 46px !important;
+              }
+              .bubble-sub-button-icon {
+                --mdc-icon-size: inherit !important;
+              }
+            grid_options:
+              columns: 6
+              rows: 3
           - type: tile
             entity: light.hue_filament_bulb_1
             name: Bedroom
@@ -1579,85 +1604,6 @@ views:
             features_position: inline
             grid_options:
               columns: full
-      - type: grid
-        cards:
-          - type: custom:bubble-card
-            card_type: calendar
-            event_action:
-              tap_action:
-                action: more-info
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            entities:
-              - entity: calendar.home
-                color: primary
-              - entity: calendar.f1_race_season_calendar
-                color: red
-            show_end: false
-            show_progress: true
-            show_place: false
-            sub_button:
-              main: []
-              bottom: []
-            card_layout: large
-            modules:
-              - frosted_glass
-            frosted_glass:
-              icon_background: dark
-              border: bubble
-              opacity: 0.6
-              main_shadow: false
-              icon_shadow: false
-            grid_options:
-              columns: 12
-              rows: 3
-          - type: custom:weather-chart-card
-            entity: weather.forecast_maison
-            show_main: true
-            show_temperature: true
-            show_current_condition: true
-            show_attributes: true
-            show_time: true
-            show_time_seconds: false
-            show_day: true
-            show_date: true
-            show_humidity: true
-            show_pressure: true
-            show_wind_direction: true
-            show_wind_speed: true
-            show_sun: true
-            show_feels_like: false
-            show_dew_point: false
-            show_wind_gust_speed: false
-            show_visibility: false
-            show_last_changed: true
-            use_12hour_format: false
-            icons_size: 25
-            animated_icons: true
-            icon_style: style1
-            autoscroll: false
-            forecast:
-              precipitation_type: rainfall
-              show_probability: true
-              labels_font_size: '11'
-              precip_bar_size: '100'
-              style: style2
-              show_wind_forecast: true
-              condition_icons: true
-              round_temp: false
-              type: daily
-              number_of_forecasts: '0'
-              disable_animation: false
-            units:
-              pressure: hPa
-              speed: km/h
-          - show_current: false
-            show_forecast: true
-            type: weather-forecast
-            entity: weather.forecast_maison
-            forecast_type: hourly
           - type: custom:mushroom-template-card
             primary: |
               {{ states('sensor.air_quality_summary') }}
@@ -1754,6 +1700,85 @@ views:
                   50%  { transform: scale(1.015); opacity: 0.92; }
                   100% { transform: scale(1); opacity: 1; }
                 }
+      - type: grid
+        cards:
+          - type: custom:bubble-card
+            card_type: calendar
+            event_action:
+              tap_action:
+                action: more-info
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            entities:
+              - entity: calendar.home
+                color: primary
+              - entity: calendar.f1_race_season_calendar
+                color: red
+            show_end: false
+            show_progress: true
+            show_place: false
+            sub_button:
+              main: []
+              bottom: []
+            card_layout: large
+            modules:
+              - frosted_glass
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+              main_shadow: false
+              icon_shadow: false
+            grid_options:
+              columns: 12
+              rows: 3
+          - type: custom:weather-chart-card
+            entity: weather.forecast_maison
+            show_main: true
+            show_temperature: true
+            show_current_condition: true
+            show_attributes: true
+            show_time: true
+            show_time_seconds: false
+            show_day: true
+            show_date: true
+            show_humidity: true
+            show_pressure: true
+            show_wind_direction: true
+            show_wind_speed: true
+            show_sun: true
+            show_feels_like: false
+            show_dew_point: false
+            show_wind_gust_speed: false
+            show_visibility: false
+            show_last_changed: true
+            use_12hour_format: false
+            icons_size: 25
+            animated_icons: true
+            icon_style: style1
+            autoscroll: false
+            forecast:
+              precipitation_type: rainfall
+              show_probability: true
+              labels_font_size: '11'
+              precip_bar_size: '100'
+              style: style2
+              show_wind_forecast: true
+              condition_icons: true
+              round_temp: false
+              type: daily
+              number_of_forecasts: '0'
+              disable_animation: false
+            units:
+              pressure: hPa
+              speed: km/h
+          - show_current: false
+            show_forecast: true
+            type: weather-forecast
+            entity: weather.forecast_maison
+            forecast_type: hourly
       - type: grid
         cards:
           - show_state: true
@@ -2052,6 +2077,7 @@ views:
                     show_unit: true
                     show_header: false
                     tertiary: {}
+                    adaptive_icon_color: true
                   - show_name: true
                     show_icon: true
                     type: button
@@ -2572,7 +2598,7 @@ views:
           - type: heading
             heading: 3D Printer
             heading_style: title
-            icon: phu:bambulab-alt
+            icon: phu:bambu-lab-alt
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -2705,22 +2731,16 @@ views:
                 secondary_info: none
                 name: Illuminance level 2
                 icon: phu:motion-sensor-luminance-alt
-              - entity: sensor.detecteur_entree_temperature
-                name: Room temperature 1
-                icon: phu:motion-sensor-temperature
-                secondary_info: last-updated
-              - entity: sensor.hue_motion_sensor_2_temperature
-                name: Room temperature 2
-                secondary_info: last-updated
-                icon: phu:motion-sensor-temperature
               - entity: sensor.hue_tap_dial_switch_1_batterie
-                name: Tap Dial Switch
+                name: Tap Dial switch living room
               - entity: sensor.hue_smart_button_1_batterie
                 name: Smart button entrance
               - entity: sensor.hue_smart_button_2_batterie
                 name: Smart button office
               - entity: sensor.hue_smart_button_3_batterie
-                name: Smart button bedroom
+                name: Smart button living room
+              - entity: sensor.hue_dimmer_switch_1_batterie
+                name: Dimmer switch bedroom
             state_color: true
           - type: vertical-stack
             cards:

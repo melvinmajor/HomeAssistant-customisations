@@ -6,6 +6,9 @@
 
 Just a bunch of info and YAML files related to my own Home Assistant installation.
 
+Home Assistant is running on a Raspberry Pi 4 4GB and an SSD.
+A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee being covered by a Philips Hue Bridge.
+
 **Quick overview of how the dashboards looks like:**
 
 * Shortcut page and `menu` > `...` expanded (shown here on mobile):
@@ -28,7 +31,7 @@ Just a bunch of info and YAML files related to my own Home Assistant installatio
 | File Editor                     | Yes    | x         |             |
 | Matter Server                   | Yes    | x         |             |
 | Mosquitto broker                | Yes    | x         |             |
-| OpenThread Border Router        | **No** | x         |             |
+| OpenThread Border Router        | Yes    | x         |             |
 | openWakeWord                    | Yes    | x         |             |
 | pigpio                          | Yes    | x         |             |
 | Piper                           | Yes    | x         |             |
