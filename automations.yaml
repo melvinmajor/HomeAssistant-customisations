@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 12/03/2026 (DD/MM/YYYY)
+# Last updated: 21/03/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -974,3 +974,38 @@
       track_status_sensor: sensor.f1_track_status
       media_player: media_player.google_tv
       light_entity: light.hue_play_bar
+- id: '1774119366601'
+  alias: Cat fountain filter reminder - 8PM
+  description: ''
+  triggers:
+  - trigger: time
+    at: '20:00:00'
+  conditions:
+  - condition: template
+    value_template: "{% set last = states('input_datetime.cat_fountain_filter') %}
+      {% if last in ['unknown', 'unavailable', ''] %}\n  false\n{% else %}\n  {% set
+      last_date = strptime(last, '%Y-%m-%d') %}\n  {% set diff = (now().date() - last_date.date()).days
+      %}\n  {{ diff == 30 }}\n{% endif %}\n"
+  actions:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.hk_citation_one
+    data:
+      media:
+        media_content_id: media-source://media_source/local/homepod_notification.mp3
+        media_content_type: audio/mpeg
+        metadata: {}
+  - delay: 00:00:02
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.hk_citation_one
+    data:
+      media:
+        media_content_id: "{% set sounds = [\n  \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-FiltreFontaine-Rappel1.mp3\",\n
+          \ \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-FiltreFontaine-Rappel2.mp3\",\n
+          \ \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-FiltreFontaine-Rappel3.mp3\",\n
+          \ \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-FiltreFontaine-Rappel4.mp3\"\n]
+          %} {{ sounds | random }}\n"
+        media_content_type: audio/mpeg
+        metadata: {}
+  mode: single

@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 15/03/2026 (DD/MM/YYYY)
+# Last updated: 21/03/2026 (DD/MM/YYYY)
 
 decluttering_templates:
   home_navbar:
@@ -1916,6 +1916,9 @@ views:
             grid_options:
               columns: 12
               rows: 3
+          - type: entities
+            entities:
+              - entity: input_datetime.cat_fountain_filter
         column_span: 1
       - type: grid
         cards:
