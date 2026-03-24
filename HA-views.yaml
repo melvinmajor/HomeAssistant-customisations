@@ -1,8 +1,12 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 21/03/2026 (DD/MM/YYYY)
+# Last updated: 24/03/2026 (DD/MM/YYYY)
 
+kiosk_mode:
+  non_admin_settings:
+    hide_add_to_home_assistant: true
+    hide_search: true
 decluttering_templates:
   home_navbar:
     card:
@@ -34,6 +38,9 @@ decluttering_templates:
             - icon: mdi:cog
               url: /config/dashboard
               label: Configuration
+            - url: /dashboard-automations
+              icon: mdi:robot
+              label: Automations
             - url: /hacs/dashboard
               icon: phu:smarthome-solver
               label: HACS
@@ -2598,6 +2605,11 @@ views:
               [HP
               Shop](https://www.hp.com/be-fr/shop/ink-toner-paper-finder/8022e)
             text_only: true
+            card_mod:
+              style: |
+                ha-card {
+                  border-radius: 0px !important;
+                }
           - type: heading
             heading: 3D Printer
             heading_style: title
@@ -2745,19 +2757,40 @@ views:
               - entity: sensor.hue_dimmer_switch_1_batterie
                 name: Dimmer switch bedroom
             state_color: true
+          - type: heading
+            heading: Home Assistant
+            heading_style: title
+            icon: mdi:home-assistant
           - type: vertical-stack
             cards:
               - type: entities
                 entities:
                   - entity: update.home_assistant_core_update
                     name: HA Core
+                    secondary_info: last-updated
                   - entity: update.home_assistant_operating_system_update
                     name: HA Operating System
+                    secondary_info: last-updated
                   - entity: update.home_assistant_supervisor_update
                     name: HA Supervisor
+                    secondary_info: last-updated
                   - entity: update.hacs_update
                     name: HACS
-                title: Home Assistant
+                    secondary_info: last-updated
+                state_color: false
+                show_header_toggle: true
+          - type: vertical-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: update.matter_server_update
+                    icon: phu:matter
+                    secondary_info: last-updated
+                  - entity: update.openthread_border_router_update
+                    icon: phu:thread-net
+                    secondary_info: last-updated
+                  - entity: sensor.matter_server_pourcentage_du_processeur
+                  - entity: sensor.matter_server_pourcentage_de_memoire
                 state_color: false
                 show_header_toggle: true
       - type: grid

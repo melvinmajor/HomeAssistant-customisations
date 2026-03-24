@@ -52,6 +52,7 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | fold-entity-row                 | Yes    |           | x           |
 | HACS                            | Yes    |           | x           |
 | Home Assistant Swipe Navigation | Yes    |           | x           |
+| kiosk-mode                      | Yes    |           | x           |
 | LLM Vision                      | Yes    |           | x           |
 | Material You Theme              | Yes    |           | x           |
 | Material You Utilities          | Yes    |           | x           |

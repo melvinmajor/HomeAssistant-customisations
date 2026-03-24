@@ -1,8 +1,12 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 21/03/2026 (DD/MM/YYYY)
+# Last updated: 24/03/2026 (DD/MM/YYYY)
 
+kiosk_mode:
+  non_admin_settings:
+    hide_add_to_home_assistant: true
+    hide_search: true
 views:
   - title: Automations
     sections:
@@ -469,8 +473,35 @@ views:
             grid_options:
               columns: 6
               rows: auto
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_datetime.cat_fountain_filter
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:account-group
+            grid_options:
+              columns: 6
+              rows: auto
+            button_type: switch
+            sub_button:
+              main: []
+              bottom: []
+            name: Entrance Override
     type: sections
     cards: []
     max_columns: 4
     dense_section_placement: true
     icon: mdi:robot
+    header:
+      card:
+        type: markdown
+        content: '## Automations and key helpers'
+        text_only: true
+        card_mod:
+          style: |
+            ha-card {
+              border-radius: 0px !important;
+            }
+    subview: true
