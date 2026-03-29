@@ -9,15 +9,7 @@ Just a bunch of info and YAML files related to my own Home Assistant installatio
 Home Assistant is running on a Raspberry Pi 4 4GB and an SSD.
 A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee being covered by a Philips Hue Bridge.
 
-**Quick overview of how the dashboards looks like:**
-
-* Shortcut page and `menu` > `...` expanded (shown here on mobile):
-
-<img src="doc/shortcutView.gif" width="300px">
-
-* Home, Kitchen, Car and IT pages (shown here on desktop/tablet):
-
-<img src="doc/homeViewDesktop.gif" width="650px">
+**Quick overview of how the dashboards looks like in the [wiki](https://github.com/melvinmajor/HomeAssistant-customisations/wiki).**
 
 ### Modules
 

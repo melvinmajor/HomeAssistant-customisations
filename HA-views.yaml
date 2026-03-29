@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 24/03/2026 (DD/MM/YYYY)
+# Last updated: 29/03/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -414,38 +414,72 @@ views:
                       .bubble-button-card-container {
                         background: RGBA(0, 0, 0, 0.2);
                       }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: name
-                name: Office
-                show_icon: true
-                icon: mdi:desk
-                tap_action:
-                  action: navigate
-                  navigation_path: '#office_Popup'
-                button_action:
-                  tap_action:
-                    action: navigate
-                    navigation_path: '#office_Popup'
-                card_layout: large
-                sub_button:
-                  main:
-                    - icon: mdi:menu-open
-                      show_background: true
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: name
+                    name: Office
+                    show_icon: true
+                    icon: mdi:desk
+                    tap_action:
+                      action: navigate
+                      navigation_path: '#office_Popup'
+                    button_action:
                       tap_action:
                         action: navigate
                         navigation_path: '#office_Popup'
-                  bottom: []
-                modules:
-                  - frosted_glass
-                frosted_glass:
-                  border: bubble
-                  icon_background: dark
-                  opacity: 0.6
-                styles: |-
-                  .bubble-button-card-container {
-                    background: RGBA(0, 0, 0, 0.2);
-                  }
+                    card_layout: large
+                    sub_button:
+                      main:
+                        - icon: mdi:menu-open
+                          show_background: true
+                          tap_action:
+                            action: navigate
+                            navigation_path: '#office_Popup'
+                      bottom: []
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      border: bubble
+                      icon_background: dark
+                      opacity: 0.6
+                    styles: |-
+                      .bubble-button-card-container {
+                        background: RGBA(0, 0, 0, 0.2);
+                      }
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: switch
+                    entity: light.hue_filament_bulb_1
+                    name: Bedside lamp
+                    show_state: true
+                    show_name: true
+                    show_attribute: true
+                    attribute: brightness
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                    sub_button:
+                      main:
+                        - icon: mdi:dots-horizontal
+                      bottom: []
+                    icon: phu:table-cylinder-lamp
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      main_shadow: false
+                      icon_shadow: false
+                      opacity: 0.6
+                    liquid_glass_light:
+                      showBorder: false
+                    styles: |-
+                      .bubble-button-card-container {
+                        background: RGBA(0, 0, 0, 0.2);
+                      }
               - type: custom:bubble-card
                 card_type: button
                 button_type: name
@@ -1720,9 +1754,13 @@ views:
                 action: none
             entities:
               - entity: calendar.home
-                color: primary
+                color: light-green
               - entity: calendar.f1_race_season_calendar
-                color: red
+                color: light-grey
+              - entity: calendar.proton_campos_mesureur
+                color: deep-orange
+              - entity: calendar.proton_anniversary_campos_mesureur
+                color: '#936e58'
             show_end: false
             show_progress: true
             show_place: false

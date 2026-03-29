@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 21/03/2026 (DD/MM/YYYY)
+# Last updated: 29/03/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -953,6 +953,12 @@
     trigger: device
   conditions: []
   actions:
+  - action: automation.trigger
+    metadata: {}
+    target:
+      entity_id: automation.turn_off_lights
+    data:
+      skip_condition: true
   - action: light.turn_off
     metadata: {}
     data:
@@ -963,6 +969,7 @@
       - light.jarvis
       - light.salon_tv
       - light.friday
+    enabled: false
   mode: single
 - id: '1771093293977'
   alias: F1 Track Status Light
@@ -1008,4 +1015,21 @@
           %} {{ sounds | random }}\n"
         media_content_type: audio/mpeg
         metadata: {}
+  mode: single
+- id: '1774802321498'
+  alias: Turn off lights
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    data:
+      transition: 1
+    target:
+      entity_id:
+      - light.accueil
+      - light.jarvis
+      - light.salon_tv
+      - light.friday
   mode: single
