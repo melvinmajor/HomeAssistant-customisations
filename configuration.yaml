@@ -1,7 +1,7 @@
 ## Home Assistant configuration.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 13/10/2025 (DD/MM/YYYY)
+# Last updated: 31/03/2026 (DD/MM/YYYY)
 
 # Loads default set of integrations. Do not remove.
 default_config:
@@ -69,6 +69,14 @@ binary_sensor:
     host: 127.0.0.1
     ports:
       23: FanSHIM Button
+
+
+notify:
+  - name: notify_devices
+    platform: group
+    services:
+      - service: mobile_app_oneplus_15_melvin # Melvin device
+      - service: mobile_app_oneplus_nord_5_cph2709 # Kiosk mode device
 
 
 # Raspberry Pi Pico W with Bosch BME680 sensor
