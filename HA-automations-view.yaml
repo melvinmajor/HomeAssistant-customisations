@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 29/03/2026 (DD/MM/YYYY)
+# Last updated: 04/04/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -10,6 +10,126 @@ kiosk_mode:
 views:
   - title: Automations
     sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: System automations and helpers
+            heading_style: title
+            icon: mdi:home-assistant
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.set_ha_theme_at_startup
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: ''
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.reset_kill_switch
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: ''
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.fanshim_ventilation
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: ''
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_select.default_dashboard
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: ''
+            button_type: switch
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_boolean.visitor_override
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:account-group
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_boolean.entrance_light_override
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:account-group
+            grid_options:
+              columns: 6
+              rows: auto
+            button_type: switch
+            sub_button:
+              main: []
+              bottom: []
+            name: Entrance Override
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_boolean.cat_night_override
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:cat
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_datetime.cat_fountain_filter
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: mdi:account-group
+            grid_options:
+              columns: 6
+              rows: auto
+            button_type: switch
+            sub_button:
+              main: []
+              bottom: []
+            name: Entrance Override
       - type: grid
         cards:
           - type: heading
@@ -388,126 +508,6 @@ views:
               bottom: []
             slider_fill_orientation: left
             slider_value_position: right
-      - type: grid
-        cards:
-          - type: heading
-            heading: System automations and helpers
-            heading_style: title
-            icon: mdi:home-assistant
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.set_ha_theme_at_startup
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ''
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.reset_kill_switch
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ''
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.fanshim_ventilation
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ''
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_select.default_dashboard
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: ''
-            button_type: switch
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_boolean.visitor_override
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: mdi:account-group
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_boolean.entrance_light_override
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: mdi:account-group
-            grid_options:
-              columns: 6
-              rows: auto
-            button_type: switch
-            sub_button:
-              main: []
-              bottom: []
-            name: Entrance Override
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_boolean.cat_night_override
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: mdi:cat
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_datetime.cat_fountain_filter
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: mdi:account-group
-            grid_options:
-              columns: 6
-              rows: auto
-            button_type: switch
-            sub_button:
-              main: []
-              bottom: []
-            name: Entrance Override
     type: sections
     cards: []
     max_columns: 4

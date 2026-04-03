@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 29/03/2026 (DD/MM/YYYY)
+# Last updated: 04/04/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -994,6 +994,16 @@
       last_date = strptime(last, '%Y-%m-%d') %}\n  {% set diff = (now().date() - last_date.date()).days
       %}\n  {{ diff == 30 }}\n{% endif %}\n"
   actions:
+  - action: notify.notify_devices
+    data:
+      title: "\U0001F431 Fontaine à eau"
+      message: Il est temps de remplacer le filtre.
+      data:
+        tag: cat_fountain_filter
+        notification_icon: mdi:water
+        actions:
+        - action: DONE_CAT_FILTER
+          title: ✅ Fait
   - action: media_player.play_media
     target:
       entity_id: media_player.hk_citation_one
@@ -1032,4 +1042,24 @@
       - light.jarvis
       - light.salon_tv
       - light.friday
+  mode: single
+- id: '1774961487495'
+  alias: Cat fountain filter - Mark as done
+  description: ''
+  triggers:
+  - trigger: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: DONE_CAT_FILTER
+  actions:
+  - target:
+      entity_id: input_datetime.cat_fountain_filter
+    data:
+      date: '{{ now().date() }}'
+    action: input_datetime.set_datetime
+  - action: notify.notify_devices
+    data:
+      message: clear_notification
+      data:
+        tag: cat_fountain_filter
   mode: single
