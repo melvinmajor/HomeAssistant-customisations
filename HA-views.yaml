@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 29/03/2026 (DD/MM/YYYY)
+# Last updated: 07/04/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -1645,6 +1645,42 @@ views:
             features_position: inline
             grid_options:
               columns: full
+          - type: custom:bubble-card
+            card_type: calendar
+            event_action:
+              tap_action:
+                action: more-info
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            entities:
+              - entity: calendar.home
+                color: light-green
+              - entity: calendar.f1_race_season_calendar
+                color: light-grey
+              - entity: calendar.proton_campos_mesureur
+                color: deep-orange
+              - entity: calendar.proton_anniversary_campos_mesureur
+                color: '#936e58'
+            show_end: false
+            show_progress: true
+            show_place: false
+            sub_button:
+              main: []
+              bottom: []
+            card_layout: large
+            modules:
+              - frosted_glass
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+              main_shadow: false
+              icon_shadow: false
+            grid_options:
+              columns: 12
+              rows: 3
           - type: custom:mushroom-template-card
             primary: |
               {{ states('sensor.air_quality_summary') }}
@@ -1743,42 +1779,24 @@ views:
                 }
       - type: grid
         cards:
-          - type: custom:bubble-card
-            card_type: calendar
-            event_action:
-              tap_action:
-                action: more-info
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
+          - type: custom:mini-graph-card
+            name: Temperature
             entities:
-              - entity: calendar.home
-                color: light-green
-              - entity: calendar.f1_race_season_calendar
-                color: light-grey
-              - entity: calendar.proton_campos_mesureur
-                color: deep-orange
-              - entity: calendar.proton_anniversary_campos_mesureur
-                color: '#936e58'
-            show_end: false
-            show_progress: true
-            show_place: false
-            sub_button:
-              main: []
-              bottom: []
-            card_layout: large
-            modules:
-              - frosted_glass
-            frosted_glass:
-              icon_background: dark
-              border: bubble
-              opacity: 0.6
-              main_shadow: false
-              icon_shadow: false
-            grid_options:
-              columns: 12
-              rows: 3
+              - entity: sensor.healthy_home_coach_temperature_sensor
+                name: Living room
+              - entity: sensor.detecteur_entree_temperature
+                name: Entrance (bedroom side)
+              - entity: sensor.hue_motion_sensor_2_temperature
+                name: Entrance (office side)
+            show:
+              labels: true
+              labels_secondary: true
+            animate: true
+            line_width: 3
+            decimals: 1
+            hour24: true
+            unit: °C
+            font_size: 90
           - type: custom:weather-chart-card
             entity: weather.forecast_maison
             show_main: true
