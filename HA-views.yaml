@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 07/04/2026 (DD/MM/YYYY)
+# Last updated: 09/04/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -38,6 +38,13 @@ decluttering_templates:
             - icon: mdi:cog
               url: /config/dashboard
               label: Configuration
+            - icon: mdi:update
+              url: /config/updates
+              label: |
+                [[[
+                  const updates = parseInt(states['sensor.updates']?.state) || 0;
+                  return updates > 0 ? `Updates (${updates} available)` : 'No updates';
+                ]]]
             - url: /dashboard-automations
               icon: mdi:robot
               label: Automations
@@ -52,13 +59,6 @@ decluttering_templates:
                 confirmation:
                   text: Are you sure you want to restart Home Assistant?
               label: Restart HA
-            - icon: mdi:update
-              url: /config/updates
-              label: |
-                [[[
-                  const updates = parseInt(states['sensor.updates']?.state) || 0;
-                  return updates > 0 ? `Updates (${updates} available)` : 'No updates';
-                ]]]
           badge:
             show: |
               [[[
@@ -208,24 +208,26 @@ views:
                 show_icon: false
                 show_name: false
                 sub_button:
-                  - name: Guest mode
-                    icon: mdi:account-group
-                    tap_action:
-                      action: toggle
-                    entity: input_boolean.visitor_override
-                    show_name: true
-                  - name: Cat night
-                    icon: mdi:cat
-                    tap_action:
-                      action: toggle
-                    entity: input_boolean.cat_night_override
-                    show_name: true
-                  - name: Entrance
-                    icon: phu:button
-                    tap_action:
-                      action: toggle
-                    entity: input_boolean.entrance_light_override
-                    show_name: true
+                  main:
+                    - name: Guest mode
+                      icon: mdi:account-group
+                      tap_action:
+                        action: toggle
+                      entity: input_boolean.visitor_override
+                      show_name: true
+                    - name: Cat night
+                      icon: mdi:cat
+                      tap_action:
+                        action: toggle
+                      entity: input_boolean.cat_night_override
+                      show_name: true
+                    - name: Entrance
+                      icon: phu:button
+                      tap_action:
+                        action: toggle
+                      entity: input_boolean.entrance_light_override
+                      show_name: true
+                  bottom: []
                 styles: |-
                   .card-content {
                     width: 100%;
@@ -315,7 +317,9 @@ views:
                 hold_action:
                   action: more-info
                 sub_button:
-                  - icon: mdi:dots-horizontal
+                  main:
+                    - icon: mdi:dots-horizontal
+                  bottom: []
                 icon: phu:bulb-group
                 modules:
                   - frosted_glass
@@ -331,6 +335,7 @@ views:
                   .bubble-button-card-container {
                     background: RGBA(0, 0, 0, 0.2);
                   }
+                card_layout: normal
               - type: horizontal-stack
                 cards:
                   - type: custom:bubble-card
@@ -346,13 +351,15 @@ views:
                       tap_action:
                         action: navigate
                         navigation_path: '#livingRoom_Popup'
-                    card_layout: large
+                    card_layout: normal
                     sub_button:
-                      - icon: mdi:menu-open
-                        show_background: true
-                        tap_action:
-                          action: navigate
-                          navigation_path: '#livingRoom_Popup'
+                      main:
+                        - icon: mdi:menu-open
+                          show_background: true
+                          tap_action:
+                            action: navigate
+                            navigation_path: '#livingRoom_Popup'
+                      bottom: []
                     modules:
                       - frosted_glass
                     frosted_glass:
@@ -379,28 +386,30 @@ views:
                       tap_action:
                         action: navigate
                         navigation_path: '#tv_Popup'
-                    card_layout: large
+                    card_layout: normal
                     sub_button:
-                      - entity: automation.turn_on_tv_scene
-                        state_background: false
-                        icon: mdi:power
-                        tap_action:
-                          action: call-service
-                          target:
-                            entity_id: entity
-                          data:
-                            skip_condition: false
-                          service: automation.trigger
-                      - entity: automation.turn_off_tv_scene
-                        state_background: false
-                        icon: mdi:power-off
-                        tap_action:
-                          action: call-service
-                          target:
-                            entity_id: entity
-                          data:
-                            skip_condition: false
-                          service: automation.trigger
+                      main:
+                        - entity: automation.turn_on_tv_scene
+                          state_background: false
+                          icon: mdi:power
+                          tap_action:
+                            action: call-service
+                            target:
+                              entity_id: entity
+                            data:
+                              skip_condition: false
+                            service: automation.trigger
+                        - entity: automation.turn_off_tv_scene
+                          state_background: false
+                          icon: mdi:power-off
+                          tap_action:
+                            action: call-service
+                            target:
+                              entity_id: entity
+                            data:
+                              skip_condition: false
+                            service: automation.trigger
+                      bottom: []
                     modules:
                       - frosted_glass
                     frosted_glass:
@@ -429,7 +438,7 @@ views:
                       tap_action:
                         action: navigate
                         navigation_path: '#office_Popup'
-                    card_layout: large
+                    card_layout: normal
                     sub_button:
                       main:
                         - icon: mdi:menu-open
@@ -480,6 +489,7 @@ views:
                       .bubble-button-card-container {
                         background: RGBA(0, 0, 0, 0.2);
                       }
+                    card_layout: normal
               - type: custom:bubble-card
                 card_type: button
                 button_type: name
@@ -493,7 +503,7 @@ views:
                   tap_action:
                     action: navigate
                     navigation_path: '#3dprinter_Popup'
-                card_layout: large
+                card_layout: normal
                 sub_button:
                   main:
                     - name: Remaining time
@@ -545,7 +555,6 @@ views:
                       - condition: numeric_state
                         entity_id: sensor.a1_03919c452905439_progression_de_l_impression
                         below: 100
-                rows: 1.188
                 slider_fill_orientation: left
                 slider_value_position: right
           - type: vertical-stack
@@ -555,14 +564,16 @@ views:
                 button_type: state
                 name: Dishwasher ends
                 icon: mdi:dishwasher
-                card_layout: large
+                card_layout: normal
                 sub_button:
-                  - name: Progress
-                    entity: sensor.lave_vaisselle_program_progress
-                    show_state: true
-                    icon: mdi:timelapse
-                    visibility: []
-                    show_background: false
+                  main:
+                    - name: Progress
+                      entity: sensor.lave_vaisselle_program_progress
+                      show_state: true
+                      icon: mdi:timelapse
+                      visibility: []
+                      show_background: false
+                  bottom: []
                 styles: |-
                   .bubble-button-card-container {
                     background: RGBA(0, 0, 0, 0.2);
@@ -949,7 +960,6 @@ views:
                   .bubble-name-container {
                     margin-right: 0px !important;
                   }
-                rows: 1
                 slider_fill_orientation: left
                 slider_value_position: right
               - type: custom:bubble-card
@@ -2490,6 +2500,15 @@ views:
         show_entity_picture: false
         state_content: state
         icon: phu:nighthawk
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.system_monitor_last_boot
+        show_entity_picture: false
+        state_content: state
+        icon: phu:raspberry-pi
+        name: RPi4 last boot
       - type: custom:mushroom-template-badge
         icon: mdi:harddisk
         color: >
@@ -2560,7 +2579,6 @@ views:
                 button_action:
                   hold_action:
                     action: none
-                name: ''
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
@@ -2580,11 +2598,11 @@ views:
                   border: bubble
                   main_shadow: false
                   icon_shadow: false
-                icon: mdi:memory
                 button_action:
                   hold_action:
                     action: none
-                name: ''
+            grid_options:
+              rows: auto
           - type: heading
             heading: Printer
             heading_style: title
