@@ -52,6 +52,7 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | Modern Circular Gauge           | Yes    |           | x           |
 | Mushroom                        | Yes    |           | x           |
 | Navbard card                    | Yes    |           | x           |
+| Nexxtmove                       | Yes    |           | x           |
 | RecycleApp                      | Yes    |           | x           |
 | UI Lovelace Minimalist          | Yes    |           | x           |
 | Weather Chart Card              | Yes    |           | x           |
@@ -61,7 +62,7 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 Submodules have been installed to further enhance the _bubble card_ module:
 
 * [Frosted Glass](https://github.com/Clooos/Bubble-Card/discussions/1672)
-* [Room Card](https://github.com/Clooos/Bubble-Card/discussions/1700)
+* [Room Card Plus](https://github.com/Clooos/Bubble-Card/discussions/2113)
 * [Icon Border Progress](https://github.com/Clooos/Bubble-Card/discussions/1525)
 * [Customize the icon color (by Dimi27)](https://github.com/Clooos/Bubble-Card/discussions/1514)
 

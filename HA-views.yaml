@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 09/04/2026 (DD/MM/YYYY)
+# Last updated: 14/04/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -158,26 +158,28 @@ views:
                   icon_shadow: true
               - type: custom:bubble-card
                 card_type: separator
-                icon: mdi:car-electric
+                icon: mdi:car-connected
                 sub_button:
-                  - entity: sensor.volvo_ex30_batterie
-                    show_name: false
-                    show_state: true
-                    show_background: false
-                    name: EX30 - battery level
-                    tap_action:
-                      action: none
-                  - entity: button.volvo_ex30_start_climatization
-                    show_name: false
-                    show_state: false
-                    name: EX30 - AC On
-                    icon: mdi:air-conditioner
-                  - entity: button.volvo_ex30_stop_climatization
-                    name: EX30 - AC Off
-                    show_state: false
-                    show_icon: true
-                    show_name: false
-                    icon: mdi:fan-off
+                  main:
+                    - entity: sensor.volvo_ex30_batterie
+                      show_name: false
+                      show_state: true
+                      show_background: false
+                      name: EX30 - battery level
+                      tap_action:
+                        action: none
+                    - entity: button.volvo_ex30_start_climatization
+                      show_name: false
+                      show_state: false
+                      name: EX30 - AC On
+                      icon: mdi:air-conditioner
+                    - entity: button.volvo_ex30_stop_climatization
+                      name: EX30 - AC Off
+                      show_state: false
+                      show_icon: true
+                      show_name: false
+                      icon: mdi:fan-off
+                  bottom: []
                 card_layout: large
               - type: custom:bubble-card
                 card_type: separator
@@ -1391,14 +1393,6 @@ views:
           - condition: state
             entity: sensor.lave_vaisselle_operation_state
             state: Run
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: sensor.healthy_home_coach_temperature_sensor
-        name: Interior temperature
-        state_content: state
-        show_entity_picture: false
     cards: []
     icon: mdi:home
     type: sections
@@ -1410,7 +1404,7 @@ views:
             button_type: name
             modules:
               - frosted_glass
-              - room_card
+              - room-card-plus
             room_card:
               square_icon: false
             name: Entrance
@@ -1424,6 +1418,8 @@ views:
                     action: toggle
                   hold_action:
                     action: more-info
+                - name: Blank
+                  show_background: false
                 - entity: binary_sensor.detecteur_entree_mouvement
                   show_state: false
                   name: Motion sensor 1 - bedroom
@@ -1432,7 +1428,6 @@ views:
                   name: Motion sensor 2 - office
                   state_background: false
               bottom: []
-            rows: 4.172
             card_layout: large-sub-buttons-grid
             frosted_glass:
               icon_background: dark
@@ -1447,8 +1442,158 @@ views:
                 --mdc-icon-size: inherit !important;
               }
             grid_options:
+              columns: 12
+              rows: 1.844
+            room-card-plus:
+              card_radius: 32
+              sub_buttons_per_column: 2
+              main_icon_bg_color: '#737373'
+              ts_pad_top: 20
+          - type: custom:bubble-card
+            card_type: button
+            button_type: name
+            name: Living room
+            icon: phu:rooms-living
+            modules:
+              - frosted_glass
+              - room-card-plus
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+            card_layout: large-sub-buttons-grid
+            button_action: {}
+            sub_button:
+              main:
+                - entity: light.salon
+                  icon: phu:bulb-general-group
+                  name: All living room lights
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - name: Blank
+                  show_background: false
+                - name: Blank
+                  show_background: false
+                - entity: light.salon_sans_spot
+                  icon: phu:rooms-lounge
+                  name: Living room (without Spot)
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - entity: light.spot
+                  name: Spot only
+                  icon: phu:hue-spot-group-v2
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - entity: light.friday
+                  name: Floor lamp
+                  icon: phu:ikea-paparlamp
+                  tap_action:
+                    action: toggle
+              bottom: []
+            styles: |-
+              .bubble-sub-button {
+                height: 46px !important;
+                width: 46px !important;
+              }
+              .bubble-sub-button-icon {
+                --mdc-icon-size: inherit !important;
+              }
+            grid_options:
               columns: 6
-              rows: 3
+              rows: 2.625
+            room-card-plus:
+              card_radius: 32
+              sub_buttons_per_column: 3
+              main_icon_bg_color: '#F25022'
+              ts_pad_top: 20
+          - type: custom:bubble-card
+            card_type: button
+            button_type: name
+            name: TV
+            icon: mdi:television
+            modules:
+              - frosted_glass
+              - room-card-plus
+            frosted_glass:
+              icon_background: dark
+              border: bubble
+              opacity: 0.6
+            card_layout: large-sub-buttons-grid
+            sub_button:
+              main:
+                - entity: automation.turn_on_tv_scene
+                  state_background: false
+                  icon: mdi:power
+                  name: Turn on TV scene
+                  tap_action:
+                    action: perform-action
+                    perform_action: automation.trigger
+                    target:
+                      entity_id: automation.turn_on_tv_scene
+                    data:
+                      skip_condition: true
+                - entity: automation.turn_off_tv_scene
+                  name: Turn off TV scene
+                  icon: mdi:power-off
+                  state_background: false
+                  tap_action:
+                    action: perform-action
+                    perform_action: automation.trigger
+                    target:
+                      entity_id: automation.turn_off_tv_scene
+                    data:
+                      skip_condition: true
+                - entity: media_player.google_tv_2
+                  icon: mdi:television-box
+                  name: Google TV
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - entity: light.hue_play_bar
+                  name: Hue Play Bar
+                  icon: phu:play-bar-v-two-out
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - entity: light.spot
+                  name: Spot
+                  icon: phu:hue-spot-group-v2
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+                - entity: light.hue_ambiance_luster_1
+                  name: Mushroom
+                  icon: mdi:mushroom
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: more-info
+              bottom: []
+            styles: |-
+              .bubble-sub-button {
+                height: 46px !important;
+                width: 46px !important;
+              }
+              .bubble-sub-button-icon {
+                --mdc-icon-size: inherit !important;
+              }
+            grid_options:
+              columns: 6
+              rows: 2.625
+            room-card-plus:
+              card_radius: 32
+              sub_buttons_per_column: 3
+              main_icon_bg_color: '#7FBA00'
+              ts_pad_top: 20
           - type: custom:bubble-card
             card_type: button
             button_type: name
@@ -1456,7 +1601,7 @@ views:
             icon: mdi:desk
             modules:
               - frosted_glass
-              - room_card
+              - room-card-plus
             frosted_glass:
               icon_background: dark
               border: bubble
@@ -1493,137 +1638,31 @@ views:
               }
             grid_options:
               columns: 6
-              rows: 3
-            rows: 4.172
+              rows: 1.844
+            room-card-plus:
+              card_radius: 32
+              sub_buttons_per_column: 2
+              main_icon_bg_color: '#00A4EF'
+              ts_pad_top: 20
           - type: custom:bubble-card
             card_type: button
             button_type: name
-            name: Living room
-            icon: phu:rooms-living
+            name: Bedroom
+            icon: phu:rooms-bedroom
             modules:
               - frosted_glass
-              - room_card
+              - room-card-plus
             frosted_glass:
               icon_background: dark
               border: bubble
               opacity: 0.6
             card_layout: large-sub-buttons-grid
-            rows: 4.172
             button_action: {}
             sub_button:
               main:
-                - entity: light.salon
-                  icon: phu:bulb-general-group
-                  name: All living room lights
-                  tap_action:
-                    action: toggle
-                  hold_action:
-                    action: more-info
-                - entity: light.salon_sans_spot
-                  icon: phu:rooms-lounge
-                  name: Living room (without Spot)
-                  tap_action:
-                    action: toggle
-                  hold_action:
-                    action: more-info
-                - entity: light.spot
-                  name: Spot only
-                  icon: phu:hue-spot-group-v2
-                  tap_action:
-                    action: toggle
-                  hold_action:
-                    action: more-info
-                - show_icon: true
-                  state_background: false
-                  show_background: false
-                  show_name: false
-                  show_state: false
-                  name: blank
-                - entity: light.friday
-                  name: Floor lamp
-                  icon: phu:ikea-paparlamp
-                  tap_action:
-                    action: toggle
-              bottom: []
-            styles: |-
-              .bubble-sub-button {
-                height: 46px !important;
-                width: 46px !important;
-              }
-              .bubble-sub-button-icon {
-                --mdc-icon-size: inherit !important;
-              }
-            grid_options:
-              columns: 6
-              rows: 3
-          - type: custom:bubble-card
-            card_type: button
-            button_type: name
-            name: TV
-            icon: mdi:television
-            modules:
-              - frosted_glass
-              - room_card
-            frosted_glass:
-              icon_background: dark
-              border: bubble
-              opacity: 0.6
-            card_layout: large-sub-buttons-grid
-            rows: 4.172
-            sub_button:
-              main:
-                - entity: automation.turn_on_tv_scene
-                  state_background: false
-                  icon: mdi:power
-                  name: Turn on TV scene
-                  tap_action:
-                    action: perform-action
-                    perform_action: automation.trigger
-                    target:
-                      entity_id: automation.turn_on_tv_scene
-                    data:
-                      skip_condition: true
-                - entity: automation.turn_off_tv_scene
-                  name: Turn off TV scene
-                  icon: mdi:power-off
-                  state_background: false
-                  tap_action:
-                    action: perform-action
-                    perform_action: automation.trigger
-                    target:
-                      entity_id: automation.turn_off_tv_scene
-                    data:
-                      skip_condition: true
-                - entity: media_player.google_tv_2
-                  icon: mdi:television-box
-                  name: Google TV
-                  tap_action:
-                    action: toggle
-                  hold_action:
-                    action: more-info
-                - show_icon: true
-                  state_background: false
-                  show_background: false
-                  show_name: false
-                  show_state: false
-                  name: blank
-                - entity: light.hue_play_bar
-                  name: Hue Play Bar
-                  icon: phu:play-bar-v-two-out
-                  tap_action:
-                    action: toggle
-                  hold_action:
-                    action: more-info
-                - entity: light.spot
-                  name: Spot
-                  icon: phu:hue-spot-group-v2
-                  tap_action:
-                    action: toggle
-                  hold_action:
-                    action: more-info
-                - entity: light.hue_ambiance_luster_1
-                  name: Mushroom
-                  icon: mdi:mushroom
+                - entity: light.hue_filament_bulb_1
+                  icon: phu:bulb-filament-candle
+                  name: Bedside lamp
                   tap_action:
                     action: toggle
                   hold_action:
@@ -1639,22 +1678,12 @@ views:
               }
             grid_options:
               columns: 6
-              rows: 3
-          - type: tile
-            entity: light.hue_filament_bulb_1
-            name: Bedroom
-            icon: phu:bulb-filament-candle
-            show_entity_picture: false
-            hide_state: false
-            vertical: false
-            tap_action:
-              action: toggle
-            features:
-              - type: light-brightness
-              - type: light-color-temp
-            features_position: inline
-            grid_options:
-              columns: full
+              rows: 1.844
+            room-card-plus:
+              card_radius: 32
+              sub_buttons_per_column: 2
+              main_icon_bg_color: '#FFB900'
+              ts_pad_top: 20
           - type: custom:bubble-card
             card_type: calendar
             event_action:
@@ -1790,7 +1819,7 @@ views:
       - type: grid
         cards:
           - type: custom:mini-graph-card
-            name: Temperature
+            name: Home temperature
             entities:
               - entity: sensor.healthy_home_coach_temperature_sensor
                 name: Living room
@@ -1852,6 +1881,8 @@ views:
             type: weather-forecast
             entity: weather.forecast_maison
             forecast_type: hourly
+            name:
+              type: device
       - type: grid
         cards:
           - show_state: true
@@ -1952,13 +1983,12 @@ views:
             entity: sensor.lave_vaisselle_operation_state
             modules:
               - frosted_glass
-              - room_card
+              - room-card-plus
             frosted_glass:
               icon_background: dark
               border: bubble
               opacity: 0.6
             card_layout: large-sub-buttons-grid
-            rows: 4.172
             icon: mdi:dishwasher
             name: Dishwasher
             show_state: false
@@ -1988,7 +2018,12 @@ views:
               bottom: []
             grid_options:
               columns: 12
-              rows: 3
+            room-card-plus:
+              card_radius: 32
+              ts_pad_top: 20
+              sub_buttons_per_column: 2
+              main_icon_bg_color: '#abacae'
+            rows: 1.844
           - type: entities
             entities:
               - entity: input_datetime.cat_fountain_filter
@@ -2226,11 +2261,7 @@ views:
                     button_type: state
                     entity: sensor.volvo_ex30_odometer
                     name: Odometer
-                    tap_action:
-                      action: none
                     button_action:
-                      tap_action:
-                        action: none
                       hold_action:
                         action: none
                     modules:
@@ -2246,17 +2277,16 @@ views:
                     icon_color:
                       use_hex: true
                       color_hex: '#FFAA00'
+                    sub_button:
+                      main: []
+                      bottom: []
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
                     entity: >-
                       sensor.volvo_ex30_trip_automatic_average_energy_consumption
                     name: Avg. consumption
-                    tap_action:
-                      action: none
                     button_action:
-                      tap_action:
-                        action: none
                       hold_action:
                         action: none
                     modules:
@@ -2273,6 +2303,9 @@ views:
                     icon_color:
                       color_hex: '#FFAA00'
                       use_hex: true
+                    sub_button:
+                      main: []
+                      bottom: []
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
@@ -2291,6 +2324,13 @@ views:
                 icon_color:
                   use_hex: true
                   color_hex: '#FFAA00'
+                sub_button:
+                  main: []
+                  bottom: []
+                tap_action:
+                  action: none
+                double_tap_action:
+                  action: none
               - type: horizontal-stack
                 cards:
                   - type: custom:bubble-card
@@ -2356,6 +2396,8 @@ views:
                     button_action:
                       hold_action:
                         action: none
+                      tap_action:
+                        action: none
                     modules:
                       - frosted_glass
                       - icon_color
@@ -2367,6 +2409,11 @@ views:
                     icon_color:
                       color_hex: '#FFAA00'
                       use_hex: true
+                    sub_button:
+                      main: []
+                      bottom: []
+                    tap_action:
+                      action: none
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
@@ -2375,6 +2422,8 @@ views:
                     icon: mdi:car-brake-fluid-level
                     button_action:
                       hold_action:
+                        action: none
+                      tap_action:
                         action: none
                     modules:
                       - frosted_glass
@@ -2387,6 +2436,11 @@ views:
                     icon_color:
                       use_hex: true
                       color_hex: '#FFAA00'
+                    sub_button:
+                      main: []
+                      bottom: []
+                    tap_action:
+                      action: none
           - type: vertical-stack
             cards:
               - type: heading
@@ -2403,6 +2457,8 @@ views:
                     button_action:
                       hold_action:
                         action: none
+                      tap_action:
+                        action: none
                     card_layout: normal
                     modules:
                       - frosted_glass
@@ -2415,6 +2471,11 @@ views:
                     icon_color:
                       use_hex: true
                       color_hex: '#FFAA00'
+                    sub_button:
+                      main: []
+                      bottom: []
+                    tap_action:
+                      action: none
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
@@ -2422,6 +2483,8 @@ views:
                     name: Front right
                     button_action:
                       hold_action:
+                        action: none
+                      tap_action:
                         action: none
                     modules:
                       - frosted_glass
@@ -2435,6 +2498,11 @@ views:
                     icon_color:
                       color_hex: '#FFAA00'
                       use_hex: true
+                    sub_button:
+                      main: []
+                      bottom: []
+                    tap_action:
+                      action: none
               - type: horizontal-stack
                 cards:
                   - type: custom:bubble-card
@@ -2445,6 +2513,8 @@ views:
                     button_action:
                       hold_action:
                         action: none
+                      tap_action:
+                        action: none
                     modules:
                       - frosted_glass
                       - icon_color
@@ -2457,6 +2527,11 @@ views:
                     icon_color:
                       use_hex: true
                       color_hex: '#FFAA00'
+                    sub_button:
+                      main: []
+                      bottom: []
+                    tap_action:
+                      action: none
                   - type: custom:bubble-card
                     card_type: button
                     button_type: state
@@ -2464,6 +2539,8 @@ views:
                     name: Rear right
                     button_action:
                       hold_action:
+                        action: none
+                      tap_action:
                         action: none
                     modules:
                       - frosted_glass
@@ -2477,6 +2554,11 @@ views:
                     icon_color:
                       color_hex: '#FFAA00'
                       use_hex: true
+                    sub_button:
+                      main: []
+                      bottom: []
+                    tap_action:
+                      action: none
       - type: grid
         cards:
           - type: custom:decluttering-card
@@ -2504,11 +2586,11 @@ views:
         show_name: true
         show_state: true
         show_icon: true
-        entity: sensor.system_monitor_last_boot
+        entity: sensor.backup_derniere_sauvegarde_automatique_reussie
         show_entity_picture: false
         state_content: state
-        icon: phu:raspberry-pi
-        name: RPi4 last boot
+        icon: mdi:cloud-upload-outline
+        name: Last successful backup
       - type: custom:mushroom-template-badge
         icon: mdi:harddisk
         color: >
@@ -2531,7 +2613,7 @@ views:
           - type: heading
             heading: Raspberry Pi 4
             heading_style: title
-            icon: mdi:raspberry-pi
+            icon: phu:raspberry-pi
           - type: horizontal-stack
             cards:
               - type: custom:bubble-card
@@ -2613,34 +2695,36 @@ views:
             entity: sensor.hp_officejet_pro_8020_series
             card_layout: large-sub-buttons-grid
             sub_button:
-              - entity: sensor.hp_officejet_pro_8020_series_black_cartridge
-                icon: mdi:water
-                show_background: true
-                show_name: true
-                name: Black cartridge
-                show_state: true
-                state_background: false
-              - entity: sensor.hp_officejet_pro_8020_series_cyan_cartridge
-                icon: mdi:water
-                show_background: true
-                show_name: true
-                name: Cyan cartridge
-                show_state: true
-                state_background: false
-              - entity: sensor.hp_officejet_pro_8020_series_magenta_cartridge
-                icon: mdi:water
-                show_background: true
-                show_name: true
-                name: Magenta cartridge
-                show_state: true
-                state_background: false
-              - entity: sensor.hp_officejet_pro_8020_series_yellow_cartridge
-                icon: mdi:water
-                show_background: true
-                show_name: true
-                name: Yellow cartridge
-                show_state: true
-                state_background: false
+              main:
+                - entity: sensor.hp_officejet_pro_8020_series_black_cartridge
+                  icon: mdi:water
+                  show_background: true
+                  show_name: true
+                  name: Black
+                  show_state: true
+                  state_background: false
+                - entity: sensor.hp_officejet_pro_8020_series_cyan_cartridge
+                  icon: mdi:water
+                  show_background: true
+                  show_name: true
+                  name: Cyan
+                  show_state: true
+                  state_background: false
+                - entity: sensor.hp_officejet_pro_8020_series_magenta_cartridge
+                  icon: mdi:water
+                  show_background: true
+                  show_name: true
+                  name: Magenta
+                  show_state: true
+                  state_background: false
+                - entity: sensor.hp_officejet_pro_8020_series_yellow_cartridge
+                  icon: mdi:water
+                  show_background: true
+                  show_name: true
+                  name: Yellow
+                  show_state: true
+                  state_background: false
+              bottom: []
             name: HP OfficeJet Pro 8022e
             show_icon: true
             icon: mdi:printer
@@ -2651,34 +2735,63 @@ views:
                 action: none
             modules:
               - frosted_glass
-              - room_card
+              - room-card-plus
             frosted_glass:
               icon_background: dark
               border: bubble
               opacity: 0.6
             styles: |-
               .bubble-sub-button {
-                width: inherit !important;
+                width: 115px !important;
               }
-              .bubble-name-container {
-                  width: 150px;
+              .bubble-sub-button-1 {
+                background-color: black;
+                color: white;
+              }
+              .bubble-sub-button-2 {
+                background-color: cyan;
+                color: black;
+              }
+              .bubble-sub-button-3 {
+                background-color: magenta;
+                color: white;
+              }
+              .bubble-sub-button-4 {
+                background-color: yellow;
+                color: black;
               }
             show_last_updated: false
             show_last_changed: false
-            rows: '3'
-            scrolling_effect: true
+            rows: 3.406
+            scrolling_effect: false
             show_attribute: false
             attribute: state_reason
             show_state: false
+            room-card-plus:
+              sub_buttons_per_column: 4
+              card_radius: 32
+              ts_pad_top: 20
+              main_icon_bg_color: '#abacae'
+            grid_options:
+              columns: 8
+              rows: 3.406
           - type: markdown
             content: >-
-              **Magenta, Cyan, Yellow:** 912, 912XL
+              **Color:**
 
-              **Black:** 912, 912XL, 917XL
+              912, 912XL
+
+              **Black:**
+
+              912, 912XL, 917XL
+
 
               [HP
               Shop](https://www.hp.com/be-fr/shop/ink-toner-paper-finder/8022e)
             text_only: true
+            grid_options:
+              columns: 4
+              rows: auto
             card_mod:
               style: |
                 ha-card {
@@ -2832,27 +2945,9 @@ views:
                 name: Dimmer switch bedroom
             state_color: true
           - type: heading
-            heading: Home Assistant
+            heading: Matter
             heading_style: title
-            icon: mdi:home-assistant
-          - type: vertical-stack
-            cards:
-              - type: entities
-                entities:
-                  - entity: update.home_assistant_core_update
-                    name: HA Core
-                    secondary_info: last-updated
-                  - entity: update.home_assistant_operating_system_update
-                    name: HA Operating System
-                    secondary_info: last-updated
-                  - entity: update.home_assistant_supervisor_update
-                    name: HA Supervisor
-                    secondary_info: last-updated
-                  - entity: update.hacs_update
-                    name: HACS
-                    secondary_info: last-updated
-                state_color: false
-                show_header_toggle: true
+            icon: phu:matter
           - type: vertical-stack
             cards:
               - type: entities
