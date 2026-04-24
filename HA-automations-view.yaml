@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 04/04/2026 (DD/MM/YYYY)
+# Last updated: 24/04/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -78,6 +78,21 @@ views:
               rows: auto
           - type: custom:bubble-card
             card_type: button
+            entity: input_select.heating_mode
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: ''
+            button_type: switch
+            grid_options:
+              columns: 6
+              rows: auto
+            sub_button:
+              main: []
+              bottom: []
+          - type: custom:bubble-card
+            card_type: button
             entity: input_boolean.visitor_override
             show_icon: true
             show_state: true
@@ -130,6 +145,85 @@ views:
               main: []
               bottom: []
             name: Entrance Override
+          - type: heading
+            heading: Heating system
+            heading_style: title
+            icon: mdi:home-thermometer
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.heating_summer_mode
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            grid_options:
+              columns: 12
+              rows: auto
+            sub_button:
+              main: []
+              bottom: []
+            name: Summer mode
+            show_last_updated: false
+            show_last_changed: false
+            show_attribute: true
+            attribute: last_triggered
+            show_state: false
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.heating_winter_mode_init
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            grid_options:
+              columns: 12
+              rows: auto
+            sub_button:
+              main: []
+              bottom: []
+            name: Winter mode init
+            show_last_updated: false
+            show_last_changed: false
+            show_attribute: true
+            attribute: last_triggered
+            show_state: false
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.heating_schedule
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            grid_options:
+              columns: 12
+              rows: auto
+            sub_button:
+              main: []
+              bottom: []
+            name: Winter schedule
+            show_last_updated: false
+            show_last_changed: false
+            show_attribute: true
+            attribute: last_triggered
+            show_state: false
       - type: grid
         cards:
           - type: heading

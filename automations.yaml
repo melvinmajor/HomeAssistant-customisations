@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 09/04/2026 (DD/MM/YYYY)
+# Last updated: 24/04/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -1063,3 +1063,160 @@
       data:
         tag: cat_fountain_filter
   mode: single
+- id: '1777024493806'
+  alias: Heating - Summer mode
+  description: ''
+  triggers:
+  - entity_id:
+    - input_select.heating_mode
+    to:
+    - Summer
+    trigger: state
+  actions:
+  - target:
+      entity_id:
+      - climate.radiator_thermostat_w600
+      - climate.radiator_thermostat_w600_2
+      - climate.radiator_thermostat_w600_4
+      - climate.radiator_thermostat_w600_3
+    data:
+      temperature: 16
+      hvac_mode: 'off'
+    action: climate.set_temperature
+- id: '1777024632212'
+  alias: Heating - Winter mode init
+  description: ''
+  triggers:
+  - entity_id:
+    - input_select.heating_mode
+    to:
+    - Winter
+    trigger: state
+  actions:
+  - action: climate.set_hvac_mode
+    metadata: {}
+    target:
+      entity_id:
+      - climate.radiator_thermostat_w600
+      - climate.radiator_thermostat_w600_4
+      - climate.radiator_thermostat_w600_2
+      - climate.radiator_thermostat_w600_3
+    data:
+      hvac_mode: heat
+- id: '1777025579606'
+  alias: Heating - Winter schedule
+  description: ''
+  triggers:
+  - at:
+    - 06:30:00
+    - 07:30:00
+    - 08:30:00
+    - '18:30:00'
+    - '22:30:00'
+    trigger: time
+  conditions:
+  - condition: state
+    entity_id: input_select.heating_mode
+    state:
+    - Winter
+  actions:
+  - choose:
+    - conditions:
+      - condition: time
+        after: 06:30:00
+        before: 07:30:00
+      sequence:
+      - target:
+          entity_id: climate.radiator_thermostat_w600_4
+        data:
+          temperature: 20
+        action: climate.set_temperature
+      - target:
+          entity_id: climate.radiator_thermostat_w600_3
+        data:
+          temperature: 22
+        action: climate.set_temperature
+      - target:
+          entity_id:
+          - climate.radiator_thermostat_w600
+        data:
+          temperature: 18.5
+        action: climate.set_temperature
+    - conditions:
+      - condition: time
+        after: 07:30:00
+        before: 08:30:00
+      sequence:
+      - target:
+          entity_id:
+          - climate.radiator_thermostat_w600_2
+        data:
+          temperature: 21
+        action: climate.set_temperature
+      - target:
+          entity_id: climate.radiator_thermostat_w600_4
+        data:
+          temperature: 20
+        action: climate.set_temperature
+      - target:
+          entity_id: climate.radiator_thermostat_w600_3
+        data:
+          temperature: 22
+        action: climate.set_temperature
+      - target:
+          entity_id:
+          - climate.radiator_thermostat_w600
+        data:
+          temperature: 18.5
+        action: climate.set_temperature
+    - conditions:
+      - condition: time
+        after: 08:30:00
+        before: '18:30:00'
+      sequence:
+      - target:
+          entity_id:
+          - climate.radiator_thermostat_w600_4
+          - climate.radiator_thermostat_w600_2
+          - climate.radiator_thermostat_w600
+          - climate.radiator_thermostat_w600_3
+        data:
+          temperature: 16
+        action: climate.set_temperature
+    - conditions:
+      - condition: time
+        after: '18:30:00'
+        before: '22:30:00'
+      sequence:
+      - target:
+          entity_id:
+          - climate.radiator_thermostat_w600_4
+        data:
+          temperature: 20
+        action: climate.set_temperature
+      - target:
+          entity_id:
+          - climate.radiator_thermostat_w600_2
+        data:
+          temperature: 19
+        action: climate.set_temperature
+      - target:
+          entity_id:
+          - climate.radiator_thermostat_w600
+        data:
+          temperature: 18.5
+        action: climate.set_temperature
+    - conditions:
+      - condition: time
+        after: '22:30:00'
+        before: 06:30:00
+      sequence:
+      - target:
+          entity_id:
+          - climate.radiator_thermostat_w600
+          - climate.radiator_thermostat_w600_2
+          - climate.radiator_thermostat_w600_4
+          - climate.radiator_thermostat_w600_3
+        data:
+          temperature: 16
+        action: climate.set_temperature
