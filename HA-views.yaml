@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 24/04/2026 (DD/MM/YYYY)
+# Last updated: 01/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -217,18 +217,28 @@ views:
                         action: toggle
                       entity: input_boolean.visitor_override
                       show_name: true
+                      content_layout: icon-top
                     - name: Cat night
                       icon: mdi:cat
                       tap_action:
                         action: toggle
                       entity: input_boolean.cat_night_override
                       show_name: true
-                    - name: Entrance
+                      content_layout: icon-top
+                    - name: Entry override
                       icon: phu:button
                       tap_action:
                         action: toggle
                       entity: input_boolean.entrance_light_override
                       show_name: true
+                      content_layout: icon-top
+                    - name: Presence sim
+                      icon: mdi:home-sound-out
+                      tap_action:
+                        action: toggle
+                      entity: switch.home_presence_simulation
+                      show_name: true
+                      content_layout: icon-top
                   bottom: []
                 styles: |-
                   .card-content {
@@ -237,20 +247,22 @@ views:
                   }
                   .bubble-button-card-container {
                     background: none;
+                    height: 54px;
                   }
                   .bubble-sub-button {
-                    height: 48px !important;
-                    width: 120px !important;
+                    height: 54px !important;
+                    width: 100% !important;
                   }
                   .bubble-sub-button-container {
                     width: 100%;
-                    justify-content: space-around !important;
+                    justify-content: space-between !important;
+                    gap: 5px;
                   }
                   .bubble-sub-button-icon {
                     --mdc-icon-size: inherit !important;
                   }
                   .bubble-name-container {
-                    margin-right: 0px !important;
+                    margin-left: 0 !important;
                   }
                 modules:
                   - frosted_glass
@@ -260,6 +272,7 @@ views:
                   main_shadow: false
                   icon_shadow: false
                   opacity: 0.6
+                rows: 1.281
               - type: custom:bubble-card
                 card_type: button
                 button_type: switch
@@ -1917,9 +1930,26 @@ views:
                   100% { transform: scale(1); opacity: 1; }
                 }
           - type: custom:bubble-card
+            card_type: button
+            button_type: switch
+            sub_button:
+              main: []
+              bottom: []
+            entity: switch.home_presence_simulation
+            name: Presence sim
+            icon: mdi:home-sound-out
+            show_state: true
+            modules: []
+            grid_options:
+              columns: 6
+              rows: auto
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: custom:bubble-card
             card_type: select
             entity: input_select.heating_mode
-            icon: ''
             double_tap_action:
               action: none
             hold_action:
@@ -1928,11 +1958,14 @@ views:
               double_tap_action:
                 action: none
             show_state: true
-            name: ''
+            name: Heat mode
             button_type: state
             sub_button:
               main: []
               bottom: []
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: climate
             sub_button:

@@ -54,6 +54,7 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | Navbard card                    | Yes    |           | x           |
 | Nexxtmove                       | Yes    |           | x           |
 | RecycleApp                      | Yes    |           | x           |
+| Presence Simulation             | Yes    |           | x           |
 | UI Lovelace Minimalist          | Yes    |           | x           |
 | Weather Chart Card              | Yes    |           | x           |
 

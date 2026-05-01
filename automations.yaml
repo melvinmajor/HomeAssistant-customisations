@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 24/04/2026 (DD/MM/YYYY)
+# Last updated: 01/05/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night  - Without guests
@@ -70,7 +70,7 @@
     device_id: 5b6f139d3f1050a8fff847fb0ac42759
     entity_id: a3cd70ff433582b7533af5e4b8ee4ed9
     domain: sensor
-    below: 10
+    below: 8
   - condition: state
     entity_id: input_boolean.entrance_light_override
     state: 'off'
@@ -689,7 +689,7 @@
     device_id: a95dcf5ffbb3936d36d049d2eba4426b
     entity_id: 9d293e9f54a9ee2eda14874bd7a419b4
     domain: sensor
-    below: 10
+    below: 8
   - condition: state
     entity_id: input_boolean.entrance_light_override
     state: 'off'
