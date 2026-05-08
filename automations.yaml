@@ -1,29 +1,18 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 01/05/2026 (DD/MM/YYYY)
+# Last updated: 08/05/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
-  alias: Entrance light motion at night  - Without guests
+  alias: Entrance light motion at night - Without guests
   description: ''
   triggers:
-  - type: motion
-    device_id: 5b6f139d3f1050a8fff847fb0ac42759
-    entity_id: d93219cc0a03ac6de549a144ed36d7d0
-    domain: binary_sensor
-    trigger: device
-  - type: motion
-    device_id: a95dcf5ffbb3936d36d049d2eba4426b
-    entity_id: 438a5301a4ecbdded495aab15f43c71e
-    domain: binary_sensor
-    trigger: device
+  - trigger: state
+    entity_id:
+    - binary_sensor.detecteur_entree_mouvement
+    - binary_sensor.hue_motion_sensor_2_mouvement
+    to: 'on'
   conditions:
-  - type: is_illuminance
-    condition: device
-    device_id: 5b6f139d3f1050a8fff847fb0ac42759
-    entity_id: a3cd70ff433582b7533af5e4b8ee4ed9
-    domain: sensor
-    below: 40
   - condition: time
     after: '23:00:00'
     before: sensor.sun_next_dawn
@@ -34,65 +23,95 @@
     entity_id: input_boolean.entrance_light_override
     state: 'off'
   - condition: state
-    state: 'off'
     entity_id: input_boolean.cat_night_override
+    state: 'off'
+  - condition: numeric_state
+    entity_id: sensor.detecteur_entree_eclairement
+    below: 40
   actions:
-  - type: turn_on
-    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
-    entity_id: 233951028fd7fcb570a5c2e3d6fce425
-    domain: light
-    brightness_pct: 20
+  - if:
+    - condition: state
+      entity_id: light.accueil
+      state: 'off'
+    then:
+    - target:
+        entity_id:
+        - light.accueil
+      data:
+        brightness_pct: 20
+      action: light.turn_on
+  - wait_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
+      \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
   - delay:
       hours: 0
       minutes: 0
-      seconds: 45
+      seconds: 15
       milliseconds: 0
-  - type: turn_off
-    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
-    entity_id: 233951028fd7fcb570a5c2e3d6fce425
-    domain: light
-  mode: single
+  - condition: template
+    value_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
+      \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
+  - target:
+      entity_id:
+      - light.accueil
+    action: light.turn_off
+    data: {}
+  mode: restart
 - id: '1726612427289'
   alias: Entrance light motion at day - bed side
   description: ''
   triggers:
-  - type: motion
-    device_id: 5b6f139d3f1050a8fff847fb0ac42759
-    entity_id: d93219cc0a03ac6de549a144ed36d7d0
-    domain: binary_sensor
-    trigger: device
+  - entity_id:
+    - binary_sensor.detecteur_entree_mouvement
+    to: 'on'
+    trigger: state
   conditions:
   - condition: time
     after: sensor.sun_next_rising
     before: sensor.sun_next_setting
-  - type: is_illuminance
-    condition: device
-    device_id: 5b6f139d3f1050a8fff847fb0ac42759
-    entity_id: a3cd70ff433582b7533af5e4b8ee4ed9
-    domain: sensor
-    below: 8
+  - condition: or
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.detecteur_entree_eclairement
+      below: 8
+    - condition: state
+      entity_id: light.couloir_cote_chambre
+      state:
+      - 'on'
   - condition: state
     entity_id: input_boolean.entrance_light_override
     state: 'off'
   - condition: state
-    state: 'off'
     entity_id: input_boolean.cat_night_override
+    state: 'off'
   actions:
-  - type: turn_on
-    device_id: 698e12b8043b3bea237b1a922ef86228
-    entity_id: 0cbd7a6da9f98a41c52ff05816115824
-    domain: light
-    brightness_pct: 100
+  - if:
+    - condition: state
+      entity_id: light.couloir_cote_chambre
+      state: 'off'
+    then:
+    - target:
+        entity_id: light.couloir_cote_chambre
+      data:
+        brightness_pct: 100
+      action: light.turn_on
+  - wait_for_trigger:
+    - entity_id:
+      - binary_sensor.detecteur_entree_mouvement
+      to: 'off'
+      trigger: state
   - delay:
       hours: 0
-      minutes: 1
-      seconds: 0
+      minutes: 0
+      seconds: 15
       milliseconds: 0
-  - type: turn_off
-    device_id: 698e12b8043b3bea237b1a922ef86228
-    entity_id: 0cbd7a6da9f98a41c52ff05816115824
-    domain: light
-  mode: single
+  - condition: state
+    entity_id: binary_sensor.detecteur_entree_mouvement
+    state: 'off'
+  - target:
+      entity_id: light.couloir_cote_chambre
+    action: light.turn_off
+    data: {}
+  mode: restart
 - id: '1728485170366'
   alias: Tag white circle is scanned
   description: ''
@@ -110,16 +129,11 @@
   alias: Entrance light motion at sunrise or sunset - Without guests
   description: ''
   triggers:
-  - type: motion
-    device_id: 5b6f139d3f1050a8fff847fb0ac42759
-    entity_id: d93219cc0a03ac6de549a144ed36d7d0
-    domain: binary_sensor
-    trigger: device
-  - type: motion
-    device_id: a95dcf5ffbb3936d36d049d2eba4426b
-    entity_id: 438a5301a4ecbdded495aab15f43c71e
-    domain: binary_sensor
-    trigger: device
+  - trigger: state
+    entity_id:
+    - binary_sensor.detecteur_entree_mouvement
+    - binary_sensor.hue_motion_sensor_2_mouvement
+    to: 'on'
   conditions:
   - condition: or
     conditions:
@@ -136,24 +150,36 @@
     entity_id: input_boolean.entrance_light_override
     state: 'off'
   - condition: state
-    state: 'off'
     entity_id: input_boolean.cat_night_override
+    state: 'off'
   actions:
-  - type: turn_on
-    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
-    entity_id: 233951028fd7fcb570a5c2e3d6fce425
-    domain: light
-    brightness_pct: 60
+  - if:
+    - condition: state
+      entity_id: light.accueil
+      state: 'off'
+    then:
+    - target:
+        entity_id:
+        - light.accueil
+      data:
+        brightness_pct: 60
+      action: light.turn_on
+  - wait_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
+      \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
   - delay:
       hours: 0
-      minutes: 1
-      seconds: 30
+      minutes: 0
+      seconds: 15
       milliseconds: 0
-  - type: turn_off
-    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
-    entity_id: 233951028fd7fcb570a5c2e3d6fce425
-    domain: light
-  mode: single
+  - condition: template
+    value_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
+      \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
+  - target:
+      entity_id:
+      - light.accueil
+    action: light.turn_off
+    data: {}
+  mode: restart
 - id: '1735677677036'
   alias: Startup and daily system care
   description: Set Home Assistant theme for all users at startup and everyday at 7AM.
@@ -236,8 +262,8 @@
     brightness_pct: 60
   - delay:
       hours: 0
-      minutes: 3
-      seconds: 0
+      minutes: 0
+      seconds: 30
       milliseconds: 0
   - type: turn_off
     device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
@@ -245,26 +271,16 @@
     domain: light
   mode: single
 - id: '1741100805200'
-  alias: Entrance light motion at night  - With guests
+  alias: Entrance light motion at night - With guests
   description: ''
   triggers:
-  - type: motion
-    device_id: 5b6f139d3f1050a8fff847fb0ac42759
-    entity_id: d93219cc0a03ac6de549a144ed36d7d0
-    domain: binary_sensor
-    trigger: device
-  - type: motion
-    device_id: a95dcf5ffbb3936d36d049d2eba4426b
-    entity_id: 438a5301a4ecbdded495aab15f43c71e
-    domain: binary_sensor
-    trigger: device
+  - trigger: state
+    entity_id:
+    - binary_sensor.detecteur_entree_mouvement
+    - binary_sensor.hue_motion_sensor_2_mouvement
+    to:
+    - 'on'
   conditions:
-  - type: is_illuminance
-    condition: device
-    device_id: 5b6f139d3f1050a8fff847fb0ac42759
-    entity_id: a3cd70ff433582b7533af5e4b8ee4ed9
-    domain: sensor
-    below: 40
   - condition: time
     after: 01:00:00
     before: sensor.sun_next_dawn
@@ -275,24 +291,36 @@
     entity_id: input_boolean.entrance_light_override
     state: 'off'
   - condition: state
-    state: 'off'
     entity_id: input_boolean.cat_night_override
+    state: 'off'
   actions:
-  - type: turn_on
-    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
-    entity_id: 233951028fd7fcb570a5c2e3d6fce425
-    domain: light
-    brightness_pct: 20
+  - if:
+    - condition: state
+      entity_id: light.accueil
+      state:
+      - 'off'
+    then:
+    - target:
+        entity_id:
+        - light.accueil
+      data:
+        brightness_pct: 20
+      action: light.turn_on
+  - wait_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
+      \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
   - delay:
       hours: 0
-      minutes: 1
-      seconds: 0
+      minutes: 0
+      seconds: 30
       milliseconds: 0
-  - type: turn_off
-    device_id: 7bc01b1a069cfdf9d1fe2f03b3351339
-    entity_id: 233951028fd7fcb570a5c2e3d6fce425
-    domain: light
-  mode: single
+  - condition: template
+    value_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
+      \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
+  - action: light.turn_off
+    data: {}
+    target:
+      entity_id: light.accueil
+  mode: restart
 - id: '1742313465937'
   alias: Smart Button entrance short press
   description: ''
@@ -675,43 +703,64 @@
   alias: Entrance light motion at day - office side
   description: ''
   triggers:
-  - type: motion
-    device_id: a95dcf5ffbb3936d36d049d2eba4426b
-    entity_id: 438a5301a4ecbdded495aab15f43c71e
-    domain: binary_sensor
-    trigger: device
+  - entity_id:
+    - binary_sensor.hue_motion_sensor_2_mouvement
+    to:
+    - 'on'
+    trigger: state
   conditions:
   - condition: time
     after: sensor.sun_next_rising
     before: sensor.sun_next_setting
-  - type: is_illuminance
-    condition: device
-    device_id: a95dcf5ffbb3936d36d049d2eba4426b
-    entity_id: 9d293e9f54a9ee2eda14874bd7a419b4
-    domain: sensor
-    below: 8
+  - condition: or
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.hue_motion_sensor_2_eclairement
+      below: 8
+    - condition: state
+      entity_id: light.couloir_cote_bureau
+      state:
+      - 'on'
   - condition: state
     entity_id: input_boolean.entrance_light_override
     state: 'off'
   - condition: state
-    state: 'off'
     entity_id: input_boolean.cat_night_override
+    state: 'off'
   actions:
-  - type: turn_on
-    device_id: f50b6d4492615b4a4264f537bec680ca
-    entity_id: 3385be7839c6553d2cff2620c7bb80d9
-    domain: light
-    brightness_pct: 100
+  - if:
+    - condition: state
+      entity_id: light.couloir_cote_bureau
+      state:
+      - 'off'
+    then:
+    - target:
+        entity_id:
+        - light.couloir_cote_bureau
+      data:
+        brightness_pct: 100
+      action: light.turn_on
+  - wait_for_trigger:
+    - entity_id:
+      - binary_sensor.hue_motion_sensor_2_mouvement
+      to:
+      - 'off'
+      trigger: state
   - delay:
       hours: 0
-      minutes: 1
-      seconds: 0
+      minutes: 0
+      seconds: 15
       milliseconds: 0
-  - type: turn_off
-    device_id: f50b6d4492615b4a4264f537bec680ca
-    entity_id: 3385be7839c6553d2cff2620c7bb80d9
-    domain: light
-  mode: single
+  - condition: state
+    entity_id: binary_sensor.hue_motion_sensor_2_mouvement
+    state:
+    - 'off'
+  - target:
+      entity_id:
+      - light.couloir_cote_bureau
+    action: light.turn_off
+    data: {}
+  mode: restart
 - id: '1769681478513'
   alias: Trash out - 8PM
   description: ''
@@ -1152,22 +1201,6 @@
           - climate.radiator_thermostat_w600_2
         data:
           temperature: 21
-        action: climate.set_temperature
-      - target:
-          entity_id: climate.radiator_thermostat_w600_4
-        data:
-          temperature: 20
-        action: climate.set_temperature
-      - target:
-          entity_id: climate.radiator_thermostat_w600_3
-        data:
-          temperature: 22
-        action: climate.set_temperature
-      - target:
-          entity_id:
-          - climate.radiator_thermostat_w600
-        data:
-          temperature: 18.5
         action: climate.set_temperature
     - conditions:
       - condition: time
