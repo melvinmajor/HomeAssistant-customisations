@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 01/05/2026 (DD/MM/YYYY)
+# Last updated: 08/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -89,6 +89,7 @@ decluttering_templates:
           enabled: true
           desktop_px: 100
           mobile_px: 60
+        reflect_child_state: true
       styles: |
         .navbar.mobile.bottom {
           bottom: 5px;
@@ -1377,6 +1378,108 @@ views:
                 sub_button:
                   main: []
                   bottom: []
+              - type: horizontal-stack
+                cards:
+                  - type: custom:mushroom-template-card
+                    primary: |
+                      {{ states('sensor.air_quality_summary') }}
+                    secondary: >
+                      CO₂ {{
+                      states('sensor.healthy_home_coach_carbon_dioxide_sensor')
+                      }} ppm · {{ states('sensor.healthy_home_coach_noise') }}
+                      dB · AQI {{
+                      states('sensor.healthy_home_coach_air_quality') }}
+                    icon: |
+                      {{ state_attr('sensor.air_quality_summary', 'icon') }}
+                    tap_action:
+                      action: more-info
+                    multiline_secondary: true
+                    vertical: true
+                    features_position: bottom
+                    card_mod:
+                      style: >
+                        {% set co2 =
+                        states('sensor.healthy_home_coach_carbon_dioxide_sensor')
+                        | int(0) %}
+
+                        ha-card {
+                          border-radius: 14px;
+                          padding: 12px;
+                          color: white;
+                          --icon-color: white;
+                          transition: all 0.4s ease;
+                        }
+
+                        /* Dynamic colors */ ha-card {
+                          {% if co2 < 800 %}
+                            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                          {% elif co2 < 1200 %}
+                            background: linear-gradient(135deg, #FF9800, #EF6C00);
+                          {% else %}
+                            background: linear-gradient(135deg, #F44336, #C62828);
+                            animation: pulse 2.2s ease-in-out infinite;
+                          {% endif %}
+                        }
+
+                        /* Animation */ @keyframes pulse {
+                          0%   { transform: scale(1); opacity: 1; }
+                          50%  { transform: scale(1.015); opacity: 0.92; }
+                          100% { transform: scale(1); opacity: 1; }
+                        }
+                  - type: custom:mushroom-template-card
+                    primary: |
+                      {{ states('sensor.aqi_summary') }}
+                    secondary: >
+                      AQI : {{ states('sensor.healthy_home_coach_air_quality')
+                      }}
+                    icon: |
+                      {{ state_attr('sensor.aqi_summary', 'icon') }}
+                    tap_action:
+                      action: more-info
+                    vertical: true
+                    features_position: bottom
+                    multiline_secondary: true
+                    card_mod:
+                      style: >
+                        {% set aqi =
+                        states('sensor.healthy_home_coach_air_quality') | int(0)
+                        %}
+
+
+                        ha-card {
+                          border-radius: 14px;
+                          padding: 12px;
+                          color: white;
+                          --icon-color: white;
+                          transition: all 0.4s ease;
+                        }
+
+
+                        /* Dynamic colors */
+
+                        ha-card {
+                          {% if aqi <= 2 %}
+                            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                          {% elif aqi == 3 %}
+                            background: linear-gradient(135deg, #8BC34A, #558B2F);
+                          {% elif aqi == 4 %}
+                            background: linear-gradient(135deg, #FF9800, #EF6C00);
+                          {% elif aqi == 5 %}
+                            background: linear-gradient(135deg, #F44336, #C62828);
+                          {% else %}
+                            background: linear-gradient(135deg, #6A1B9A, #4A148C);
+                            animation: pulse 2.2s ease-in-out infinite;
+                          {% endif %}
+                        }
+
+
+                        /* Animation */
+
+                        @keyframes pulse {
+                          0%   { transform: scale(1); opacity: 1; }
+                          50%  { transform: scale(1.015); opacity: 0.92; }
+                          100% { transform: scale(1); opacity: 1; }
+                        }
               - type: custom:mini-graph-card
                 name: Home temperature
                 entities:
@@ -1420,7 +1523,7 @@ views:
                   double_tap_action:
                     action: none
                 show_state: true
-                name: ''
+                name: Heat mode
                 button_type: state
                 sub_button:
                   main: []
@@ -1833,102 +1936,6 @@ views:
               sub_buttons_per_column: 2
               main_icon_bg_color: '#FFB900'
               ts_pad_top: 20
-          - type: custom:mushroom-template-card
-            primary: |
-              {{ states('sensor.air_quality_summary') }}
-            secondary: >
-              CO₂ {{ states('sensor.healthy_home_coach_carbon_dioxide_sensor')
-              }} ppm · {{ states('sensor.healthy_home_coach_noise') }} dB · AQI
-              {{ states('sensor.healthy_home_coach_air_quality') }}
-            icon: |
-              {{ state_attr('sensor.air_quality_summary', 'icon') }}
-            tap_action:
-              action: more-info
-            multiline_secondary: true
-            vertical: true
-            features_position: bottom
-            card_mod:
-              style: >
-                {% set co2 =
-                states('sensor.healthy_home_coach_carbon_dioxide_sensor') |
-                int(0) %}
-
-                ha-card {
-                  border-radius: 14px;
-                  padding: 12px;
-                  color: white;
-                  --icon-color: white;
-                  transition: all 0.4s ease;
-                }
-
-                /* Dynamic colors */ ha-card {
-                  {% if co2 < 800 %}
-                    background: linear-gradient(135deg, #4CAF50, #2E7D32);
-                  {% elif co2 < 1200 %}
-                    background: linear-gradient(135deg, #FF9800, #EF6C00);
-                  {% else %}
-                    background: linear-gradient(135deg, #F44336, #C62828);
-                    animation: pulse 2.2s ease-in-out infinite;
-                  {% endif %}
-                }
-
-                /* Animation */ @keyframes pulse {
-                  0%   { transform: scale(1); opacity: 1; }
-                  50%  { transform: scale(1.015); opacity: 0.92; }
-                  100% { transform: scale(1); opacity: 1; }
-                }
-          - type: custom:mushroom-template-card
-            primary: |
-              {{ states('sensor.aqi_summary') }}
-            secondary: |
-              AQI : {{ states('sensor.healthy_home_coach_air_quality') }}
-            icon: |
-              {{ state_attr('sensor.aqi_summary', 'icon') }}
-            tap_action:
-              action: more-info
-            vertical: true
-            features_position: bottom
-            multiline_secondary: true
-            card_mod:
-              style: >
-                {% set aqi = states('sensor.healthy_home_coach_air_quality') |
-                int(0) %}
-
-
-                ha-card {
-                  border-radius: 14px;
-                  padding: 12px;
-                  color: white;
-                  --icon-color: white;
-                  transition: all 0.4s ease;
-                }
-
-
-                /* Dynamic colors */
-
-                ha-card {
-                  {% if aqi <= 2 %}
-                    background: linear-gradient(135deg, #4CAF50, #2E7D32);
-                  {% elif aqi == 3 %}
-                    background: linear-gradient(135deg, #8BC34A, #558B2F);
-                  {% elif aqi == 4 %}
-                    background: linear-gradient(135deg, #FF9800, #EF6C00);
-                  {% elif aqi == 5 %}
-                    background: linear-gradient(135deg, #F44336, #C62828);
-                  {% else %}
-                    background: linear-gradient(135deg, #6A1B9A, #4A148C);
-                    animation: pulse 2.2s ease-in-out infinite;
-                  {% endif %}
-                }
-
-
-                /* Animation */
-
-                @keyframes pulse {
-                  0%   { transform: scale(1); opacity: 1; }
-                  50%  { transform: scale(1.015); opacity: 0.92; }
-                  100% { transform: scale(1); opacity: 1; }
-                }
           - type: custom:bubble-card
             card_type: button
             button_type: switch

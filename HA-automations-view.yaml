@@ -1,12 +1,101 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 24/04/2026 (DD/MM/YYYY)
+# Last updated: 08/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
     hide_add_to_home_assistant: true
     hide_search: true
+decluttering_templates:
+  home_navbar:
+    card:
+      type: custom:navbar-card
+      routes:
+        - url: /custom-dashboard/shortcuts
+          icon: mdi:lifebuoy
+          label: Shortcuts
+        - url: /custom-dashboard/home
+          icon: mdi:home
+          label: Home
+          hold_action:
+            action: navigate
+            navigation_path: /config/devices/dashboard
+        - url: /custom-dashboard/kitchen
+          icon: mdi:fridge
+          label: Kitchen
+        - url: /custom-dashboard/vehicle
+          icon: phu:volvo
+          label: Vehicle
+        - icon: mdi:server-minus
+          label: IT
+          url: /custom-dashboard/IT-server
+        - icon: mdi:dots-horizontal
+          label: More
+          tap_action:
+            action: open-popup
+          popup:
+            - icon: mdi:cog
+              url: /config/dashboard
+              label: Configuration
+            - icon: mdi:update
+              url: /config/updates
+              label: |
+                [[[
+                  const updates = parseInt(states['sensor.updates']?.state) || 0;
+                  return updates > 0 ? `Updates (${updates} available)` : 'No updates';
+                ]]]
+            - url: /dashboard-automations
+              icon: mdi:robot
+              label: Automations
+            - url: /hacs/dashboard
+              icon: phu:smarthome-solver
+              label: HACS
+            - icon: mdi:power
+              tap_action:
+                action: call-service
+                service: homeassistant.restart
+                service_data: {}
+                confirmation:
+                  text: Are you sure you want to restart Home Assistant?
+              label: Restart HA
+          badge:
+            show: |
+              [[[
+                return (parseInt(states['sensor.updates']?.state) || 0) > 0;
+              ]]]
+      mobile:
+        mode: floating
+        show_popup_label_backgrounds: true
+        show_labels: popup_only
+        position: bottom
+      desktop:
+        show_labels: popup_only
+        show_popup_label_backgrounds: true
+        position: bottom
+      media_player:
+        album_cover_background: true
+        players:
+          - entity: media_player.spotify_melvin_campos_casares
+            icon: ''
+          - entity: media_player.google_tv
+            title: Google TV
+            icon: mdi:youtube-tv
+            tap_action:
+              action: more-info
+              entity: media_player.google_tv_2
+      layout:
+        auto_padding:
+          enabled: true
+          desktop_px: 100
+          mobile_px: 60
+        reflect_child_state: true
+      styles: |
+        .navbar.mobile.bottom {
+          bottom: 5px;
+        }
+      haptic:
+        tap_action: true
 views:
   - title: Automations
     sections:
@@ -602,6 +691,10 @@ views:
               bottom: []
             slider_fill_orientation: left
             slider_value_position: right
+      - type: grid
+        cards:
+          - type: custom:decluttering-card
+            template: home_navbar
     type: sections
     cards: []
     max_columns: 4
