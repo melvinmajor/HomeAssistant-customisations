@@ -1,0 +1,228 @@
+## Home Assistant view used as a secondary page used for maintenance purpose.
+# GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
+# Author: Melvin Campos Casares
+# Last updated: 10/05/2026 (DD/MM/YYYY)
+
+kiosk_mode:
+  non_admin_settings:
+    hide_add_to_home_assistant: true
+    hide_search: true
+decluttering_templates:
+  home_navbar:
+    card:
+      type: custom:navbar-card
+      routes:
+        - url: /custom-dashboard/shortcuts
+          icon: mdi:lifebuoy
+          label: Shortcuts
+        - url: /custom-dashboard/home
+          icon: mdi:home
+          label: Home
+          hold_action:
+            action: navigate
+            navigation_path: /config/devices/dashboard
+        - url: /custom-dashboard/kitchen
+          icon: mdi:fridge
+          label: Kitchen
+        - url: /custom-dashboard/vehicle
+          icon: phu:volvo
+          label: Vehicle
+        - icon: mdi:server-minus
+          label: IT
+          url: /custom-dashboard/IT-server
+        - icon: mdi:dots-horizontal
+          label: More
+          tap_action:
+            action: open-popup
+          popup:
+            - icon: mdi:cog
+              url: /config/dashboard
+              label: Configuration
+            - icon: mdi:update
+              url: /config/updates
+              label: |
+                [[[
+                  const updates = parseInt(states['sensor.updates']?.state) || 0;
+                  return updates > 0 ? `Updates (${updates} available)` : 'No updates';
+                ]]]
+            - url: /dashboard-automations
+              icon: mdi:robot
+              label: Automations
+            - icon: mdi:home-battery
+              label: Maintenance
+              url: /custom-maintenance
+            - url: /hacs/dashboard
+              icon: phu:smarthome-solver
+              label: HACS
+            - icon: mdi:power
+              tap_action:
+                action: call-service
+                service: homeassistant.restart
+                service_data: {}
+                confirmation:
+                  text: Are you sure you want to restart Home Assistant?
+              label: Restart HA
+          badge:
+            show: |
+              [[[
+                return (parseInt(states['sensor.updates']?.state) || 0) > 0;
+              ]]]
+      mobile:
+        mode: floating
+        show_popup_label_backgrounds: true
+        show_labels: popup_only
+        position: bottom
+      desktop:
+        show_labels: popup_only
+        show_popup_label_backgrounds: true
+        position: bottom
+      media_player:
+        album_cover_background: true
+        players:
+          - entity: media_player.spotify_melvin_campos_casares
+            icon: ''
+          - entity: media_player.google_tv
+            title: Google TV
+            icon: mdi:youtube-tv
+            tap_action:
+              action: more-info
+              entity: media_player.google_tv_2
+      layout:
+        auto_padding:
+          enabled: true
+          desktop_px: 100
+          mobile_px: 60
+        reflect_child_state: true
+      styles: |
+        .navbar.mobile.bottom {
+          bottom: 5px;
+        }
+      haptic:
+        tap_action: true
+views:
+  - type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Radiator thermostats
+            heading_style: title
+            icon: phu:aqara-thermo-e1
+          - type: markdown
+            content: '**Battery type:** 2x AA'
+            text_only: true
+          - type: tile
+            entity: sensor.radiator_thermostat_w600_battery
+            name: Entrance thermostat
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.radiator_thermostat_w600_battery_3
+            name: Bathroom thermostat
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.radiator_thermostat_w600_battery_2
+            name: Office thermostat
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.radiator_thermostat_w600_battery_4
+            name: Bedroom thermostat
+            vertical: false
+            features_position: bottom
+      - type: grid
+        cards:
+          - type: heading
+            heading: Philips Hue Smart Buttons
+            heading_style: title
+            icon: phu:button
+          - type: markdown
+            content: '**Battery type:** CR2032'
+            text_only: true
+          - type: tile
+            entity: sensor.hue_smart_button_1_batterie
+            name: Entrance button
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.hue_smart_button_3_batterie
+            name: Living room button
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.hue_smart_button_2_batterie
+            name: Office button
+            vertical: false
+            features_position: bottom
+          - type: heading
+            heading: Philips Hue Tap Dial Switch
+            heading_style: title
+            icon: phu:tap-dial
+          - type: markdown
+            content: '**Battery type:** CR2032'
+            text_only: true
+          - type: tile
+            entity: sensor.hue_tap_dial_switch_1_batterie
+            name: Living room dial switch
+            vertical: false
+            features_position: bottom
+            grid_options:
+              columns: 12
+              rows: 1
+          - type: heading
+            heading: Philips Hue Dimmer Switch
+            heading_style: title
+            icon: phu:dimmer-switch
+          - type: markdown
+            content: '**Battery type:** CR2032'
+            text_only: true
+          - type: tile
+            entity: sensor.hue_dimmer_switch_1_batterie
+            name: Bedroom dimmer switch
+            vertical: false
+            features_position: bottom
+            grid_options:
+              columns: 12
+              rows: 1
+      - type: grid
+        cards:
+          - type: custom:decluttering-card
+            template: home_navbar
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Hello {{ user }}
+          This is your maintenance screen ✨
+        card_mod:
+          style: |
+            ha-card {
+              border-radius: 0px !important;
+            }
+    max_columns: 3
+    title: Maintenance
+    icon: mdi:home-battery
+    cards: []
+    subview: true
+    visible:
+      - user: 44573b9ac3d34374a5e538fbac0b175d
+      - user: 712f940e040f46d8ab27b65c0040f410
+    background:
+      opacity: 50
+      alignment: center
+      size: cover
+      repeat: no-repeat
+      attachment: fixed
+      image:
+        media_content_id: media-source://image_upload/4f558534f7d571e219bc896a1422c99a
+        media_content_type: image/png
+        metadata:
+          title: Black-Minimalist-Wallpaper-by-kensey-_WallpaperCave_.png
+          thumbnail: /api/image/serve/4f558534f7d571e219bc896a1422c99a/256x256
+          media_class: image
+          navigateIds:
+            - {}
+            - media_content_type: app
+              media_content_id: media-source://image_upload

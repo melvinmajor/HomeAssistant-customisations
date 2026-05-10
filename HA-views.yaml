@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 08/05/2026 (DD/MM/YYYY)
+# Last updated: 10/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -48,6 +48,9 @@ decluttering_templates:
             - url: /dashboard-automations
               icon: mdi:robot
               label: Automations
+            - icon: mdi:home-battery
+              label: Maintenance
+              url: /custom-maintenance
             - url: /hacs/dashboard
               icon: phu:smarthome-solver
               label: HACS
