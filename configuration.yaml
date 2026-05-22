@@ -1,7 +1,7 @@
 ## Home Assistant configuration.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 07/04/2026 (DD/MM/YYYY)
+# Last updated: 22/05/2026 (DD/MM/YYYY)
 
 # Loads default set of integrations. Do not remove.
 default_config:
@@ -75,8 +75,8 @@ notify:
   - name: notify_devices
     platform: group
     services:
-      - service: mobile_app_oneplus_15_melvin # Melvin device
-      - service: mobile_app_oneplus_nord_5_cph2709 # Kiosk mode device
+      - service: mobile_app_oppo_find_x9_ultra_melvin # Melvin device
+      #- service: mobile_app_oneplus_nord_5_cph2709 # Kiosk mode device
 
 
 # Raspberry Pi Pico W with Bosch BME680 sensor

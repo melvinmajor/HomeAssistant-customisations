@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page used for maintenance purpose.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 10/05/2026 (DD/MM/YYYY)
+# Last updated: 22/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -187,25 +187,37 @@ views:
               rows: 1
       - type: grid
         cards:
+          - type: heading
+            heading: Philips Hue Motion sensor
+            heading_style: title
+            icon: phu:motion-sensor
+          - type: markdown
+            content: '**Battery type:** 2x AAA'
+            text_only: true
+          - type: tile
+            entity: sensor.detecteur_entree_batterie
+            name: Entrance (bedroom side)
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.hue_motion_sensor_2_batterie
+            name: Entrance (office side)
+            vertical: false
+            features_position: bottom
+      - type: grid
+        cards:
           - type: custom:decluttering-card
             template: home_navbar
     header:
       card:
         type: markdown
         text_only: true
-        content: |-
-          # Hello {{ user }}
-          This is your maintenance screen ✨
-        card_mod:
-          style: |
-            ha-card {
-              border-radius: 0px !important;
-            }
+        content: '## Maintenance'
     max_columns: 3
     title: Maintenance
     icon: mdi:home-battery
     cards: []
-    subview: true
+    subview: false
     visible:
       - user: 44573b9ac3d34374a5e538fbac0b175d
       - user: 712f940e040f46d8ab27b65c0040f410
@@ -226,3 +238,4 @@ views:
             - {}
             - media_content_type: app
               media_content_id: media-source://image_upload
+    dense_section_placement: false

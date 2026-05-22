@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 08/05/2026 (DD/MM/YYYY)
+# Last updated: 22/05/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night - Without guests
@@ -684,7 +684,7 @@
     - conditions:
       - condition: numeric_state
         entity_id: sensor.system_monitor_temperature_cpu
-        above: 70
+        above: 75
       sequence:
       - target:
           entity_id: switch.fanshim_fan
@@ -693,7 +693,7 @@
     - conditions:
       - condition: numeric_state
         entity_id: sensor.system_monitor_temperature_cpu
-        below: 55
+        below: 60
       sequence:
       - target:
           entity_id: switch.fanshim_fan
@@ -1031,11 +1031,11 @@
       media_player: media_player.google_tv
       light_entity: light.hue_play_bar
 - id: '1774119366601'
-  alias: Cat fountain filter reminder - 8PM
+  alias: Cat fountain filter reminder - 8:30PM
   description: ''
   triggers:
   - trigger: time
-    at: '20:00:00'
+    at: '20:30:00'
   conditions:
   - condition: template
     value_template: "{% set last = states('input_datetime.cat_fountain_filter') %}

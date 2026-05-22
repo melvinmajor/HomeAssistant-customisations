@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 10/05/2026 (DD/MM/YYYY)
+# Last updated: 22/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -3208,29 +3208,18 @@ views:
             icon: phu:hue-only
           - type: entities
             entities:
-              - entity: sensor.detecteur_entree_batterie
-                name: Motion sensor 1 battery
-                secondary_info: none
-              - entity: sensor.hue_motion_sensor_2_batterie
-                name: Motion sensor 2 battery
               - entity: sensor.detecteur_entree_eclairement
-                name: Illuminance level 1
+                name: Illuminance (bedroom side)
                 secondary_info: none
                 icon: phu:motion-sensor-luminance-alt
               - entity: sensor.hue_motion_sensor_2_eclairement
                 secondary_info: none
-                name: Illuminance level 2
+                name: Illuminance (office side)
                 icon: phu:motion-sensor-luminance-alt
-              - entity: sensor.hue_tap_dial_switch_1_batterie
-                name: Tap Dial switch living room
-              - entity: sensor.hue_smart_button_1_batterie
-                name: Smart button entrance
-              - entity: sensor.hue_smart_button_2_batterie
-                name: Smart button office
-              - entity: sensor.hue_smart_button_3_batterie
-                name: Smart button living room
-              - entity: sensor.hue_dimmer_switch_1_batterie
-                name: Dimmer switch bedroom
+              - entity: binary_sensor.detecteur_entree_mouvement
+                name: Motion (bedroom side)
+              - entity: binary_sensor.hue_motion_sensor_2_mouvement
+                name: Motion (office side)
             state_color: true
           - type: heading
             heading: Matter
