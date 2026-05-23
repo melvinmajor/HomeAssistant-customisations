@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 22/05/2026 (DD/MM/YYYY)
+# Last updated: 23/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -967,6 +967,28 @@ views:
                 sub_button:
                   main: []
                   bottom: []
+              - type: custom:bubble-card
+                card_type: button
+                entity: input_boolean.f1_track_status_light
+                tap_action:
+                  action: toggle
+                double_tap_action:
+                  action: none
+                hold_action:
+                  action: more-info
+                button_action:
+                  double_tap_action:
+                    action: none
+                show_state: true
+                name: F1 track status automation
+                button_type: switch
+                sub_button:
+                  main: []
+                  bottom: []
+                modules:
+                  - icon_color
+                icon_color:
+                  color: white
               - type: custom:bubble-card
                 card_type: separator
                 icon: ''
@@ -1945,11 +1967,30 @@ views:
             sub_button:
               main: []
               bottom: []
+            entity: input_boolean.f1_track_status_light
+            name: F1 track status automation
+            icon: ''
+            show_state: true
+            modules:
+              - icon_color
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            icon_color:
+              color: white
+          - type: custom:bubble-card
+            card_type: button
+            button_type: switch
+            sub_button:
+              main: []
+              bottom: []
             entity: switch.home_presence_simulation
             name: Presence sim
             icon: mdi:home-sound-out
             show_state: true
-            modules: []
+            modules:
+              - icon_color
             grid_options:
               columns: 6
               rows: auto
@@ -1957,6 +1998,8 @@ views:
               action: toggle
             hold_action:
               action: more-info
+            icon_color:
+              color: white
           - type: custom:bubble-card
             card_type: select
             entity: input_select.heating_mode
@@ -1976,6 +2019,7 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            modules: []
           - type: custom:bubble-card
             card_type: climate
             sub_button:
