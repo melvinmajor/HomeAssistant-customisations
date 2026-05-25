@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 22/05/2026 (DD/MM/YYYY)
+# Last updated: 25/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -338,6 +338,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            sub_button:
+              main: []
+              bottom: []
+            name: TV scene ON
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -354,6 +358,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            sub_button:
+              main: []
+              bottom: []
+            name: TV scene OFF
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -399,6 +407,27 @@ views:
             sub_button:
               main: []
               bottom: []
+            name: Lights OFF
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.nest_cam_motion_notification
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            grid_options:
+              columns: 6
+              rows: auto
+            sub_button:
+              main: []
+              bottom: []
+            name: Nest Cam - Motion
           - type: vertical-stack
             cards:
               - type: custom:bubble-card
@@ -679,6 +708,7 @@ views:
             card_type: button
             button_type: state
             entity: automation.f1_track_status_light
+            name: F1 light automation
             double_tap_action:
               action: none
             hold_action:
@@ -694,6 +724,22 @@ views:
               bottom: []
             slider_fill_orientation: left
             slider_value_position: right
+          - type: custom:bubble-card
+            card_type: button
+            entity: input_boolean.f1_track_status_light
+            name: F1 light helper
+            show_icon: true
+            show_state: true
+            show_attribute: true
+            show_last_changed: false
+            icon: ''
+            grid_options:
+              columns: 6
+              rows: auto
+            button_type: switch
+            sub_button:
+              main: []
+              bottom: []
       - type: grid
         cards:
           - type: custom:decluttering-card

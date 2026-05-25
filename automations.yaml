@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 23/05/2026 (DD/MM/YYYY)
+# Last updated: 25/05/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night - Without guests
@@ -45,7 +45,7 @@
   - delay:
       hours: 0
       minutes: 0
-      seconds: 15
+      seconds: 10
       milliseconds: 0
   - condition: template
     value_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
@@ -72,7 +72,7 @@
     conditions:
     - condition: numeric_state
       entity_id: sensor.detecteur_entree_eclairement
-      below: 8
+      below: 6
     - condition: state
       entity_id: light.couloir_cote_chambre
       state:
@@ -102,7 +102,7 @@
   - delay:
       hours: 0
       minutes: 0
-      seconds: 15
+      seconds: 10
       milliseconds: 0
   - condition: state
     entity_id: binary_sensor.detecteur_entree_mouvement
@@ -169,7 +169,7 @@
   - delay:
       hours: 0
       minutes: 0
-      seconds: 15
+      seconds: 10
       milliseconds: 0
   - condition: template
     value_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
@@ -716,7 +716,7 @@
     conditions:
     - condition: numeric_state
       entity_id: sensor.hue_motion_sensor_2_eclairement
-      below: 8
+      below: 6
     - condition: state
       entity_id: light.couloir_cote_bureau
       state:
@@ -749,7 +749,7 @@
   - delay:
       hours: 0
       minutes: 0
-      seconds: 15
+      seconds: 10
       milliseconds: 0
   - condition: state
     entity_id: binary_sensor.hue_motion_sensor_2_mouvement
@@ -1258,3 +1258,26 @@
         data:
           temperature: 16
         action: climate.set_temperature
+- id: '1779714944261'
+  alias: Nest Cam - Motion notification
+  triggers:
+  - event_type: nest_cam_motion
+    trigger: event
+  conditions:
+  - condition: state
+    entity_id: timer.camera_cooldown
+    state: idle
+  actions:
+  - delay: 00:00:03
+  - data:
+      title: "\U0001F4F9 Motion detected"
+      message: 'Nest Cam detected movement in the living room at {{ now().strftime(''%H:%M'')
+        }}. Check Google Home for more details.
+
+        '
+    action: notify.notify_devices
+  - target:
+      entity_id: timer.camera_cooldown
+    action: timer.start
+    data: {}
+  mode: restart
