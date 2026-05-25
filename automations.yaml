@@ -1261,14 +1261,14 @@
 - id: '1779714944261'
   alias: Nest Cam - Motion notification
   triggers:
-  - event_type: nest_cam_motion
-    trigger: event
+  - trigger: state
+    entity_id:
+    - event.nest_cam_motion
   conditions:
   - condition: state
     entity_id: timer.camera_cooldown
     state: idle
   actions:
-  - delay: 00:00:03
   - data:
       title: "\U0001F4F9 Motion detected"
       message: 'Nest Cam detected movement in the living room at {{ now().strftime(''%H:%M'')
