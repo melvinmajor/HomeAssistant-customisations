@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 30/05/2026 (DD/MM/YYYY)
+# Last updated: 31/05/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night - Without guests
@@ -1300,4 +1300,41 @@
       brightness_pct: 66
       transition: 1
       color_temp_kelvin: 2288
+  mode: single
+- id: '1780177507064'
+  alias: Dishwasher - Cycle finished
+  description: ''
+  triggers:
+  - entity_id: sensor.lave_vaisselle_operation_state
+    to: Finished
+    trigger: state
+  conditions: []
+  actions:
+  - data:
+      title: "\U0001F37D️ Lave-vaisselle"
+      message: Le cycle de lavage est terminé.
+      data:
+        tag: dishwasher_finished
+        notification_icon: mdi:dishwasher
+    action: notify.notify_devices
+  - target:
+      entity_id: media_player.hk_citation_one
+    data:
+      media:
+        media_content_id: media-source://media_source/local/homepod_notification.mp3
+        media_content_type: audio/mpeg
+        metadata: {}
+    action: media_player.play_media
+  - delay: 00:00:02
+  - target:
+      entity_id: media_player.hk_citation_one
+    data:
+      media:
+        media_content_id: "{% set sounds = [\n  \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-LaveVaisselle-Finish1.mp3\",\n
+          \ \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-LaveVaisselle-Finish2.mp3\",\n
+          \ \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-LaveVaisselle-Finish3.mp3\"\n]
+          %} {{ sounds | random }}\n"
+        media_content_type: audio/mpeg
+        metadata: {}
+    action: media_player.play_media
   mode: single

@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 30/05/2026 (DD/MM/YYYY)
+# Last updated: 31/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -111,20 +111,6 @@ views:
           - type: custom:bubble-card
             card_type: button
             button_type: state
-            entity: automation.set_ha_theme_at_startup
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ''
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
             entity: automation.reset_kill_switch
             double_tap_action:
               action: none
@@ -136,35 +122,6 @@ views:
               hold_action:
                 action: none
             icon: ''
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.fanshim_ventilation
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ''
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_select.default_dashboard
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: ''
-            button_type: switch
             grid_options:
               columns: 6
               rows: auto
@@ -228,7 +185,7 @@ views:
             show_state: true
             show_attribute: true
             show_last_changed: false
-            icon: mdi:account-group
+            icon: ''
             grid_options:
               columns: 6
               rows: auto
@@ -236,7 +193,6 @@ views:
             sub_button:
               main: []
               bottom: []
-            name: Entrance Override
           - type: heading
             heading: Heating system
             heading_style: title
@@ -280,12 +236,12 @@ views:
               hold_action:
                 action: none
             grid_options:
-              columns: 12
+              columns: 6
               rows: auto
             sub_button:
               main: []
               bottom: []
-            name: Winter mode init
+            name: Winter mode
             show_last_updated: false
             show_last_changed: false
             show_attribute: true
@@ -305,7 +261,7 @@ views:
               hold_action:
                 action: none
             grid_options:
-              columns: 12
+              columns: 6
               rows: auto
             sub_button:
               main: []
@@ -375,6 +331,10 @@ views:
                 action: none
               hold_action:
                 action: none
+            sub_button:
+              main: []
+              bottom: []
+            name: Entrance light motion day - office side
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -388,6 +348,10 @@ views:
                 action: none
               hold_action:
                 action: none
+            sub_button:
+              main: []
+              bottom: []
+            name: Entrance light motion day - bed side
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -428,6 +392,26 @@ views:
               main: []
               bottom: []
             name: Nest Cam - Motion
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.dishwasher_cycle_finished
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            sub_button:
+              main: []
+              bottom: []
+            grid_options:
+              columns: 6
+              rows: auto
+            name: Dishwasher finished
           - type: vertical-stack
             cards:
               - type: custom:bubble-card
@@ -446,6 +430,10 @@ views:
                     action: none
                   hold_action:
                     action: none
+                sub_button:
+                  main: []
+                  bottom: []
+                name: Entrance light motion sunrise/sunset - without guests
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
@@ -459,6 +447,10 @@ views:
                     action: none
                   hold_action:
                     action: none
+                sub_button:
+                  main: []
+                  bottom: []
+                name: Entrance light motion night - without guests
           - type: vertical-stack
             cards:
               - type: custom:bubble-card
@@ -478,6 +470,10 @@ views:
                     action: none
                   hold_action:
                     action: none
+                sub_button:
+                  main: []
+                  bottom: []
+                name: Entrance light motion sunrise/sunset - with guests
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
@@ -491,6 +487,10 @@ views:
                     action: none
                   hold_action:
                     action: none
+                sub_button:
+                  main: []
+                  bottom: []
+                name: Entrance light motion night - with guests
         column_span: 1
       - type: grid
         cards:
@@ -643,6 +643,7 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            name: Trash out 8PM
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -662,6 +663,7 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            name: Trash out 10PM
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -681,7 +683,7 @@ views:
             grid_options:
               columns: 6
               rows: auto
-            name: Fountain filter - 8PM
+            name: Fountain filter 8:30PM
           - type: heading
             heading: Tags automations
             heading_style: title
@@ -789,3 +791,31 @@ views:
     visible:
       - user: 44573b9ac3d34374a5e538fbac0b175d
       - user: 712f940e040f46d8ab27b65c0040f410
+    badges:
+      - type: custom:mushroom-template-badge
+        entity: input_select.default_dashboard
+        icon: mdi:view-dashboard
+        content: '{{ states(entity) }}'
+        label: '{{ state_attr(entity, ''friendly_name'') }}'
+      - type: custom:mushroom-template-badge
+        entity: automation.set_ha_theme_at_startup
+        icon: mdi:palette-swatch-variant
+        content: '{{ states(entity) | title }}'
+        label: '{{ state_attr(entity, ''friendly_name'') }}'
+        color: |
+          {% if is_state(entity, 'on') %}
+            green
+          {% else %}
+            red
+          {% endif %}
+      - type: custom:mushroom-template-badge
+        entity: automation.fanshim_ventilation
+        icon: mdi:cpu-64-bit
+        content: '{{ states(entity) | title }}'
+        label: FanSHIM
+        color: |
+          {% if is_state(entity, 'on') %}
+            green
+          {% else %}
+            red
+          {% endif %}
