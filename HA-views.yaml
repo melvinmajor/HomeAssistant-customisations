@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 23/05/2026 (DD/MM/YYYY)
+# Last updated: 30/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -617,45 +617,47 @@ views:
                     action: none
             visibility:
               - condition: state
-                entity: sensor.lave_vaisselle_remaining_program_time
-                state_not: unavailable
+                entity: sensor.lave_vaisselle_operation_state
+                state_not: finished
       - type: grid
         cards:
           - type: custom:decluttering-card
             template: home_navbar
       - type: grid
         cards:
-          - type: vertical-stack
+          - type: custom:bubble-card
+            card_type: pop-up
+            hash: '#livingRoom_Popup'
+            entity: light.salon
+            show_icon: false
+            name: Living room
+            show_last_changed: false
+            tap_action:
+              action: none
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              tap_action:
+                action: none
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            auto_close: ''
+            close_by_clicking_outside: true
+            bg_opacity: '60'
+            shadow_opacity: '0'
+            styles: ''
+            hide_backdrop: false
+            bg_blur: '10'
+            backdrop_blur: '0'
+            button_type: name
+            sub_button:
+              main: []
+              bottom: []
             cards:
-              - type: custom:bubble-card
-                card_type: pop-up
-                hash: '#livingRoom_Popup'
-                entity: light.salon
-                show_icon: false
-                name: Living room
-                show_last_changed: false
-                tap_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                button_action:
-                  tap_action:
-                    action: none
-                  double_tap_action:
-                    action: none
-                  hold_action:
-                    action: none
-                auto_close: ''
-                close_by_clicking_outside: true
-                bg_opacity: '88'
-                shadow_opacity: '0'
-                styles: ''
-                hide_backdrop: false
-                bg_blur: '10'
-                backdrop_blur: '0'
-                bg_color: ''
               - type: custom:mushroom-template-card
                 primary: |
                   {{ states('sensor.air_quality_summary') }}
@@ -669,8 +671,6 @@ views:
                 multiline_secondary: true
                 vertical: true
                 features_position: bottom
-                grid_options:
-                  columns: full
                 card_mod:
                   style: >
                     {% set co2 =
@@ -701,6 +701,9 @@ views:
                       50%  { transform: scale(1.015); opacity: 0.92; }
                       100% { transform: scale(1); opacity: 1; }
                     }
+                grid_options:
+                  columns: 12
+                  rows: auto
               - type: custom:bubble-card
                 card_type: media-player
                 entity: media_player.hk_citation_one
@@ -715,6 +718,207 @@ views:
                   action: none
                 force_icon: false
                 icon: mdi:cast-audio-variant
+                grid_options:
+                  columns: 12
+                styles: ''
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
+                sub_button:
+                  main: []
+                  bottom: []
+                cover_background: true
+              - type: custom:bubble-card
+                card_type: separator
+                icon: ''
+                styles: |-
+                  .bubble-line {
+                    background: var(--secondary-text-color);
+                    opacity: 1;
+                  }
+                name: Lights
+                grid_options:
+                  columns: 12
+              - features:
+                  - type: light-brightness
+                type: tile
+                entity: light.salon_sans_spot
+                tap_action:
+                  action: toggle
+                icon_tap_action:
+                  action: more-info
+                name: Living room lights
+                icon: phu:bulb-group-filament-candle
+                vertical: false
+                show_entity_picture: false
+                hide_state: false
+                features_position: inline
+                grid_options:
+                  columns: 12
+                  rows: auto
+              - features:
+                  - type: light-brightness
+                type: tile
+                show_entity_picture: false
+                vertical: false
+                hide_state: false
+                tap_action:
+                  action: toggle
+                icon_tap_action:
+                  action: more-info
+                icon: phu:hue-spot-group-v2
+                entity: light.spot
+                name: Spots
+                state_content:
+                  - state
+                  - brightness
+                features_position: inline
+                grid_options:
+                  columns: 6
+                  rows: auto
+              - type: custom:bubble-card
+                card_type: button
+                button_type: switch
+                entity: light.spot_gauche
+                name: Spot L
+                show_state: true
+                show_name: true
+                show_attribute: true
+                attribute: brightness
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                sub_button:
+                  main:
+                    - icon: mdi:dots-horizontal
+                  bottom: []
+                icon: phu:bulbs-spot
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
+                styles: |-
+                  .bubble-button-card-container {
+                    background: rgba(255, 255, 255, 0.2);
+                  }
+                grid_options:
+                  columns: 6
+                  rows: auto
+              - type: custom:bubble-card
+                card_type: button
+                entity: light.lanterne_gauche
+                tap_action:
+                  action: toggle
+                double_tap_action:
+                  action: none
+                hold_action:
+                  action: more-info
+                button_action:
+                  double_tap_action:
+                    action: none
+                name: Wall L
+                show_state: true
+                icon: phu:bulb-candle
+                grid_options:
+                  columns: 6
+                  rows: auto
+                button_type: switch
+                sub_button:
+                  main: []
+                  bottom: []
+                styles: |-
+                  .bubble-button-card-container {
+                    background: rgba(255, 255, 255, 0.2);
+                  }
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
+              - type: custom:bubble-card
+                card_type: button
+                button_type: switch
+                entity: light.spot_droite
+                name: Spot R
+                show_state: true
+                show_name: true
+                show_attribute: true
+                attribute: brightness
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                sub_button:
+                  main:
+                    - icon: mdi:dots-horizontal
+                  bottom: []
+                icon: phu:bulbs-spot
+                styles: |-
+                  .bubble-button-card-container {
+                    background: rgba(255, 255, 255, 0.2);
+                  }
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
+                grid_options:
+                  columns: 6
+                  rows: auto
+              - type: custom:bubble-card
+                card_type: button
+                entity: light.lanterne_droite
+                tap_action:
+                  action: toggle
+                double_tap_action:
+                  action: none
+                hold_action:
+                  action: more-info
+                button_action:
+                  double_tap_action:
+                    action: none
+                name: Wall R
+                icon: phu:bulb-candle
+                show_state: true
+                grid_options:
+                  columns: 6
+                button_type: switch
+                sub_button:
+                  main: []
+                  bottom: []
+                styles: |-
+                  .bubble-button-card-container {
+                    background: rgba(255, 255, 255, 0.2);
+                  }
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
               - type: custom:bubble-card
                 card_type: button
                 entity: light.friday
@@ -730,130 +934,61 @@ views:
                     action: none
                 show_state: true
                 name: Floor lamp
-              - type: custom:bubble-card
-                card_type: separator
-                icon: ''
+                grid_options:
+                  columns: 6
+                  rows: auto
                 styles: |-
-                  .bubble-line {
-                    background: var(--secondary-text-color);
-                    opacity: 1;
+                  .bubble-button-card-container {
+                    background: rgba(255, 255, 255, 0.2);
                   }
-                name: Lights
-              - features:
-                  - type: light-brightness
-                type: tile
-                entity: light.salon_sans_spot
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
+                button_type: switch
+                sub_button:
+                  main: []
+                  bottom: []
+              - type: custom:bubble-card
+                card_type: button
+                entity: light.plafond_salon
                 tap_action:
                   action: toggle
-                icon_tap_action:
+                double_tap_action:
+                  action: none
+                hold_action:
                   action: more-info
-                name: Living room lights
-                icon: phu:bulb-group-filament-candle
-                vertical: false
-                show_entity_picture: false
-                hide_state: false
-                features_position: inline
-              - type: horizontal-stack
-                cards:
-                  - features:
-                      - type: light-brightness
-                    type: tile
-                    show_entity_picture: false
-                    vertical: false
-                    hide_state: false
-                    tap_action:
-                      action: toggle
-                    icon_tap_action:
-                      action: more-info
-                    icon: phu:hue-spot-group-v2
-                    entity: light.spot
-                    name: Spots
-                    state_content:
-                      - state
-                      - brightness
-                    features_position: inline
-                  - type: vertical-stack
-                    cards:
-                      - type: custom:bubble-card
-                        card_type: button
-                        button_type: switch
-                        entity: light.spot_gauche
-                        name: Spot L
-                        show_state: true
-                        show_name: true
-                        show_attribute: true
-                        attribute: brightness
-                        tap_action:
-                          action: toggle
-                        hold_action:
-                          action: more-info
-                        sub_button:
-                          - icon: mdi:dots-horizontal
-                        icon: phu:bulbs-spot
-                      - type: custom:bubble-card
-                        card_type: button
-                        button_type: switch
-                        entity: light.spot_droite
-                        name: Spot R
-                        show_state: true
-                        show_name: true
-                        show_attribute: true
-                        attribute: brightness
-                        tap_action:
-                          action: toggle
-                        hold_action:
-                          action: more-info
-                        sub_button:
-                          - icon: mdi:dots-horizontal
-                        icon: phu:bulbs-spot
-              - type: horizontal-stack
-                cards:
-                  - type: custom:bubble-card
-                    card_type: button
-                    entity: light.plafond_salon
-                    tap_action:
-                      action: toggle
-                    double_tap_action:
-                      action: none
-                    hold_action:
-                      action: more-info
-                    button_action:
-                      double_tap_action:
-                        action: none
-                    name: Ceiling
-                    icon: phu:bulbs-filament
-                    show_state: true
-                    card_layout: normal
-                  - type: custom:bubble-card
-                    card_type: button
-                    entity: light.lanterne_gauche
-                    tap_action:
-                      action: toggle
-                    double_tap_action:
-                      action: none
-                    hold_action:
-                      action: more-info
-                    button_action:
-                      double_tap_action:
-                        action: none
-                    name: Wall L
-                    show_state: true
-                    icon: phu:bulb-candle
-                  - type: custom:bubble-card
-                    card_type: button
-                    entity: light.lanterne_droite
-                    tap_action:
-                      action: toggle
-                    double_tap_action:
-                      action: none
-                    hold_action:
-                      action: more-info
-                    button_action:
-                      double_tap_action:
-                        action: none
-                    name: Wall R
-                    icon: phu:bulb-candle
-                    show_state: true
+                button_action:
+                  double_tap_action:
+                    action: none
+                name: Ceiling
+                icon: phu:bulbs-filament
+                show_state: true
+                grid_options:
+                  columns: 6
+                  rows: auto
+                styles: |-
+                  .bubble-button-card-container {
+                    background: rgba(255, 255, 255, 0.2);
+                  }
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
+                button_type: switch
+                sub_button:
+                  main: []
+                  bottom: []
               - features:
                   - type: light-brightness
                 type: tile
@@ -868,41 +1003,45 @@ views:
                 entity: light.hue_ambiance_luster_1
                 name: Mushroom
                 features_position: inline
-          - type: vertical-stack
+                grid_options:
+                  columns: 12
+                  rows: auto
+            popup_mode: centered
+            with_bottom_offset: true
+          - type: custom:bubble-card
+            card_type: pop-up
+            hash: '#tv_Popup'
+            entity: light.salon
+            show_icon: false
+            name: TV
+            show_last_changed: false
+            tap_action:
+              action: none
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              tap_action:
+                action: none
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            auto_close: ''
+            close_by_clicking_outside: true
+            bg_opacity: '60'
+            shadow_opacity: '0'
+            styles: ''
+            bg_color: ''
+            button_type: name
+            sub_button:
+              main: []
+              bottom: []
+            slider_fill_orientation: left
+            slider_value_position: right
+            light_slider_type: brightness
             cards:
-              - type: custom:bubble-card
-                card_type: pop-up
-                hash: '#tv_Popup'
-                entity: light.salon
-                show_icon: false
-                name: TV
-                show_last_changed: false
-                tap_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                button_action:
-                  tap_action:
-                    action: none
-                  double_tap_action:
-                    action: none
-                  hold_action:
-                    action: none
-                auto_close: ''
-                close_by_clicking_outside: true
-                bg_opacity: '88'
-                shadow_opacity: '0'
-                styles: ''
-                bg_color: ''
-                button_type: name
-                sub_button:
-                  main: []
-                  bottom: []
-                slider_fill_orientation: left
-                slider_value_position: right
-                light_slider_type: brightness
               - type: custom:bubble-card
                 card_type: button
                 card_layout: normal
@@ -954,6 +1093,8 @@ views:
                   }
                 slider_fill_orientation: left
                 slider_value_position: right
+                grid_options:
+                  columns: 12
               - type: custom:bubble-card
                 card_type: media-player
                 entity: media_player.hk_citation_multibeam_1100_7927
@@ -967,6 +1108,8 @@ views:
                 sub_button:
                   main: []
                   bottom: []
+                grid_options:
+                  columns: 12
               - type: custom:bubble-card
                 card_type: button
                 entity: input_boolean.f1_track_status_light
@@ -989,6 +1132,8 @@ views:
                   - icon_color
                 icon_color:
                   color: white
+                grid_options:
+                  columns: 12
               - type: custom:bubble-card
                 card_type: separator
                 icon: ''
@@ -998,6 +1143,8 @@ views:
                     opacity: 1;
                   }
                 name: Lights
+                grid_options:
+                  columns: 12
               - type: custom:bubble-card
                 card_type: button
                 entity: light.friday
@@ -1013,100 +1160,114 @@ views:
                     action: none
                 show_state: true
                 name: Floor lamp
-              - type: horizontal-stack
+                grid_options:
+                  columns: 12
+              - features:
+                  - type: light-brightness
+                type: tile
+                entity: light.tv
+                show_entity_picture: false
+                vertical: false
+                hide_state: false
+                tap_action:
+                  action: toggle
+                icon_tap_action:
+                  action: more-info
+                name: TV lights
+                icon: phu:play-bar-v-two-out
+                features_position: bottom
+                grid_options:
+                  columns: 6
+                  rows: auto
+              - features:
+                  - type: light-brightness
+                type: tile
+                show_entity_picture: false
+                vertical: false
+                hide_state: false
+                tap_action:
+                  action: toggle
+                icon_tap_action:
+                  action: more-info
+                icon: mdi:mushroom
+                entity: light.hue_ambiance_luster_1
+                name: Mushroom
+                state_content:
+                  - state
+                  - brightness
+                features_position: bottom
+                grid_options:
+                  columns: 6
+                  rows: auto
+              - type: tile
+                grid_options:
+                  columns: 6
+                  rows: auto
+                entity: light.spot
+                name: Spots
+                icon: phu:hue-spot-group-v2
+                show_entity_picture: false
+                hide_state: false
+                state_content:
+                  - state
+                  - brightness
+                vertical: false
+                tap_action:
+                  action: toggle
+                icon_tap_action:
+                  action: more-info
+                features:
+                  - type: light-brightness
+                features_position: bottom
+              - type: vertical-stack
                 cards:
-                  - features:
-                      - type: light-brightness
-                    type: tile
-                    entity: light.tv
-                    show_entity_picture: false
-                    vertical: false
-                    hide_state: false
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: switch
+                    entity: light.spot_gauche
+                    name: Spot L
+                    show_state: true
+                    show_name: true
+                    show_attribute: true
+                    attribute: brightness
                     tap_action:
                       action: toggle
-                    icon_tap_action:
+                    hold_action:
                       action: more-info
-                    name: TV lights
-                    icon: phu:play-bar-v-two-out
-                    features_position: bottom
-                  - features:
-                      - type: light-brightness
-                    type: tile
-                    show_entity_picture: false
-                    vertical: false
-                    hide_state: false
+                    sub_button:
+                      - icon: mdi:dots-horizontal
+                    icon: phu:bulbs-spot
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: switch
+                    entity: light.spot_droite
+                    name: Spot R
+                    show_state: true
+                    show_name: true
+                    show_attribute: true
+                    attribute: brightness
                     tap_action:
                       action: toggle
-                    icon_tap_action:
+                    hold_action:
                       action: more-info
-                    icon: mdi:mushroom
-                    entity: light.hue_ambiance_luster_1
-                    name: Mushroom
-                    state_content:
-                      - state
-                      - brightness
-                    features_position: bottom
-              - type: horizontal-stack
-                cards:
-                  - features:
-                      - type: light-brightness
-                    type: tile
-                    show_entity_picture: false
-                    vertical: false
-                    hide_state: false
-                    tap_action:
-                      action: toggle
-                    icon_tap_action:
-                      action: more-info
-                    icon: phu:hue-spot-group-v2
-                    entity: light.spot
-                    name: Spots
-                    state_content:
-                      - state
-                      - brightness
-                    features_position: inline
-                  - type: vertical-stack
-                    cards:
-                      - type: custom:bubble-card
-                        card_type: button
-                        button_type: switch
-                        entity: light.spot_gauche
-                        name: Spot L
-                        show_state: true
-                        show_name: true
-                        show_attribute: true
-                        attribute: brightness
-                        tap_action:
-                          action: toggle
-                        hold_action:
-                          action: more-info
-                        sub_button:
-                          - icon: mdi:dots-horizontal
-                        icon: phu:bulbs-spot
-                      - type: custom:bubble-card
-                        card_type: button
-                        button_type: switch
-                        entity: light.spot_droite
-                        name: Spot R
-                        show_state: true
-                        show_name: true
-                        show_attribute: true
-                        attribute: brightness
-                        tap_action:
-                          action: toggle
-                        hold_action:
-                          action: more-info
-                        sub_button:
-                          - icon: mdi:dots-horizontal
-                        icon: phu:bulbs-spot
-          - type: vertical-stack
+                    sub_button:
+                      - icon: mdi:dots-horizontal
+                    icon: phu:bulbs-spot
+                grid_options:
+                  columns: 6
+                  rows: auto
+            popup_mode: centered
+            with_bottom_offset: true
+          - type: custom:bubble-card
+            card_type: pop-up
+            hash: '#office_Popup'
+            button_type: name
+            name: Office
+            show_icon: false
+            sub_button:
+              main: []
+              bottom: []
             cards:
-              - type: custom:bubble-card
-                card_type: pop-up
-                hash: '#office_Popup'
-                button_type: name
-                name: Office
-                show_icon: false
               - type: custom:bubble-card
                 card_type: media-player
                 entity: media_player.google_nest_audio
@@ -1128,6 +1289,8 @@ views:
                   main: []
                   bottom: []
                 cover_background: true
+                grid_options:
+                  columns: 12
               - type: custom:bubble-card
                 card_type: climate
                 sub_button:
@@ -1145,6 +1308,8 @@ views:
                 icon: phu:aqara-thermo-e1
                 show_attribute: true
                 attribute: current_temperature
+                grid_options:
+                  columns: 12
               - type: custom:bubble-card
                 card_type: separator
                 icon: ''
@@ -1154,6 +1319,8 @@ views:
                     opacity: 1;
                   }
                 name: Lights
+                grid_options:
+                  columns: 12
               - features:
                   - type: light-brightness
                   - type: light-color-temp
@@ -1166,6 +1333,9 @@ views:
                 icon: phu:bulbs-classic
                 vertical: false
                 features_position: inline
+                grid_options:
+                  columns: 12
+                  rows: auto
               - type: custom:bubble-card
                 card_type: separator
                 icon: ''
@@ -1183,6 +1353,8 @@ views:
                     icon: mdi:dots-horizontal
                     show_state: false
                     show_attribute: false
+                grid_options:
+                  columns: 12
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
@@ -1208,25 +1380,29 @@ views:
                 tap_action:
                   action: more-info
                   navigation_path: '#3dprinter_Popup'
-              - type: horizontal-stack
-                cards:
-                  - type: custom:bubble-card
-                    card_type: button
-                    button_type: state
-                    entity: sensor.a1_03919c452905439_progression_de_l_impression
-                    name: A1 - Print progress
-                    icon: phu:3dprinter-printing
-                  - type: custom:bubble-card
-                    card_type: button
-                    button_type: state
-                    entity: sensor.a1_03919c452905439_temps_restant
-                    name: A1 - Remaining time
-                    icon: phu:bambu-lab-alt
-                    force_icon: false
-                    show_last_changed: false
-                    sub_button:
-                      main: []
-                      bottom: []
+                grid_options:
+                  columns: 12
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: sensor.a1_03919c452905439_progression_de_l_impression
+                name: A1 - Print progress
+                icon: phu:3dprinter-printing
+                grid_options:
+                  columns: 6
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: sensor.a1_03919c452905439_temps_restant
+                name: A1 - Remaining time
+                icon: phu:bambu-lab-alt
+                force_icon: false
+                show_last_changed: false
+                sub_button:
+                  main: []
+                  bottom: []
+                grid_options:
+                  columns: 6
               - show_state: true
                 show_name: true
                 camera_view: auto
@@ -1235,129 +1411,148 @@ views:
                 name: Bambu Lab A1
                 camera_image: camera.a1_03919c452905439_camera
                 aspect_ratio: '16:9'
-          - type: vertical-stack
+                grid_options:
+                  columns: 12
+                  rows: auto
+            popup_mode: centered
+            with_bottom_offset: true
+            full_width_on_mobile: false
+            bg_opacity: '60'
+          - type: custom:bubble-card
+            card_type: pop-up
+            hash: '#3dprinter_Popup'
+            button_type: name
+            name: 3D Printer
+            show_icon: false
+            sub_button:
+              main: []
+              bottom: []
             cards:
-              - type: custom:bubble-card
-                card_type: pop-up
-                hash: '#3dprinter_Popup'
-                button_type: name
-                name: 3D Printer
-                show_icon: false
               - type: custom:ha-bambulab-print_control-card
                 printer: 3c9267e47d7aa4e0fc877665539ca33e
+                grid_options:
+                  columns: 12
+                  rows: auto
               - type: custom:ha-bambulab-print_status-card
                 printer: 3c9267e47d7aa4e0fc877665539ca33e
                 custom_power: light.chevet
                 style: simple
-              - type: horizontal-stack
-                cards:
-                  - type: custom:bubble-card
-                    card_type: button
-                    button_type: switch
-                    entity: sensor.a1_03919c452905439_etape_actuelle
-                    show_state: true
-                    force_icon: false
-                    show_icon: true
-                    name: Stage
-                    icon: mdi:printer-3d
-                    button_action:
-                      tap_action:
-                        action: more-info
-                      hold_action:
-                        action: none
-                    modules:
-                      - frosted_glass
-                      - icon_color
-                    frosted_glass:
-                      icon_background: dark
-                      border: bubble
-                      main_shadow: false
-                      icon_shadow: false
-                      sub_shadow: false
-                      opacity: 0.6
-                    icon_color:
-                      use_hex: true
-                      color_hex: '#FFD700'
-                  - type: custom:bubble-card
-                    card_type: button
-                    button_type: switch
-                    entity: sensor.a1_03919c452905439_progression_de_l_impression
-                    show_state: true
-                    force_icon: false
-                    show_icon: true
-                    name: Progress
-                    icon: mdi:progress-star-four-points
-                    button_action:
-                      tap_action:
-                        action: more-info
-                      hold_action:
-                        action: none
-                    modules:
-                      - frosted_glass
-                      - icon_border_progress
-                      - icon_color
-                    frosted_glass:
-                      icon_background: dark
-                      border: bubble
-                      opacity: 0.6
-                    card_layout: large
-                    icon_border_progress:
-                      - button: main
-                        source: sensor.a1_03919c452905439_progression_de_l_impression
-                        interpolate_colors: false
-                    icon_color:
-                      use_hex: true
-                      color_hex: '#1E90FF'
-              - type: horizontal-stack
-                cards:
-                  - type: custom:bubble-card
-                    card_type: button
-                    button_type: switch
-                    entity: binary_sensor.a1_03919c452905439_etat
-                    show_state: true
-                    force_icon: false
-                    show_icon: true
-                    name: Status
-                    icon: mdi:cog
-                    button_action:
-                      tap_action:
-                        action: more-info
-                      hold_action:
-                        action: none
-                    modules:
-                      - frosted_glass
-                      - icon_color
-                    frosted_glass:
-                      icon_background: dark
-                      border: bubble
-                      opacity: 0.6
-                    icon_color:
-                      use_hex: true
-                      color_hex: '#69BE28'
-                  - type: custom:bubble-card
-                    card_type: button
-                    button_type: switch
-                    entity: sensor.a1_03919c452905439_temps_restant
-                    show_state: true
-                    force_icon: false
-                    show_icon: true
-                    name: Time left
-                    icon: mdi:timer-sand
-                    button_action:
-                      tap_action:
-                        action: more-info
-                      hold_action:
-                        action: none
-                    modules:
-                      - frosted_glass
-                      - icon_color
-                    frosted_glass:
-                      icon_background: dark
-                      border: bubble
-                      opacity: 0.6
-                    icon_color:
-                      use_hex: true
-                      color_hex: '#1E90FF'
+                grid_options:
+                  columns: 12
+                  rows: auto
+              - type: custom:bubble-card
+                card_type: button
+                button_type: switch
+                entity: sensor.a1_03919c452905439_etape_actuelle
+                show_state: true
+                force_icon: false
+                show_icon: true
+                name: Stage
+                icon: mdi:printer-3d
+                button_action:
+                  tap_action:
+                    action: more-info
+                  hold_action:
+                    action: none
+                modules:
+                  - frosted_glass
+                  - icon_color
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  main_shadow: false
+                  icon_shadow: false
+                  sub_shadow: false
+                  opacity: 0.6
+                icon_color:
+                  use_hex: true
+                  color_hex: '#FFD700'
+                grid_options:
+                  columns: 6
+              - type: custom:bubble-card
+                card_type: button
+                button_type: switch
+                entity: sensor.a1_03919c452905439_progression_de_l_impression
+                show_state: true
+                force_icon: false
+                show_icon: true
+                name: Progress
+                icon: mdi:progress-star-four-points
+                button_action:
+                  tap_action:
+                    action: more-info
+                  hold_action:
+                    action: none
+                modules:
+                  - frosted_glass
+                  - icon_border_progress
+                  - icon_color
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                card_layout: large
+                icon_border_progress:
+                  - button: main
+                    source: sensor.a1_03919c452905439_progression_de_l_impression
+                    interpolate_colors: false
+                icon_color:
+                  use_hex: true
+                  color_hex: '#1E90FF'
+                grid_options:
+                  columns: 6
+              - type: custom:bubble-card
+                card_type: button
+                button_type: switch
+                entity: binary_sensor.a1_03919c452905439_etat
+                show_state: true
+                force_icon: false
+                show_icon: true
+                name: Status
+                icon: mdi:cog
+                button_action:
+                  tap_action:
+                    action: more-info
+                  hold_action:
+                    action: none
+                modules:
+                  - frosted_glass
+                  - icon_color
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                icon_color:
+                  use_hex: true
+                  color_hex: '#69BE28'
+                grid_options:
+                  columns: 6
+              - type: custom:bubble-card
+                card_type: button
+                button_type: switch
+                entity: sensor.a1_03919c452905439_temps_restant
+                show_state: true
+                force_icon: false
+                show_icon: true
+                name: Time left
+                icon: mdi:timer-sand
+                button_action:
+                  tap_action:
+                    action: more-info
+                  hold_action:
+                    action: none
+                modules:
+                  - frosted_glass
+                  - icon_color
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                icon_color:
+                  use_hex: true
+                  color_hex: '#1E90FF'
+                grid_options:
+                  columns: 6
               - type: custom:bubble-card
                 card_type: button
                 button_type: switch
@@ -1383,6 +1578,8 @@ views:
                 icon_color:
                   use_hex: true
                   color_hex: '#FF4500'
+                grid_options:
+                  columns: 12
               - show_state: true
                 show_name: true
                 camera_view: auto
@@ -1392,119 +1589,125 @@ views:
                 name: Bambu Lab A1
                 camera_image: camera.a1_03919c452905439_camera
                 aspect_ratio: '16:9'
-          - type: vertical-stack
+                grid_options:
+                  columns: 12
+                  rows: auto
+            popup_mode: centered
+            with_bottom_offset: true
+            full_width_on_mobile: false
+            bg_opacity: '60'
+          - type: custom:bubble-card
+            card_type: pop-up
+            hash: '#climate_Popup'
+            name: Climate
+            show_icon: false
+            sub_button:
+              main: []
+              bottom: []
             cards:
-              - type: custom:bubble-card
-                card_type: pop-up
-                hash: '#climate_Popup'
-                button_type: name
-                name: Climate
-                show_icon: false
-                sub_button:
-                  main: []
-                  bottom: []
-              - type: horizontal-stack
-                cards:
-                  - type: custom:mushroom-template-card
-                    primary: |
-                      {{ states('sensor.air_quality_summary') }}
-                    secondary: >
-                      CO₂ {{
-                      states('sensor.healthy_home_coach_carbon_dioxide_sensor')
-                      }} ppm · {{ states('sensor.healthy_home_coach_noise') }}
-                      dB · AQI {{
-                      states('sensor.healthy_home_coach_air_quality') }}
-                    icon: |
-                      {{ state_attr('sensor.air_quality_summary', 'icon') }}
-                    tap_action:
-                      action: more-info
-                    multiline_secondary: true
-                    vertical: true
-                    features_position: bottom
-                    card_mod:
-                      style: >
-                        {% set co2 =
-                        states('sensor.healthy_home_coach_carbon_dioxide_sensor')
-                        | int(0) %}
+              - type: custom:mushroom-template-card
+                primary: |
+                  {{ states('sensor.air_quality_summary') }}
+                secondary: >
+                  CO₂ {{
+                  states('sensor.healthy_home_coach_carbon_dioxide_sensor') }}
+                  ppm · {{ states('sensor.healthy_home_coach_noise') }} dB · AQI
+                  {{ states('sensor.healthy_home_coach_air_quality') }}
+                icon: |
+                  {{ state_attr('sensor.air_quality_summary', 'icon') }}
+                tap_action:
+                  action: more-info
+                multiline_secondary: true
+                vertical: true
+                features_position: bottom
+                card_mod:
+                  style: >
+                    {% set co2 =
+                    states('sensor.healthy_home_coach_carbon_dioxide_sensor') |
+                    int(0) %}
 
-                        ha-card {
-                          border-radius: 14px;
-                          padding: 12px;
-                          color: white;
-                          --icon-color: white;
-                          transition: all 0.4s ease;
-                        }
+                    ha-card {
+                      border-radius: 14px;
+                      padding: 12px;
+                      color: white;
+                      --icon-color: white;
+                      transition: all 0.4s ease;
+                    }
 
-                        /* Dynamic colors */ ha-card {
-                          {% if co2 < 800 %}
-                            background: linear-gradient(135deg, #4CAF50, #2E7D32);
-                          {% elif co2 < 1200 %}
-                            background: linear-gradient(135deg, #FF9800, #EF6C00);
-                          {% else %}
-                            background: linear-gradient(135deg, #F44336, #C62828);
-                            animation: pulse 2.2s ease-in-out infinite;
-                          {% endif %}
-                        }
+                    /* Dynamic colors */ ha-card {
+                      {% if co2 < 800 %}
+                        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                      {% elif co2 < 1200 %}
+                        background: linear-gradient(135deg, #FF9800, #EF6C00);
+                      {% else %}
+                        background: linear-gradient(135deg, #F44336, #C62828);
+                        animation: pulse 2.2s ease-in-out infinite;
+                      {% endif %}
+                    }
 
-                        /* Animation */ @keyframes pulse {
-                          0%   { transform: scale(1); opacity: 1; }
-                          50%  { transform: scale(1.015); opacity: 0.92; }
-                          100% { transform: scale(1); opacity: 1; }
-                        }
-                  - type: custom:mushroom-template-card
-                    primary: |
-                      {{ states('sensor.aqi_summary') }}
-                    secondary: >
-                      AQI : {{ states('sensor.healthy_home_coach_air_quality')
-                      }}
-                    icon: |
-                      {{ state_attr('sensor.aqi_summary', 'icon') }}
-                    tap_action:
-                      action: more-info
-                    vertical: true
-                    features_position: bottom
-                    multiline_secondary: true
-                    card_mod:
-                      style: >
-                        {% set aqi =
-                        states('sensor.healthy_home_coach_air_quality') | int(0)
-                        %}
+                    /* Animation */ @keyframes pulse {
+                      0%   { transform: scale(1); opacity: 1; }
+                      50%  { transform: scale(1.015); opacity: 0.92; }
+                      100% { transform: scale(1); opacity: 1; }
+                    }
+                grid_options:
+                  columns: 6
+                  rows: auto
+              - type: custom:mushroom-template-card
+                primary: |
+                  {{ states('sensor.aqi_summary') }}
+                secondary: |
+                  AQI : {{ states('sensor.healthy_home_coach_air_quality') }}
+                icon: |
+                  {{ state_attr('sensor.aqi_summary', 'icon') }}
+                tap_action:
+                  action: more-info
+                vertical: true
+                features_position: bottom
+                multiline_secondary: true
+                card_mod:
+                  style: >
+                    {% set aqi = states('sensor.healthy_home_coach_air_quality')
+                    | int(0) %}
 
 
-                        ha-card {
-                          border-radius: 14px;
-                          padding: 12px;
-                          color: white;
-                          --icon-color: white;
-                          transition: all 0.4s ease;
-                        }
+                    ha-card {
+                      border-radius: 14px;
+                      padding: 12px;
+                      color: white;
+                      --icon-color: white;
+                      transition: all 0.4s ease;
+                    }
 
 
-                        /* Dynamic colors */
+                    /* Dynamic colors */
 
-                        ha-card {
-                          {% if aqi <= 2 %}
-                            background: linear-gradient(135deg, #4CAF50, #2E7D32);
-                          {% elif aqi == 3 %}
-                            background: linear-gradient(135deg, #8BC34A, #558B2F);
-                          {% elif aqi == 4 %}
-                            background: linear-gradient(135deg, #FF9800, #EF6C00);
-                          {% elif aqi == 5 %}
-                            background: linear-gradient(135deg, #F44336, #C62828);
-                          {% else %}
-                            background: linear-gradient(135deg, #6A1B9A, #4A148C);
-                            animation: pulse 2.2s ease-in-out infinite;
-                          {% endif %}
-                        }
+                    ha-card {
+                      {% if aqi <= 2 %}
+                        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                      {% elif aqi == 3 %}
+                        background: linear-gradient(135deg, #8BC34A, #558B2F);
+                      {% elif aqi == 4 %}
+                        background: linear-gradient(135deg, #FF9800, #EF6C00);
+                      {% elif aqi == 5 %}
+                        background: linear-gradient(135deg, #F44336, #C62828);
+                      {% else %}
+                        background: linear-gradient(135deg, #6A1B9A, #4A148C);
+                        animation: pulse 2.2s ease-in-out infinite;
+                      {% endif %}
+                    }
 
 
-                        /* Animation */
+                    /* Animation */
 
-                        @keyframes pulse {
-                          0%   { transform: scale(1); opacity: 1; }
-                          50%  { transform: scale(1.015); opacity: 0.92; }
-                          100% { transform: scale(1); opacity: 1; }
-                        }
+                    @keyframes pulse {
+                      0%   { transform: scale(1); opacity: 1; }
+                      50%  { transform: scale(1.015); opacity: 0.92; }
+                      100% { transform: scale(1); opacity: 1; }
+                    }
+                grid_options:
+                  columns: 6
+                  rows: auto
               - type: custom:mini-graph-card
                 name: Home temperature
                 entities:
@@ -1527,15 +1730,9 @@ views:
                 hour24: true
                 unit: °C
                 font_size: 90
-              - type: custom:bubble-card
-                card_type: separator
-                icon: ''
-                styles: |-
-                  .bubble-line {
-                    background: var(--secondary-text-color);
-                    opacity: 1;
-                  }
-                name: ''
+                grid_options:
+                  columns: 12
+                  rows: auto
               - type: custom:bubble-card
                 card_type: select
                 entity: input_select.heating_mode
@@ -1553,98 +1750,101 @@ views:
                 sub_button:
                   main: []
                   bottom: []
-              - type: horizontal-stack
-                cards:
-                  - type: custom:bubble-card
-                    card_type: climate
-                    sub_button:
-                      main:
-                        - name: HVAC modes menu
-                          select_attribute: hvac_modes
-                          state_background: false
-                          show_arrow: false
-                          sub_button_type: select
-                      bottom: []
-                    entity: climate.radiator_thermostat_w600
-                    modules:
-                      - frosted_glass
-                    main_buttons_position: bottom
-                    icon: phu:aqara-thermo-e1
-                    name: Entrance
-                    show_state: false
-                    show_attribute: true
-                    attribute: current_temperature
-                    rows: 1.719
-                    grid_options:
-                      columns: 6
-                      rows: 1.719
-                  - type: custom:bubble-card
-                    card_type: climate
-                    sub_button:
-                      main:
-                        - name: HVAC modes menu
-                          select_attribute: hvac_modes
-                          state_background: false
-                          show_arrow: false
-                          sub_button_type: select
-                      bottom: []
-                    entity: climate.radiator_thermostat_w600_3
-                    modules:
-                      - frosted_glass
-                    main_buttons_position: bottom
-                    rows: 1.719
-                    icon: phu:aqara-thermo-e1
-                    name: Bathroom
-                    show_attribute: true
-                    attribute: current_temperature
-                    grid_options:
-                      columns: 6
-                      rows: 1.719
-              - type: horizontal-stack
-                cards:
-                  - type: custom:bubble-card
-                    card_type: climate
-                    sub_button:
-                      main:
-                        - name: HVAC modes menu
-                          select_attribute: hvac_modes
-                          state_background: false
-                          show_arrow: false
-                          sub_button_type: select
-                      bottom: []
-                    entity: climate.radiator_thermostat_w600_2
-                    modules:
-                      - frosted_glass
-                    main_buttons_position: bottom
-                    icon: phu:aqara-thermo-e1
-                    name: Office
-                    show_attribute: true
-                    attribute: current_temperature
-                    grid_options:
-                      columns: 6
-                    rows: 1.719
-                  - type: custom:bubble-card
-                    card_type: climate
-                    sub_button:
-                      main:
-                        - name: HVAC modes menu
-                          select_attribute: hvac_modes
-                          state_background: false
-                          show_arrow: false
-                          sub_button_type: select
-                      bottom: []
-                    entity: climate.radiator_thermostat_w600_4
-                    modules:
-                      - frosted_glass
-                    main_buttons_position: bottom
-                    rows: 1.719
-                    icon: phu:aqara-thermo-e1
-                    name: Bedroom
-                    show_attribute: true
-                    attribute: current_temperature
-                    grid_options:
-                      columns: 6
-                      rows: 1.719
+                grid_options:
+                  columns: 12
+              - type: custom:bubble-card
+                card_type: climate
+                sub_button:
+                  main:
+                    - name: HVAC modes menu
+                      select_attribute: hvac_modes
+                      state_background: false
+                      show_arrow: false
+                      sub_button_type: select
+                  bottom: []
+                entity: climate.radiator_thermostat_w600
+                modules:
+                  - frosted_glass
+                main_buttons_position: bottom
+                icon: phu:aqara-thermo-e1
+                name: Entrance
+                show_state: false
+                show_attribute: true
+                attribute: current_temperature
+                rows: 1.719
+                grid_options:
+                  rows: 1.719
+                  columns: 6
+              - type: custom:bubble-card
+                card_type: climate
+                sub_button:
+                  main:
+                    - name: HVAC modes menu
+                      select_attribute: hvac_modes
+                      state_background: false
+                      show_arrow: false
+                      sub_button_type: select
+                  bottom: []
+                entity: climate.radiator_thermostat_w600_3
+                modules:
+                  - frosted_glass
+                main_buttons_position: bottom
+                rows: 1.719
+                icon: phu:aqara-thermo-e1
+                name: Bathroom
+                show_attribute: true
+                attribute: current_temperature
+                grid_options:
+                  rows: 1.719
+                  columns: 6
+              - type: custom:bubble-card
+                card_type: climate
+                sub_button:
+                  main:
+                    - name: HVAC modes menu
+                      select_attribute: hvac_modes
+                      state_background: false
+                      show_arrow: false
+                      sub_button_type: select
+                  bottom: []
+                entity: climate.radiator_thermostat_w600_2
+                modules:
+                  - frosted_glass
+                main_buttons_position: bottom
+                icon: phu:aqara-thermo-e1
+                name: Office
+                show_attribute: true
+                attribute: current_temperature
+                rows: 1.719
+                grid_options:
+                  columns: 6
+              - type: custom:bubble-card
+                card_type: climate
+                sub_button:
+                  main:
+                    - name: HVAC modes menu
+                      select_attribute: hvac_modes
+                      state_background: false
+                      show_arrow: false
+                      sub_button_type: select
+                  bottom: []
+                entity: climate.radiator_thermostat_w600_4
+                modules:
+                  - frosted_glass
+                main_buttons_position: bottom
+                rows: 1.719
+                icon: phu:aqara-thermo-e1
+                name: Bedroom
+                show_attribute: true
+                attribute: current_temperature
+                grid_options:
+                  rows: 1.719
+                  columns: 6
+            popup_mode: centered
+            button_type: name
+            with_bottom_offset: true
+            full_width_on_mobile: false
+            bg_opacity: '60'
     max_columns: 1
     dense_section_placement: true
     background:
@@ -2274,8 +2474,8 @@ views:
         name: Dishwasher - ends
         visibility:
           - condition: state
-            entity: sensor.lave_vaisselle_remaining_program_time
-            state_not: unavailable
+            entity: sensor.lave_vaisselle_operation_state
+            state_not: finished
       - type: entity
         show_name: true
         show_state: true
@@ -2284,8 +2484,8 @@ views:
         name: Dishwasher - Progress
         visibility:
           - condition: state
-            entity: sensor.lave_vaisselle_program_progress
-            state_not: unavailable
+            entity: sensor.lave_vaisselle_operation_state
+            state_not: finished
     sections:
       - type: grid
         cards:
@@ -2435,8 +2635,8 @@ views:
         entity: sensor.volvo_ex30_estimated_charging_time
         visibility:
           - condition: state
-            entity: sensor.volvo_ex30_estimated_charging_time
-            state_not: '1'
+            entity: sensor.volvo_ex30_charging_connection_status
+            state_not: disconnected
         name: Estimated charging time
         color: orange
       - type: entity

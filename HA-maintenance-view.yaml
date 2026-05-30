@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page used for maintenance purpose.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 22/05/2026 (DD/MM/YYYY)
+# Last updated: 30/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -156,35 +156,52 @@ views:
             vertical: false
             features_position: bottom
           - type: heading
-            heading: Philips Hue Tap Dial Switch
+            heading: Philips Hue switches
             heading_style: title
-            icon: phu:tap-dial
+            icon: phu:hue-only
           - type: markdown
             content: '**Battery type:** CR2032'
             text_only: true
-          - type: tile
-            entity: sensor.hue_tap_dial_switch_1_batterie
-            name: Living room dial switch
-            vertical: false
-            features_position: bottom
+          - type: vertical-stack
+            cards:
+              - type: heading
+                heading: Hue Tap Dial
+                heading_style: title
+                icon: phu:tap-dial
+                grid_options:
+                  columns: 6
+                  rows: auto
+              - type: tile
+                entity: sensor.hue_tap_dial_switch_1_batterie
+                name: Living room dial switch
+                vertical: false
+                features_position: bottom
+                grid_options:
+                  columns: 6
+                  rows: 1
             grid_options:
-              columns: 12
-              rows: 1
-          - type: heading
-            heading: Philips Hue Dimmer Switch
-            heading_style: title
-            icon: phu:dimmer-switch
-          - type: markdown
-            content: '**Battery type:** CR2032'
-            text_only: true
-          - type: tile
-            entity: sensor.hue_dimmer_switch_1_batterie
-            name: Bedroom dimmer switch
-            vertical: false
-            features_position: bottom
+              columns: 6
+              rows: auto
+          - type: vertical-stack
+            cards:
+              - type: heading
+                heading: Hue Dimmer
+                heading_style: title
+                icon: phu:dimmer-switch
+                grid_options:
+                  columns: 6
+                  rows: auto
+              - type: tile
+                entity: sensor.hue_dimmer_switch_1_batterie
+                name: Bedroom dimmer switch
+                vertical: false
+                features_position: bottom
+                grid_options:
+                  columns: 6
+                  rows: 1
             grid_options:
-              columns: 12
-              rows: 1
+              columns: 6
+              rows: auto
       - type: grid
         cards:
           - type: heading

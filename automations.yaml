@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 25/05/2026 (DD/MM/YYYY)
+# Last updated: 30/05/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night - Without guests
@@ -25,9 +25,6 @@
   - condition: state
     entity_id: input_boolean.cat_night_override
     state: 'off'
-  - condition: numeric_state
-    entity_id: sensor.detecteur_entree_eclairement
-    below: 40
   actions:
   - if:
     - condition: state
@@ -209,18 +206,11 @@
   actions:
   - action: input_boolean.turn_off
     target:
-      entity_id: input_boolean.visitor_override
+      entity_id:
+      - input_boolean.visitor_override
+      - input_boolean.entrance_light_override
+      - input_boolean.cat_night_override
     data: {}
-  - action: input_boolean.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id: input_boolean.entrance_light_override
-  - action: input_boolean.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id: input_boolean.cat_night_override
   mode: single
 - id: '1741100615672'
   alias: Entrance light motion at sunrise or sunset - With guests
@@ -1281,3 +1271,33 @@
     action: timer.start
     data: {}
   mode: restart
+- id: '1779720326227'
+  alias: Scene - Restore TV lights after F1
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.f1_current_session
+    to:
+    - unavailable
+  conditions:
+  - condition: state
+    entity_id: input_boolean.f1_track_status_light
+    state:
+    - 'on'
+  actions:
+  - action: input_boolean.turn_off
+    metadata: {}
+    target:
+      entity_id: input_boolean.f1_track_status_light
+    data: {}
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id:
+      - light.tv
+    data:
+      brightness_pct: 66
+      transition: 1
+      color_temp_kelvin: 2288
+  mode: single

@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 25/05/2026 (DD/MM/YYYY)
+# Last updated: 30/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -724,6 +724,32 @@ views:
               bottom: []
             slider_fill_orientation: left
             slider_value_position: right
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.set_tv_lights_back_to_normal_state_after_f1
+            name: Restore TV lights after F1
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            icon: ''
+            sub_button:
+              main: []
+              bottom: []
+            slider_fill_orientation: left
+            slider_value_position: right
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             entity: input_boolean.f1_track_status_light
