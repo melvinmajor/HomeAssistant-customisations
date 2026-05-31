@@ -1,0 +1,5 @@
+kindle_display:
+  module: kindle_display
+  class: KindleDisplay
+  update_interval: 30
+  output_path: /config/www/kindle_display.png
