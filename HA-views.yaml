@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 30/05/2026 (DD/MM/YYYY)
+# Last updated: 31/05/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -1610,16 +1610,17 @@ views:
                   {{ states('sensor.air_quality_summary') }}
                 secondary: >
                   CO₂ {{
-                  states('sensor.healthy_home_coach_carbon_dioxide_sensor') }}
-                  ppm · {{ states('sensor.healthy_home_coach_noise') }} dB · AQI
-                  {{ states('sensor.healthy_home_coach_air_quality') }}
-                icon: |
-                  {{ state_attr('sensor.air_quality_summary', 'icon') }}
+                  states('sensor.healthy_home_coach_carbon_dioxide_sensor')
+                  }}ppm · {{ states('sensor.healthy_home_coach_noise') }}dB ·
+                  AQI {{ states('sensor.healthy_home_coach_air_quality') }}
                 tap_action:
                   action: more-info
                 multiline_secondary: true
                 vertical: true
                 features_position: bottom
+                grid_options:
+                  columns: 6
+                  rows: auto
                 card_mod:
                   style: >
                     {% set co2 =
@@ -1650,16 +1651,11 @@ views:
                       50%  { transform: scale(1.015); opacity: 0.92; }
                       100% { transform: scale(1); opacity: 1; }
                     }
-                grid_options:
-                  columns: 6
-                  rows: auto
               - type: custom:mushroom-template-card
                 primary: |
                   {{ states('sensor.aqi_summary') }}
                 secondary: |
                   AQI : {{ states('sensor.healthy_home_coach_air_quality') }}
-                icon: |
-                  {{ state_attr('sensor.aqi_summary', 'icon') }}
                 tap_action:
                   action: more-info
                 vertical: true
@@ -2333,7 +2329,7 @@ views:
             unit: °C
             font_size: 90
           - type: custom:weather-chart-card
-            entity: weather.forecast_maison
+            entity: weather.irm
             show_main: true
             show_temperature: true
             show_current_condition: true
@@ -2375,7 +2371,7 @@ views:
           - show_current: false
             show_forecast: true
             type: weather-forecast
-            entity: weather.forecast_maison
+            entity: weather.irm
             forecast_type: hourly
             name:
               type: device

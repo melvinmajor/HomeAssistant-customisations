@@ -18,6 +18,7 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | Module name                     | Active | HA Add-on | HACS Plugin |
 | :-----------------------------: | :----: | :-------: | :---------: |
 | AirCast                         | Yes    | x         |             |
+| AppDaemon                       | Yes    | x         |             |
 | Assist Microphone               | Yes    | x         |             |
 | ESPHome Device Builder          | Yes    | x         |             |
 | File Editor                     | Yes    | x         |             |
@@ -27,6 +28,7 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | openWakeWord                    | Yes    | x         |             |
 | pigpio                          | Yes    | x         |             |
 | Piper                           | Yes    | x         |             |
+| SONOFF Dongle Flasher           | **No** | x         |             |
 | Samba share                     | **No** | x         |             |
 | Speech-to-Phrase                | Yes    | x         |             |
 | Terminal & SSH                  | **No** | x         |             |
@@ -45,16 +47,15 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | HACS                            | Yes    |           | x           |
 | Home Assistant Swipe Navigation | Yes    |           | x           |
 | kiosk-mode                      | Yes    |           | x           |
-| LLM Vision                      | Yes    |           | x           |
+| Material Home Component         | Yes    |           | x           |
 | Material You Theme              | Yes    |           | x           |
 | Material You Utilities          | Yes    |           | x           |
 | mini-graph-card                 | Yes    |           | x           |
 | Modern Circular Gauge           | Yes    |           | x           |
 | Mushroom                        | Yes    |           | x           |
 | Navbard card                    | Yes    |           | x           |
-| Nexxtmove                       | Yes    |           | x           |
-| RecycleApp                      | Yes    |           | x           |
 | Presence Simulation             | Yes    |           | x           |
+| RecycleApp                      | Yes    |           | x           |
 | UI Lovelace Minimalist          | Yes    |           | x           |
 | Weather Chart Card              | Yes    |           | x           |
 
