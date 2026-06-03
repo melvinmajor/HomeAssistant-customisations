@@ -1,7 +1,7 @@
 ## Home Assistant configuration.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 22/05/2026 (DD/MM/YYYY)
+# Last updated: 03/06/2026 (DD/MM/YYYY)
 
 # Loads default set of integrations. Do not remove.
 default_config:
@@ -94,6 +94,11 @@ notify:
 #    - name: "PiSense Gas Resistance"
 #      unique_id: pisense_gasresistance
 #      state_topic: "home/pisense/bme680"
+
+
+# For Kindle Display project
+shell_command:
+  kindle_copy: cp /share/kindle_display.png /config/www/kindle.png
 
 
 conversation:

@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 31/05/2026 (DD/MM/YYYY)
+# Last updated: 03/06/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night - Without guests
@@ -1308,7 +1308,22 @@
   - entity_id: sensor.lave_vaisselle_operation_state
     to: Finished
     trigger: state
-  conditions: []
+  conditions:
+  - condition: time
+    after: 07:00:00
+    before: '22:00:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  - condition: time
+    after: 08:00:00
+    before: '23:00:00'
+    weekday:
+    - sat
+    - sun
   actions:
   - data:
       title: "\U0001F37D️ Lave-vaisselle"
@@ -1337,4 +1352,16 @@
         media_content_type: audio/mpeg
         metadata: {}
     action: media_player.play_media
+  mode: single
+- id: '1780438893921'
+  alias: Kindle – Generate and Copy Image
+  description: ''
+  triggers:
+  - minutes: '0'
+    trigger: time_pattern
+  - minutes: '30'
+    trigger: time_pattern
+  actions:
+  - delay: 00:00:02
+  - action: shell_command.kindle_copy
   mode: single

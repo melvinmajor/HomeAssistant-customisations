@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 31/05/2026 (DD/MM/YYYY)
+# Last updated: 03/06/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -193,6 +193,29 @@ views:
             sub_button:
               main: []
               bottom: []
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.kindle_generate_and_copy_image
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            grid_options:
+              columns: 12
+              rows: auto
+            sub_button:
+              main: []
+              bottom: []
+            show_attribute: false
+            attribute: last_triggered
+            show_state: true
+            name: Kindle AutoCopy Home Status image
           - type: heading
             heading: Heating system
             heading_style: title
