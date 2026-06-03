@@ -1,7 +1,8 @@
 import appdaemon.plugins.hass.hassapi as hass
 from PIL import Image, ImageDraw, ImageFont
-import datetime
+from datetime import datetime, timedelta
 import os
+import pytz
 
 
 ICON_MAP = {
@@ -24,8 +25,12 @@ ICON_MAP = {
 }
 
 # Layout constants
+IMAGE_WIDTH = 758 # 758 on Kindle EY21
+IMAGE_HEIGHT = 880 # Should be 1024 on Kindle EY21 but browser bar has to be kept in mind
 MARGIN_X = 45
 MARGIN_Y = 35
+LEFT_X = MARGIN_X # left side of 2 column
+RIGHT_X = 380 # right side of 2 column, more or less half of 758
 LINE_WIDTH_HEADER = 2
 LINE_WIDTH = 1
 LINE_FILL_HEADER = 80
@@ -33,12 +38,12 @@ LINE_FILL = 120
 LINE_FILL_LIGHT = 180
 SECTION_SPACING = 25
 ICON_SIZE = 94
-ICON_SMALL = 60
+ICON_SMALL = 64
 
-font_header = ImageFont.truetype("/config/www/fonts/NotoSans-Bold.ttf", 24)
-font_text = ImageFont.truetype("/config/www/fonts/NotoSans-Regular.ttf", 18)
-font_text_small = ImageFont.truetype("/config/www/fonts/NotoSans-Regular.ttf", 16)
-font_emoji = ImageFont.truetype("/config/www/fonts/Twemoji.Mozilla.ttf", 18)
+font_header = ImageFont.truetype("/share/fonts/NotoSans-Bold.ttf", 28)
+font_text = ImageFont.truetype("/share/fonts/NotoSans-Regular.ttf", 20)
+font_text_small = ImageFont.truetype("/share/fonts/NotoSans-Regular.ttf", 16)
+font_emoji = ImageFont.truetype("/share/fonts/Twemoji.Mozilla.ttf", 20)
 
 def uv_category(uv):
     try:
@@ -68,18 +73,18 @@ class KindleDisplay(hass.Hass):
 
         #self.run_every(self.update_display, "now+60", self.args["update_interval"] * 60)
         # Then every hour at :00 and :30
-        now = datetime.datetime.now()
-        next_full = now.replace(minute=0, second=0, microsecond=0) + datetime.timedelta(hours=1)
+        now = datetime.now()
+        next_full = now.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
         next_half = now.replace(minute=30, second=0, microsecond=0)
         if now.minute >= 30:
-            next_half += datetime.timedelta(hours=1)
+            next_half += timedelta(hours=1)
 
         self.run_hourly(self.update_display, next_full)
         self.run_hourly(self.update_display, next_half)
 
 
     def update_display(self, kwargs):
-        now = datetime.datetime.now()
+        now = datetime.now()
         hour = now.hour
 
         # --- WEATHER ---
@@ -123,7 +128,7 @@ class KindleDisplay(hass.Hass):
         aqi_co2 = self.get_state("sensor.healthy_home_coach_carbon_dioxide_sensor")
 
         # --- IMAGE SETUP ---
-        img = Image.new("L", (758, 1024), 255)
+        img = Image.new("L", (IMAGE_WIDTH, IMAGE_HEIGHT), 255)
         draw = ImageDraw.Draw(img)
 
 
@@ -154,11 +159,11 @@ class KindleDisplay(hass.Hass):
 
         # Icon today
         icon_today = ICON_MAP.get(weather_state, "wi-na.png")
-        icon_path = f"/config/www/kindle/icons/{icon_today}"
+        icon_path = f"/share/kindle/icons/{icon_today}"
         if os.path.exists(icon_path):
             try:
                 icon = Image.open(icon_path).convert("RGBA").resize((ICON_SIZE, ICON_SIZE))
-                img.paste(icon, (758 - ICON_SIZE - MARGIN_X, y - 10), icon)
+                img.paste(icon, (758 - ICON_SIZE - MARGIN_X, y - 5), icon)
             except Exception as e:
                 self.log(f"Icon error: {e}", level="WARNING")
 
@@ -176,7 +181,7 @@ class KindleDisplay(hass.Hass):
         #    draw.text((MARGIN_X, y), f"{time_label} – {temp}°C – {cond}", font=font_text, fill=0)
 
         #    icon_name = ICON_MAP.get(cond, "wi-na.png")
-        #    icon_path = f"/config/www/kindle/icons/{icon_name}"
+        #    icon_path = f"/share/kindle/icons/{icon_name}"
         #    if os.path.exists(icon_path):
         #        try:
         #            icon_h = Image.open(icon_path).convert("RGBA").resize((ICON_SMALL, ICON_SMALL))
@@ -187,13 +192,13 @@ class KindleDisplay(hass.Hass):
         #    y += 40
 
         # --- NEXT HOURS GRAPH ---
+        # Using Open-Meteo data
         y += 80
         title = "Next Hours"
         draw.text((MARGIN_X, y), title, font=font_text, fill=0)
         bbox = draw.textbbox((MARGIN_X, y), title, font=font_text)
         text_bottom = bbox[3]
         draw.line((MARGIN_X, text_bottom + 5, 758 - MARGIN_X, text_bottom + 5), fill=LINE_FILL, width=LINE_WIDTH)
-
 
         y += 40
 
@@ -205,12 +210,11 @@ class KindleDisplay(hass.Hass):
         # Graph dimensions
         graph_x1 = MARGIN_X + 60
         graph_x2 = 758 - MARGIN_X - 60
-        graph_y1 = y
+        graph_y1 = y + 10
         graph_y2 = y + 120
 
         # Base line
         draw.line((graph_x1, graph_y2, graph_x2, graph_y2), fill=LINE_FILL_LIGHT, width=LINE_WIDTH)
-
 
         # Normalize temperatures
         t_min = min(temps)
@@ -245,11 +249,11 @@ class KindleDisplay(hass.Hass):
 
             # Weather icon above point
             icon_name = ICON_MAP.get(cond, "wi-na.png")
-            icon_path = f"/config/www/kindle/icons/{icon_name}"
+            icon_path = f"/share/kindle/icons/{icon_name}"
             if os.path.exists(icon_path):
                 try:
-                    icon_h = Image.open(icon_path).convert("RGBA").resize((40, 40))
-                    img.paste(icon_h, (x - 20, graph_y1 - 10), icon_h)
+                    icon_h = Image.open(icon_path).convert("RGBA").resize((ICON_SMALL, ICON_SMALL))
+                    img.paste(icon_h, (x - 20, graph_y1 - 25), icon_h)
                 except:
                     pass
 
@@ -258,7 +262,7 @@ class KindleDisplay(hass.Hass):
 
 
         # --- WEATHER TOMORROW ---
-        if hour >= 18 and tomorrow_forecast:
+        if tomorrow_forecast:
             y += SECTION_SPACING
             title = "Weather Tomorrow"
             draw.text((MARGIN_X, y), title, font=font_text, fill=0)
@@ -267,47 +271,77 @@ class KindleDisplay(hass.Hass):
             draw.line((MARGIN_X, text_bottom + 5, 758 - MARGIN_X, text_bottom + 5), fill=LINE_FILL, width=LINE_WIDTH)
 
             y += 35
-            cond_tomorrow = tomorrow_forecast.get("condition", "sunny")
-            temp_tomorrow = tomorrow_forecast.get("temperature", "?")
 
-            draw.text((MARGIN_X, y), f"{temp_tomorrow}°C – {cond_tomorrow}", font=font_text, fill=0)
+            # Extract fields from Buienradar
+            cond_tomorrow = tomorrow_forecast.get("condition", "sunny") # Only one from Open-Meteo, strangely I can't get the one from Buienradar to work
+            cond_detailed_tomorrow = self.get_state("sensor.buienradar_full_condition_1d")
+            temp_min = self.get_state("sensor.buienradar_minimum_temperature_1d")
+            temp_max = self.get_state("sensor.buienradar_temperature_1d")
+            rainchance = self.get_state("sensor.buienradar_rainchance_1d")
+            sunrise_raw = self.get_state("sensor.sun_next_rising")
+            sunset_raw = self.get_state("sensor.sun_next_setting")
 
+            draw.text((MARGIN_X, y), f"{cond_detailed_tomorrow}", font=font_text, fill=0)
+            y += 30
+            draw.text((MARGIN_X, y), f"Min {temp_min}°C / Max {temp_max}°C", font=font_text, fill=0)
+            y += 30
+
+            # Rain
+            draw.text((MARGIN_X, y), f"Rain: {rainchance}%", font=font_text, fill=0)
+            y += 30
+
+            # Sunrise / Sunset
+            if sunrise_raw and sunset_raw:
+                utc = pytz.utc
+                local_tz = pytz.timezone("Europe/Brussels")
+
+                sunrise_dt = datetime.fromisoformat(sunrise_raw.replace("Z", "+00:00")).astimezone(local_tz)
+                sunset_dt = datetime.fromisoformat(sunset_raw.replace("Z", "+00:00")).astimezone(local_tz)
+
+                sunrise_fmt = sunrise_dt.strftime("%H:%M")
+                sunset_fmt = sunset_dt.strftime("%H:%M")
+
+                draw.text((MARGIN_X, y), f"Sunrise {sunrise_fmt} – Sunset {sunset_fmt}", font=font_text, fill=0)
+                y += 30
+
+            # Weather icon
             icon_tomorrow = ICON_MAP.get(cond_tomorrow, "wi-na.png")
-            icon_path = f"/config/www/kindle/icons/{icon_tomorrow}"
+            icon_path = f"/share/kindle/icons/{icon_tomorrow}"
             if os.path.exists(icon_path):
                 try:
                     icon2 = Image.open(icon_path).convert("RGBA").resize((ICON_SIZE, ICON_SIZE))
-                    img.paste(icon2, (758 - ICON_SIZE - MARGIN_X, y - 10), icon2)
+                    img.paste(icon2, (758 - ICON_SIZE - MARGIN_X, y - 120), icon2)
                 except:
                     pass
 
-        # --- INDOOR CLIMATE ---
-        y += 120
+        # --- TWO-COLUMN LAYOUT ---
+        y += 30
+
+        # --- COLUMN 1 - INDOOR CLIMATE ---
         title = "Indoor Climate"
-        draw.text((MARGIN_X, y), title, font=font_text, fill=0)
-        bbox = draw.textbbox((MARGIN_X, y), title, font=font_text)
+        draw.text((LEFT_X, y), title, font=font_text, fill=0)
+        bbox = draw.textbbox((LEFT_X, y), title, font=font_text)
         text_bottom = bbox[3]
-        draw.line((MARGIN_X, text_bottom + 5, 758 - MARGIN_X, text_bottom + 5), fill=LINE_FILL, width=LINE_WIDTH)
+        draw.line((LEFT_X, text_bottom + 5, RIGHT_X - 20, text_bottom + 5), fill=LINE_FILL, width=LINE_WIDTH)
 
-        y += 35
-        draw.text((MARGIN_X, y), f"Living Room: {temp_living}°C | {humidity_living}% RH", font=font_text, fill=0)
-        y += 30
-        draw.text((MARGIN_X, y), f"Entrance: {temp_entrance}°C", font=font_text, fill=0)
-        y += 30
-        draw.text((MARGIN_X, y), f"Bedroom: {temp_bedroom}°C", font=font_text, fill=0)
-        y += 30
-        draw.text((MARGIN_X, y), f"Bathroom: {temp_bathroom}°C", font=font_text, fill=0)
-        y += 30
-        draw.text((MARGIN_X, y), f"Office: {temp_office}°C", font=font_text, fill=0)
+        y_left = y + 35
+        draw.text((LEFT_X, y_left), f"Living Room: {temp_living}°C | {humidity_living}% RH", font=font_text, fill=0)
+        y_left += 30
+        draw.text((LEFT_X, y_left), f"Entrance: {temp_entrance}°C", font=font_text, fill=0)
+        y_left += 30
+        draw.text((LEFT_X, y_left), f"Bedroom: {temp_bedroom}°C", font=font_text, fill=0)
+        y_left += 30
+        draw.text((LEFT_X, y_left), f"Bathroom: {temp_bathroom}°C", font=font_text, fill=0)
+        y_left += 30
+        draw.text((LEFT_X, y_left), f"Office: {temp_office}°C", font=font_text, fill=0)
 
-        # --- AIR QUALITY ---
-        y += 80
+        # --- COLUMN 2 - AIR QUALITY ---
         title = "Air Quality"
-        draw.text((MARGIN_X, y), title, font=font_text, fill=0)
-        bbox = draw.textbbox((MARGIN_X, y), title, font=font_text)
+        draw.text((RIGHT_X, y), title, font=font_text, fill=0)
+        bbox = draw.textbbox((RIGHT_X, y), title, font=font_text)
         text_bottom = bbox[3]
-        draw.line((MARGIN_X, text_bottom + 5, 758 - MARGIN_X, text_bottom + 5), fill=LINE_FILL, width=LINE_WIDTH)
-        y += 35
+        draw.line((RIGHT_X, text_bottom + 5, 758 - MARGIN_X, text_bottom + 5), fill=LINE_FILL, width=LINE_WIDTH)
+        y_right = y + 35
 
         summary = aqi_summary or ""
         emoji_char = ""
@@ -316,18 +350,20 @@ class KindleDisplay(hass.Hass):
             emoji_char = summary[0]
             text_part = summary[1:].strip()
         if emoji_char:
-            draw.text((MARGIN_X, y), emoji_char, font=font_emoji, fill=0)
-            draw.text((MARGIN_X + 30, y), text_part, font=font_text, fill=0)
+            draw.text((RIGHT_X, y_right), emoji_char, font=font_emoji, fill=0)
+            draw.text((RIGHT_X + 30, y_right), text_part, font=font_text, fill=0)
         else:
-            draw.text((MARGIN_X, y), summary, font=font_text, fill=0)
-        y += 30
-        draw.text((MARGIN_X, y), f"PM2.5 Index: {aqi_pm25}", font=font_text, fill=0)
-        y += 30
-        draw.text((MARGIN_X, y), f"CO2: {aqi_co2} ppm", font=font_text, fill=0)
+            draw.text((RIGHT_X, y_right), summary, font=font_text, fill=0)
+        y_right += 30
+        draw.text((RIGHT_X, y_right), f"PM2.5 Index: {aqi_pm25}", font=font_text, fill=0)
+        y_right += 30
+        draw.text((RIGHT_X, y_right), f"CO2: {aqi_co2} ppm", font=font_text, fill=0)
+
+        y = max(y_left, y_right)
 
 
         # --- SAVE ---
-        self.log("Saving Kindle display image...", level="INFO")
+        #self.log("Saving Kindle display image...", level="INFO")
         try:
             img.save(self.args["output_path"])
             self.log("Kindle display image updated.", level="INFO")
