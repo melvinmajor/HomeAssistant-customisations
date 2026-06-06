@@ -30,7 +30,7 @@ IMAGE_HEIGHT = 880 # Should be 1024 on Kindle EY21 but browser bar has to be kep
 MARGIN_X = 45
 MARGIN_Y = 35
 LEFT_X = MARGIN_X # left side of 2 column
-RIGHT_X = 380 # right side of 2 column, more or less half of 758
+RIGHT_X = 450 # right side of 2 column, smaller than left side
 LINE_WIDTH_HEADER = 2
 LINE_WIDTH = 1
 LINE_FILL_HEADER = 80
@@ -72,19 +72,20 @@ class KindleDisplay(hass.Hass):
         self.run_in(self.update_display, 30)
 
         #self.run_every(self.update_display, "now+60", self.args["update_interval"] * 60)
-        # Then every hour at :00 and :30
+        # Then every hour
         now = datetime.now()
         next_full = now.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
-        next_half = now.replace(minute=30, second=0, microsecond=0)
-        if now.minute >= 30:
-            next_half += timedelta(hours=1)
+        #next_half = now.replace(minute=30, second=0, microsecond=0)
+        #if now.minute >= 30:
+        #    next_half += timedelta(hours=1)
 
         self.run_hourly(self.update_display, next_full)
-        self.run_hourly(self.update_display, next_half)
+        #self.run_hourly(self.update_display, next_half)
 
 
     def update_display(self, kwargs):
-        now = datetime.now()
+        tz = pytz.timezone("Europe/Brussels")
+        now = datetime.now(tz)
         hour = now.hour
 
         # --- WEATHER ---
@@ -96,11 +97,7 @@ class KindleDisplay(hass.Hass):
 
         # --- FORECAST ---
         #forecast = self.get_state("weather.openweathermap_forecast", attribute="forecast")
-        raw = self.call_service(
-            "weather/get_forecasts",
-            entity_id="weather.open_meteo",
-            type="hourly"
-        )
+        raw = self.call_service("weather/get_forecasts", entity_id="weather.open_meteo", type="hourly")
         #self.log(f"Forecast service result: {raw}", level="WARNING") # Debug
         response = raw["result"]["response"]
         entity_key = list(response.keys())[0]
@@ -135,11 +132,28 @@ class KindleDisplay(hass.Hass):
         # --- HEADER ---
         title = "Home Status"
         refresh = f"Last refresh: {now.strftime('%Y-%m-%d %H:%M')}"
-        draw.text((MARGIN_X, MARGIN_Y), title, font=font_header, fill=0)
-        bbox = draw.textbbox((0, 0), refresh, font=font_text)
-        refresh_width = bbox[2] - bbox[0]
-        draw.text((758 - refresh_width - MARGIN_X, MARGIN_Y), refresh, font=font_text, fill=0)
-        draw.line((MARGIN_X, MARGIN_Y + 35, 758 - MARGIN_X, MARGIN_Y + 35), fill=LINE_FILL_HEADER, width=LINE_WIDTH_HEADER)
+
+        # Measure both texts
+        bbox_title = draw.textbbox((0, 0), title, font=font_header)
+        title_w = bbox_title[2] - bbox_title[0]
+        title_h = bbox_title[3] - bbox_title[1]
+
+        bbox_refresh = draw.textbbox((0, 0), refresh, font=font_text_small)
+        refresh_w = bbox_refresh[2] - bbox_refresh[0]
+        refresh_h = bbox_refresh[3] - bbox_refresh[1]
+        max_h = max(title_h, refresh_h) # Find the tallest text (for baseline alignment)
+        y_line = MARGIN_Y + max_h + 15
+
+        # Compute Y offsets so both texts align on the bottom
+        title_y = MARGIN_Y + (max_h - title_h)
+        refresh_y = MARGIN_Y + (max_h - refresh_h)
+
+        draw.text((MARGIN_X, title_y), title, font=font_header, fill=0)
+        draw.text((758 - MARGIN_X - refresh_w, refresh_y), refresh, font=font_text_small, fill=0)
+        center = 758 // 2
+        draw.line((MARGIN_X, y_line, center - 150, y_line), fill=LINE_FILL_HEADER, width=LINE_WIDTH_HEADER) # Left segment
+        draw.line((center + 105, y_line, 758 - MARGIN_X, y_line), fill=LINE_FILL_HEADER, width=LINE_WIDTH_HEADER) # Right segment
+
 
         # --- WEATHER TODAY ---
         y = MARGIN_Y + 60
@@ -154,8 +168,7 @@ class KindleDisplay(hass.Hass):
         #draw.text((MARGIN_X, y + 30), f"Humidity: {weather_humidity}%", font=font_text, fill=0)
         weather_uv = self.get_state("weather.irm", attribute="uv_index")
         uv_cat = uv_category(weather_uv)
-        draw.text((MARGIN_X, y + 30), f"UV: {uv_cat} ({weather_uv})", font=font_text, fill=0)
-
+        draw.text((MARGIN_X, y + 30), f"UV: {uv_cat} ({weather_uv})", font=font_text_small, fill=0)
 
         # Icon today
         icon_today = ICON_MAP.get(weather_state, "wi-na.png")
@@ -167,32 +180,8 @@ class KindleDisplay(hass.Hass):
             except Exception as e:
                 self.log(f"Icon error: {e}", level="WARNING")
 
-        # --- HOURLY FORECAST ---
-        #y += 120
-        #draw.text((MARGIN_X, y), "Next Hours", font=font_text, fill=0)
-        #draw.line((MARGIN_X, y + 20, 758 - MARGIN_X, y + 20), fill=LINE_FILL, width=LINE_WIDTH)
-        #y += 35
 
-        #for f in hourly_forecasts:
-        #    cond = f["condition"]
-        #    temp = f["temperature"]
-        #    time_label = f["datetime"].split("T")[1][:5]
-
-        #    draw.text((MARGIN_X, y), f"{time_label} – {temp}°C – {cond}", font=font_text, fill=0)
-
-        #    icon_name = ICON_MAP.get(cond, "wi-na.png")
-        #    icon_path = f"/share/kindle/icons/{icon_name}"
-        #    if os.path.exists(icon_path):
-        #        try:
-        #            icon_h = Image.open(icon_path).convert("RGBA").resize((ICON_SMALL, ICON_SMALL))
-        #            img.paste(icon_h, (758 - ICON_SMALL - MARGIN_X, y - 5), icon_h)
-        #        except:
-        #            pass
-
-        #    y += 40
-
-        # --- NEXT HOURS GRAPH ---
-        # Using Open-Meteo data
+        # --- NEXT HOURS (horizontal icons + time + temp) ---
         y += 80
         title = "Next Hours"
         draw.text((MARGIN_X, y), title, font=font_text, fill=0)
@@ -202,63 +191,55 @@ class KindleDisplay(hass.Hass):
 
         y += 40
 
-        # Extract temperatures and labels
-        temps = [f["temperature"] for f in hourly_forecasts]
-        labels = [f["datetime"].split("T")[1][:5] for f in hourly_forecasts]
-        conds = [f["condition"] for f in hourly_forecasts]
+        # --- FILTER ONLY FUTURE HOURS ---
+        # Round "now" down to the hour
+        now_hour = now.replace(minute=0, second=0, microsecond=0)
+        future_forecasts = []
+        for f in hourly_forecasts:
+            raw = f["datetime"]
+            # Ensure timezone exists
+            if "+" not in raw and "Z" not in raw:
+                raw = raw + "+00:00"
+            dt = datetime.fromisoformat(raw).astimezone(tz)
+            # Skip previous hour AND current hour
+            if dt <= now_hour:
+                continue
+            future_forecasts.append(f)
 
-        # Graph dimensions
-        graph_x1 = MARGIN_X + 60
-        graph_x2 = 758 - MARGIN_X - 60
-        graph_y1 = y + 10
-        graph_y2 = y + 120
+        # Compute column width for 3 items
+        col_width = (758 - 2*MARGIN_X) // 3
 
-        # Base line
-        draw.line((graph_x1, graph_y2, graph_x2, graph_y2), fill=LINE_FILL_LIGHT, width=LINE_WIDTH)
+        for i, f in enumerate(future_forecasts):
+            cond = f["condition"]
+            temp = f["temperature"]
+            time_label = f["datetime"].split("T")[1][:5]
 
-        # Normalize temperatures
-        t_min = min(temps)
-        t_max = max(temps)
-        t_range = max(1, t_max - t_min)
+            # X position for this column
+            x_col = MARGIN_X + i * col_width
 
-        # Compute X positions
-        step = (graph_x2 - graph_x1) // (len(temps) - 1)
-        points = []
-
-        for i, t in enumerate(temps):
-            x = graph_x1 + i * step
-            # invert Y because top = low temp
-            y_t = graph_y2 - int((t - t_min) / t_range * (graph_y2 - graph_y1 - 20))
-            points.append((x, y_t))
-
-        # Draw lines
-        for i in range(len(points) - 1):
-            draw.line((points[i][0], points[i][1], points[i+1][0], points[i+1][1]), fill=0, width=2)
-
-        # Draw points
-        for x, y_t in points:
-            draw.ellipse((x - 4, y_t - 4, x + 4, y_t + 4), fill=0)
-
-        # Draw labels and icons
-        for i, (x, t, label, cond) in enumerate(zip([p[0] for p in points], temps, labels, conds)):
-            # Temperature label
-            draw.text((x - 10, graph_y2 + 10), f"{t}°", font=font_text_small, fill=0)
-
-            # Time label
-            draw.text((x - 15, graph_y2 + 30), label, font=font_text_small, fill=0)
-
-            # Weather icon above point
+            # --- ICON ---
             icon_name = ICON_MAP.get(cond, "wi-na.png")
             icon_path = f"/share/kindle/icons/{icon_name}"
             if os.path.exists(icon_path):
                 try:
                     icon_h = Image.open(icon_path).convert("RGBA").resize((ICON_SMALL, ICON_SMALL))
-                    img.paste(icon_h, (x - 20, graph_y1 - 25), icon_h)
+                    img.paste(icon_h, (x_col + (col_width - ICON_SMALL)//2, y), icon_h)
                 except:
                     pass
 
+            # --- TIME LABEL ---
+            bbox = draw.textbbox((0, 0), time_label, font=font_text)
+            time_w = bbox[2] - bbox[0]
+            draw.text((x_col + (col_width - time_w) // 2, y + ICON_SMALL + 5), time_label, font=font_text_small, fill=0)
+
+            # --- TEMPERATURE LABEL ---
+            temp_str = f"{temp}°C"
+            bbox = draw.textbbox((0, 0), temp_str, font=font_text_small)
+            temp_w = bbox[2] - bbox[0]
+            draw.text((x_col + (col_width - temp_w) // 2, y + ICON_SMALL + 25), temp_str, font=font_text_small, fill=0)
+
         # Move Y for next section
-        y = graph_y2 + 60
+        y += ICON_SMALL + 45
 
 
         # --- WEATHER TOMORROW ---
@@ -281,8 +262,8 @@ class KindleDisplay(hass.Hass):
             sunrise_raw = self.get_state("sensor.sun_next_rising")
             sunset_raw = self.get_state("sensor.sun_next_setting")
 
-            draw.text((MARGIN_X, y), f"{cond_detailed_tomorrow}", font=font_text, fill=0)
-            y += 30
+            draw.text((MARGIN_X, y), f"{cond_detailed_tomorrow}", font=font_text_small, fill=0)
+            y += 25
             draw.text((MARGIN_X, y), f"Min {temp_min}°C / Max {temp_max}°C", font=font_text, fill=0)
             y += 30
 
@@ -292,11 +273,8 @@ class KindleDisplay(hass.Hass):
 
             # Sunrise / Sunset
             if sunrise_raw and sunset_raw:
-                utc = pytz.utc
-                local_tz = pytz.timezone("Europe/Brussels")
-
-                sunrise_dt = datetime.fromisoformat(sunrise_raw.replace("Z", "+00:00")).astimezone(local_tz)
-                sunset_dt = datetime.fromisoformat(sunset_raw.replace("Z", "+00:00")).astimezone(local_tz)
+                sunrise_dt = datetime.fromisoformat(sunrise_raw.replace("Z", "+00:00")).astimezone(tz)
+                sunset_dt = datetime.fromisoformat(sunset_raw.replace("Z", "+00:00")).astimezone(tz)
 
                 sunrise_fmt = sunrise_dt.strftime("%H:%M")
                 sunset_fmt = sunset_dt.strftime("%H:%M")
@@ -314,8 +292,9 @@ class KindleDisplay(hass.Hass):
                 except:
                     pass
 
+
         # --- TWO-COLUMN LAYOUT ---
-        y += 30
+        y += 20
 
         # --- COLUMN 1 - INDOOR CLIMATE ---
         title = "Indoor Climate"
@@ -327,13 +306,13 @@ class KindleDisplay(hass.Hass):
         y_left = y + 35
         draw.text((LEFT_X, y_left), f"Living Room: {temp_living}°C | {humidity_living}% RH", font=font_text, fill=0)
         y_left += 30
-        draw.text((LEFT_X, y_left), f"Entrance: {temp_entrance}°C", font=font_text, fill=0)
-        y_left += 30
-        draw.text((LEFT_X, y_left), f"Bedroom: {temp_bedroom}°C", font=font_text, fill=0)
-        y_left += 30
-        draw.text((LEFT_X, y_left), f"Bathroom: {temp_bathroom}°C", font=font_text, fill=0)
-        y_left += 30
-        draw.text((LEFT_X, y_left), f"Office: {temp_office}°C", font=font_text, fill=0)
+        draw.text((LEFT_X, y_left), f"Entrance: {temp_entrance}°C", font=font_text_small, fill=0)
+        y_left += 25
+        draw.text((LEFT_X, y_left), f"Bedroom: {temp_bedroom}°C", font=font_text_small, fill=0)
+        y_left += 25
+        draw.text((LEFT_X, y_left), f"Bathroom: {temp_bathroom}°C", font=font_text_small, fill=0)
+        y_left += 25
+        draw.text((LEFT_X, y_left), f"Office: {temp_office}°C", font=font_text_small, fill=0)
 
         # --- COLUMN 2 - AIR QUALITY ---
         title = "Air Quality"
@@ -355,11 +334,54 @@ class KindleDisplay(hass.Hass):
         else:
             draw.text((RIGHT_X, y_right), summary, font=font_text, fill=0)
         y_right += 30
-        draw.text((RIGHT_X, y_right), f"PM2.5 Index: {aqi_pm25}", font=font_text, fill=0)
-        y_right += 30
-        draw.text((RIGHT_X, y_right), f"CO2: {aqi_co2} ppm", font=font_text, fill=0)
+        draw.text((RIGHT_X, y_right), f"PM2.5 Index: {aqi_pm25}", font=font_text_small, fill=0)
+        y_right += 25
+        draw.text((RIGHT_X, y_right), f"CO2: {aqi_co2} ppm", font=font_text_small, fill=0)
 
-        y = max(y_left, y_right)
+        y = max(y_left, y_right) + 50
+
+
+        # --- WASTE COLLECTION ---
+        title = "Waste Collection"
+        draw.text((MARGIN_X, y), title, font=font_text, fill=0)
+        bbox = draw.textbbox((MARGIN_X, y), title, font=font_text)
+        text_bottom = bbox[3]
+        draw.line((MARGIN_X, text_bottom + 5, 758 - MARGIN_X, text_bottom + 5), fill=LINE_FILL, width=LINE_WIDTH)
+
+        y += 40
+
+        # Sensors + labels
+        waste_sensors = [
+            ("sensor.residual_household_waste", "Residual Waste"),
+            ("sensor.pmd", "PMD"),
+            ("sensor.paper_cardboard", "Paper/Cardboard")
+        ]
+
+        # 3 equal columns
+        col_width = (758 - 2*MARGIN_X) // 3
+
+        for i, (entity, label) in enumerate(waste_sensors):
+            x_col = MARGIN_X + i * col_width
+
+            # --- LABEL ABOVE DATE ---
+            bbox = draw.textbbox((0, 0), label, font=font_text_small)
+            label_w = bbox[2] - bbox[0]
+            draw.text((x_col + (col_width - label_w) // 2, y), label, font=font_text_small, fill=0)
+
+            # --- DATE ---
+            raw = self.get_state(entity)
+            try:
+                dt = datetime.strptime(raw, "%d/%m/%Y")
+                formatted = dt.strftime("%a %d %b")
+            except:
+                formatted = "-"
+
+            bbox = draw.textbbox((0, 0), formatted, font=font_text_small)
+            date_w = bbox[2] - bbox[0]
+            draw.text((x_col + (col_width - date_w) // 2, y + 25), formatted, font=font_text_small, fill=0)
+
+        # Move Y for next section
+        y += 80
 
 
         # --- SAVE ---

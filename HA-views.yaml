@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 31/05/2026 (DD/MM/YYYY)
+# Last updated: 07/06/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -80,7 +80,7 @@ decluttering_templates:
         album_cover_background: true
         players:
           - entity: media_player.spotify_melvin_campos_casares
-            icon: ''
+            icon: ""
           - entity: media_player.google_tv
             title: Google TV
             icon: mdi:youtube-tv
@@ -108,7 +108,7 @@ views:
     badges:
       - type: custom:mushroom-template-badge
         entity: sensor.residual_household_waste
-        picture: '{{ state_attr(''sensor.residual_household_waste'', ''entity_picture'') }}'
+        picture: "{{ state_attr('sensor.residual_household_waste', 'entity_picture') }}"
         content: >-
           {{ strptime(states('sensor.residual_household_waste'),
           '%d/%m/%Y').strftime('%a %d %b') }}
@@ -116,13 +116,13 @@ views:
           action: more-info
       - type: custom:mushroom-template-badge
         entity: sensor.pmd
-        picture: '{{ state_attr(''sensor.pmd'', ''entity_picture'') }}'
-        content: '{{ strptime(states(''sensor.pmd''), ''%d/%m/%Y'').strftime(''%a %d %b'') }}'
+        picture: "{{ state_attr('sensor.pmd', 'entity_picture') }}"
+        content: "{{ strptime(states('sensor.pmd'), '%d/%m/%Y').strftime('%a %d %b') }}"
         tap_action:
           action: more-info
       - type: custom:mushroom-template-badge
         entity: sensor.paper_cardboard
-        picture: '{{ state_attr(''sensor.paper_cardboard'', ''entity_picture'') }}'
+        picture: "{{ state_attr('sensor.paper_cardboard', 'entity_picture') }}"
         content: >-
           {{ strptime(states('sensor.paper_cardboard'), '%d/%m/%Y').strftime('%a
           %d %b') }}
@@ -318,11 +318,11 @@ views:
                 icon: mdi:thermostat
                 tap_action:
                   action: navigate
-                  navigation_path: '#climate_Popup'
+                  navigation_path: "#climate_Popup"
                 button_action:
                   tap_action:
                     action: navigate
-                    navigation_path: '#climate_Popup'
+                    navigation_path: "#climate_Popup"
                 card_layout: normal
                 sub_button:
                   main:
@@ -330,7 +330,7 @@ views:
                       show_background: true
                       tap_action:
                         action: navigate
-                        navigation_path: '#climate_Popup'
+                        navigation_path: "#climate_Popup"
                   bottom: []
                 modules:
                   - frosted_glass
@@ -356,11 +356,11 @@ views:
                     icon: phu:rooms-living
                     tap_action:
                       action: navigate
-                      navigation_path: '#livingRoom_Popup'
+                      navigation_path: "#livingRoom_Popup"
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: '#livingRoom_Popup'
+                        navigation_path: "#livingRoom_Popup"
                     card_layout: normal
                     sub_button:
                       main:
@@ -368,7 +368,7 @@ views:
                           show_background: true
                           tap_action:
                             action: navigate
-                            navigation_path: '#livingRoom_Popup'
+                            navigation_path: "#livingRoom_Popup"
                       bottom: []
                     modules:
                       - frosted_glass
@@ -391,11 +391,11 @@ views:
                     icon: mdi:television
                     tap_action:
                       action: navigate
-                      navigation_path: '#tv_Popup'
+                      navigation_path: "#tv_Popup"
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: '#tv_Popup'
+                        navigation_path: "#tv_Popup"
                     card_layout: normal
                     sub_button:
                       main:
@@ -443,11 +443,11 @@ views:
                     icon: mdi:desk
                     tap_action:
                       action: navigate
-                      navigation_path: '#office_Popup'
+                      navigation_path: "#office_Popup"
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: '#office_Popup'
+                        navigation_path: "#office_Popup"
                     card_layout: normal
                     sub_button:
                       main:
@@ -455,7 +455,7 @@ views:
                           show_background: true
                           tap_action:
                             action: navigate
-                            navigation_path: '#office_Popup'
+                            navigation_path: "#office_Popup"
                       bottom: []
                     modules:
                       - frosted_glass
@@ -508,11 +508,11 @@ views:
                 icon: phu:3dprinter-standby
                 tap_action:
                   action: navigate
-                  navigation_path: '#3dprinter_Popup'
+                  navigation_path: "#3dprinter_Popup"
                 button_action:
                   tap_action:
                     action: navigate
-                    navigation_path: '#3dprinter_Popup'
+                    navigation_path: "#3dprinter_Popup"
                 card_layout: normal
                 sub_button:
                   main:
@@ -627,7 +627,7 @@ views:
         cards:
           - type: custom:bubble-card
             card_type: pop-up
-            hash: '#livingRoom_Popup'
+            hash: "#livingRoom_Popup"
             entity: light.salon
             show_icon: false
             name: Living room
@@ -645,14 +645,14 @@ views:
                 action: none
               hold_action:
                 action: none
-            auto_close: ''
+            auto_close: ""
             close_by_clicking_outside: true
-            bg_opacity: '60'
-            shadow_opacity: '0'
-            styles: ''
+            bg_opacity: "60"
+            shadow_opacity: "0"
+            styles: ""
             hide_backdrop: false
-            bg_blur: '10'
-            backdrop_blur: '0'
+            bg_blur: "10"
+            backdrop_blur: "0"
             button_type: name
             sub_button:
               main: []
@@ -720,7 +720,7 @@ views:
                 icon: mdi:cast-audio-variant
                 grid_options:
                   columns: 12
-                styles: ''
+                styles: ""
                 modules:
                   - frosted_glass
                 frosted_glass:
@@ -736,7 +736,7 @@ views:
                 cover_background: true
               - type: custom:bubble-card
                 card_type: separator
-                icon: ''
+                icon: ""
                 styles: |-
                   .bubble-line {
                     background: var(--secondary-text-color);
@@ -1010,7 +1010,7 @@ views:
             with_bottom_offset: true
           - type: custom:bubble-card
             card_type: pop-up
-            hash: '#tv_Popup'
+            hash: "#tv_Popup"
             entity: light.salon
             show_icon: false
             name: TV
@@ -1028,12 +1028,12 @@ views:
                 action: none
               hold_action:
                 action: none
-            auto_close: ''
+            auto_close: ""
             close_by_clicking_outside: true
-            bg_opacity: '60'
-            shadow_opacity: '0'
-            styles: ''
-            bg_color: ''
+            bg_opacity: "60"
+            shadow_opacity: "0"
+            styles: ""
+            bg_color: ""
             button_type: name
             sub_button:
               main: []
@@ -1136,7 +1136,7 @@ views:
                   columns: 12
               - type: custom:bubble-card
                 card_type: separator
-                icon: ''
+                icon: ""
                 styles: |-
                   .bubble-line {
                     background: var(--secondary-text-color);
@@ -1260,7 +1260,7 @@ views:
             with_bottom_offset: true
           - type: custom:bubble-card
             card_type: pop-up
-            hash: '#office_Popup'
+            hash: "#office_Popup"
             button_type: name
             name: Office
             show_icon: false
@@ -1312,7 +1312,7 @@ views:
                   columns: 12
               - type: custom:bubble-card
                 card_type: separator
-                icon: ''
+                icon: ""
                 styles: |-
                   .bubble-line {
                     background: var(--secondary-text-color);
@@ -1338,7 +1338,7 @@ views:
                   rows: auto
               - type: custom:bubble-card
                 card_type: separator
-                icon: ''
+                icon: ""
                 styles: |-
                   .bubble-line {
                     background: var(--secondary-text-color);
@@ -1348,7 +1348,7 @@ views:
                 sub_button:
                   - tap_action:
                       action: navigate
-                      navigation_path: '#3dprinter_Popup'
+                      navigation_path: "#3dprinter_Popup"
                     show_name: false
                     icon: mdi:dots-horizontal
                     show_state: false
@@ -1375,11 +1375,11 @@ views:
                     action: none
                   tap_action:
                     action: more-info
-                    navigation_path: '#3dprinter_Popup'
+                    navigation_path: "#3dprinter_Popup"
                 icon: phu:3dprinter-standby
                 tap_action:
                   action: more-info
-                  navigation_path: '#3dprinter_Popup'
+                  navigation_path: "#3dprinter_Popup"
                 grid_options:
                   columns: 12
               - type: custom:bubble-card
@@ -1410,17 +1410,17 @@ views:
                 entity: camera.a1_03919c452905439_camera
                 name: Bambu Lab A1
                 camera_image: camera.a1_03919c452905439_camera
-                aspect_ratio: '16:9'
+                aspect_ratio: "16:9"
                 grid_options:
                   columns: 12
                   rows: auto
             popup_mode: centered
             with_bottom_offset: true
             full_width_on_mobile: false
-            bg_opacity: '60'
+            bg_opacity: "60"
           - type: custom:bubble-card
             card_type: pop-up
-            hash: '#3dprinter_Popup'
+            hash: "#3dprinter_Popup"
             button_type: name
             name: 3D Printer
             show_icon: false
@@ -1466,7 +1466,7 @@ views:
                   opacity: 0.6
                 icon_color:
                   use_hex: true
-                  color_hex: '#FFD700'
+                  color_hex: "#FFD700"
                 grid_options:
                   columns: 6
               - type: custom:bubble-card
@@ -1498,7 +1498,7 @@ views:
                     interpolate_colors: false
                 icon_color:
                   use_hex: true
-                  color_hex: '#1E90FF'
+                  color_hex: "#1E90FF"
                 grid_options:
                   columns: 6
               - type: custom:bubble-card
@@ -1524,7 +1524,7 @@ views:
                   opacity: 0.6
                 icon_color:
                   use_hex: true
-                  color_hex: '#69BE28'
+                  color_hex: "#69BE28"
                 grid_options:
                   columns: 6
               - type: custom:bubble-card
@@ -1550,7 +1550,7 @@ views:
                   opacity: 0.6
                 icon_color:
                   use_hex: true
-                  color_hex: '#1E90FF'
+                  color_hex: "#1E90FF"
                 grid_options:
                   columns: 6
               - type: custom:bubble-card
@@ -1577,7 +1577,7 @@ views:
                   opacity: 0.6
                 icon_color:
                   use_hex: true
-                  color_hex: '#FF4500'
+                  color_hex: "#FF4500"
                 grid_options:
                   columns: 12
               - show_state: true
@@ -1588,17 +1588,17 @@ views:
                 entity: camera.a1_03919c452905439_camera
                 name: Bambu Lab A1
                 camera_image: camera.a1_03919c452905439_camera
-                aspect_ratio: '16:9'
+                aspect_ratio: "16:9"
                 grid_options:
                   columns: 12
                   rows: auto
             popup_mode: centered
             with_bottom_offset: true
             full_width_on_mobile: false
-            bg_opacity: '60'
+            bg_opacity: "60"
           - type: custom:bubble-card
             card_type: pop-up
-            hash: '#climate_Popup'
+            hash: "#climate_Popup"
             name: Climate
             show_icon: false
             sub_button:
@@ -1732,7 +1732,7 @@ views:
               - type: custom:bubble-card
                 card_type: select
                 entity: input_select.heating_mode
-                icon: ''
+                icon: ""
                 double_tap_action:
                   action: none
                 hold_action:
@@ -1840,7 +1840,7 @@ views:
             button_type: name
             with_bottom_offset: true
             full_width_on_mobile: false
-            bg_opacity: '60'
+            bg_opacity: "60"
     max_columns: 1
     dense_section_placement: true
     background:
@@ -1920,7 +1920,7 @@ views:
             room-card-plus:
               card_radius: 32
               sub_buttons_per_column: 2
-              main_icon_bg_color: '#737373'
+              main_icon_bg_color: "#737373"
               ts_pad_top: 20
           - type: custom:bubble-card
             card_type: button
@@ -1983,7 +1983,7 @@ views:
             room-card-plus:
               card_radius: 32
               sub_buttons_per_column: 3
-              main_icon_bg_color: '#F25022'
+              main_icon_bg_color: "#F25022"
               ts_pad_top: 20
           - type: custom:bubble-card
             card_type: button
@@ -2065,7 +2065,7 @@ views:
             room-card-plus:
               card_radius: 32
               sub_buttons_per_column: 3
-              main_icon_bg_color: '#7FBA00'
+              main_icon_bg_color: "#7FBA00"
               ts_pad_top: 20
           - type: custom:bubble-card
             card_type: button
@@ -2115,7 +2115,7 @@ views:
             room-card-plus:
               card_radius: 32
               sub_buttons_per_column: 2
-              main_icon_bg_color: '#00A4EF'
+              main_icon_bg_color: "#00A4EF"
               ts_pad_top: 20
           - type: custom:bubble-card
             card_type: button
@@ -2155,7 +2155,7 @@ views:
             room-card-plus:
               card_radius: 32
               sub_buttons_per_column: 2
-              main_icon_bg_color: '#FFB900'
+              main_icon_bg_color: "#FFB900"
               ts_pad_top: 20
           - type: custom:bubble-card
             card_type: button
@@ -2165,7 +2165,7 @@ views:
               bottom: []
             entity: input_boolean.f1_track_status_light
             name: F1 track status automation
-            icon: ''
+            icon: ""
             show_state: true
             modules:
               - icon_color
@@ -2356,14 +2356,14 @@ views:
             forecast:
               precipitation_type: rainfall
               show_probability: true
-              labels_font_size: '11'
-              precip_bar_size: '100'
+              labels_font_size: "11"
+              precip_bar_size: "100"
               style: style2
               show_wind_forecast: true
               condition_icons: true
               round_temp: false
               type: daily
-              number_of_forecasts: '0'
+              number_of_forecasts: "0"
               disable_animation: false
             units:
               pressure: hPa
@@ -2375,6 +2375,9 @@ views:
             forecast_type: hourly
             name:
               type: device
+            grid_options:
+              columns: 12
+              rows: 2
       - type: grid
         cards:
           - type: custom:bubble-card
@@ -2391,10 +2394,10 @@ views:
                 color: light-green
               - entity: calendar.f1_race_season_calendar
                 color: light-grey
-              - entity: calendar.proton_campos_mesureur
+              - entity: calendar.proton_family
                 color: deep-orange
-              - entity: calendar.proton_anniversary_campos_mesureur
-                color: '#936e58'
+              - entity: calendar.proton_family_anniversary
+                color: "#936e58"
             show_end: false
             show_progress: true
             show_place: false
@@ -2421,7 +2424,7 @@ views:
             camera_image: camera.nest_cam
             name: Google Nest Cam - Living room
             image: /api/image/serve/6be493b22bba97857d5f36daff76faaa/512x512
-            aspect_ratio: '16:9'
+            aspect_ratio: "16:9"
           - type: heading
             heading: Cleaning robot
             heading_style: title
@@ -2431,7 +2434,7 @@ views:
               - entity: vacuum.r5_d4
                 name: Status
                 secondary_info: last-updated
-                icon: ''
+                icon: ""
               - entity: binary_sensor.r5_d4_bac_plein
                 name: Full bin?
               - entity: sensor.r5_d4_batterie
@@ -2441,7 +2444,7 @@ views:
                 icon: phu:irobot
               - entity: sensor.r5_d4_duree_moyenne_d_une_mission
                 name: Average time of a mission
-                icon: ''
+                icon: ""
               - entity: sensor.r5_d4_temps_total_de_nettoyage
                 name: Total cleaning time
             state_color: true
@@ -2550,7 +2553,7 @@ views:
               card_radius: 32
               ts_pad_top: 20
               sub_buttons_per_column: 2
-              main_icon_bg_color: '#abacae'
+              main_icon_bg_color: "#abacae"
             rows: 1.844
           - type: entities
             entities:
@@ -2643,7 +2646,7 @@ views:
         visibility:
           - condition: state
             entity: sensor.volvo_ex30_charging_power
-            state_not: '0'
+            state_not: "0"
         name: Power
         color: orange
     type: sections
@@ -2767,7 +2770,7 @@ views:
                         name: EX30
                     theme_mode: auto
                     default_zoom: 17
-                    aspect_ratio: '16:9'
+                    aspect_ratio: "16:9"
                     hours_to_show: 24
                   - type: markdown
                     content: >-
@@ -2804,7 +2807,7 @@ views:
                     icon: mdi:counter
                     icon_color:
                       use_hex: true
-                      color_hex: '#FFAA00'
+                      color_hex: "#FFAA00"
                     sub_button:
                       main: []
                       bottom: []
@@ -2829,7 +2832,7 @@ views:
                     show_icon: true
                     icon: mdi:car-electric
                     icon_color:
-                      color_hex: '#FFAA00'
+                      color_hex: "#FFAA00"
                       use_hex: true
                     sub_button:
                       main: []
@@ -2851,7 +2854,7 @@ views:
                 icon: mdi:car-wrench
                 icon_color:
                   use_hex: true
-                  color_hex: '#FFAA00'
+                  color_hex: "#FFAA00"
                 sub_button:
                   main: []
                   bottom: []
@@ -2883,7 +2886,7 @@ views:
                     card_layout: normal
                     icon: mdi:wrench-clock
                     icon_color:
-                      color_hex: '#FFAA00'
+                      color_hex: "#FFAA00"
                       use_hex: true
                   - type: custom:bubble-card
                     card_type: button
@@ -2907,7 +2910,7 @@ views:
                     card_layout: normal
                     icon: mdi:wrench-clock
                     icon_color:
-                      color_hex: '#FFAA00'
+                      color_hex: "#FFAA00"
                       use_hex: true
               - type: heading
                 icon: mdi:car-connected
@@ -2935,7 +2938,7 @@ views:
                       opacity: 0.6
                     card_layout: normal
                     icon_color:
-                      color_hex: '#FFAA00'
+                      color_hex: "#FFAA00"
                       use_hex: true
                     sub_button:
                       main: []
@@ -2963,7 +2966,7 @@ views:
                     card_layout: normal
                     icon_color:
                       use_hex: true
-                      color_hex: '#FFAA00'
+                      color_hex: "#FFAA00"
                     sub_button:
                       main: []
                       bottom: []
@@ -2998,7 +3001,7 @@ views:
                     icon: mdi:car-tire-alert
                     icon_color:
                       use_hex: true
-                      color_hex: '#FFAA00'
+                      color_hex: "#FFAA00"
                     sub_button:
                       main: []
                       bottom: []
@@ -3024,7 +3027,7 @@ views:
                     card_layout: normal
                     icon: mdi:car-tire-alert
                     icon_color:
-                      color_hex: '#FFAA00'
+                      color_hex: "#FFAA00"
                       use_hex: true
                     sub_button:
                       main: []
@@ -3054,7 +3057,7 @@ views:
                     icon: mdi:car-tire-alert
                     icon_color:
                       use_hex: true
-                      color_hex: '#FFAA00'
+                      color_hex: "#FFAA00"
                     sub_button:
                       main: []
                       bottom: []
@@ -3080,7 +3083,7 @@ views:
                     card_layout: normal
                     icon: mdi:car-tire-alert
                     icon_color:
-                      color_hex: '#FFAA00'
+                      color_hex: "#FFAA00"
                       use_hex: true
                     sub_button:
                       main: []
@@ -3299,7 +3302,7 @@ views:
               sub_buttons_per_column: 4
               card_radius: 32
               ts_pad_top: 20
-              main_icon_bg_color: '#abacae'
+              main_icon_bg_color: "#abacae"
             grid_options:
               columns: 8
               rows: 3.406

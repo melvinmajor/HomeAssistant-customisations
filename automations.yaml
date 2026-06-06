@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 03/06/2026 (DD/MM/YYYY)
+# Last updated: 07/06/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night - Without guests
@@ -1305,9 +1305,11 @@
   alias: Dishwasher - Cycle finished
   description: ''
   triggers:
-  - entity_id: sensor.lave_vaisselle_operation_state
-    to: Finished
+  - entity_id:
+    - select.lave_vaisselle_active_program
     trigger: state
+    to:
+    - unknown
   conditions:
   - condition: time
     after: 07:00:00
@@ -1361,6 +1363,7 @@
     trigger: time_pattern
   - minutes: '30'
     trigger: time_pattern
+    enabled: false
   actions:
   - delay: 00:00:02
   - action: shell_command.kindle_copy
