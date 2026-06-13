@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 07/06/2026 (DD/MM/YYYY)
+# Last updated: 13/06/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night - Without guests
@@ -1306,26 +1306,28 @@
   description: ''
   triggers:
   - entity_id:
-    - select.lave_vaisselle_active_program
+    - sensor.lave_vaisselle_operation_state
     trigger: state
     to:
-    - unknown
+    - finished
   conditions:
-  - condition: time
-    after: 07:00:00
-    before: '22:00:00'
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
-  - condition: time
-    after: 08:00:00
-    before: '23:00:00'
-    weekday:
-    - sat
-    - sun
+  - condition: or
+    conditions:
+    - condition: time
+      after: 07:00:00
+      before: '22:00:00'
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: time
+      after: 08:00:00
+      before: '23:00:00'
+      weekday:
+      - sat
+      - sun
   actions:
   - data:
       title: "\U0001F37D️ Lave-vaisselle"

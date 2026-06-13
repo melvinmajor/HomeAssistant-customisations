@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 07/06/2026 (DD/MM/YYYY)
+# Last updated: 13/06/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -469,37 +469,36 @@ views:
                       }
                   - type: custom:bubble-card
                     card_type: button
-                    button_type: switch
-                    entity: light.hue_filament_bulb_1
-                    name: Bedside lamp
-                    show_state: true
-                    show_name: true
-                    show_attribute: true
-                    attribute: brightness
+                    button_type: name
+                    name: Bedroom
+                    show_icon: true
+                    icon: phu:rooms-bedroom
                     tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
+                      action: navigate
+                      navigation_path: "#bedroom_Popup"
+                    button_action:
+                      tap_action:
+                        action: navigate
+                        navigation_path: "#bedroom_Popup"
+                    card_layout: normal
                     sub_button:
                       main:
-                        - icon: mdi:dots-horizontal
+                        - icon: mdi:menu-open
+                          show_background: true
+                          tap_action:
+                            action: navigate
+                            navigation_path: "#bedroom_Popup"
                       bottom: []
-                    icon: phu:table-cylinder-lamp
                     modules:
                       - frosted_glass
                     frosted_glass:
-                      icon_background: dark
                       border: bubble
-                      main_shadow: false
-                      icon_shadow: false
+                      icon_background: dark
                       opacity: 0.6
-                    liquid_glass_light:
-                      showBorder: false
                     styles: |-
                       .bubble-button-card-container {
                         background: RGBA(0, 0, 0, 0.2);
                       }
-                    card_layout: normal
               - type: custom:bubble-card
                 card_type: button
                 button_type: name
@@ -617,8 +616,8 @@ views:
                     action: none
             visibility:
               - condition: state
-                entity: sensor.lave_vaisselle_operation_state
-                state_not: finished
+                entity: switch.lave_vaisselle_power
+                state_not: "off"
       - type: grid
         cards:
           - type: custom:decluttering-card
@@ -1841,6 +1840,129 @@ views:
             with_bottom_offset: true
             full_width_on_mobile: false
             bg_opacity: "60"
+          - type: custom:bubble-card
+            card_type: pop-up
+            hash: "#bedroom_Popup"
+            entity: light.hue_filament_bulb_1
+            show_icon: false
+            name: Bedroom
+            show_last_changed: false
+            tap_action:
+              action: none
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              tap_action:
+                action: none
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            auto_close: ""
+            close_by_clicking_outside: true
+            bg_opacity: "60"
+            shadow_opacity: "0"
+            styles: ""
+            hide_backdrop: false
+            bg_blur: "10"
+            backdrop_blur: "0"
+            button_type: name
+            sub_button:
+              main: []
+              bottom: []
+            cards:
+              - type: tile
+                entity: automation.turn_off_lights
+                name: Turn off all lights
+                show_entity_picture: false
+                hide_state: true
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: automation.trigger
+                  target:
+                    entity_id: automation.turn_off_lights
+                  data:
+                    skip_condition: true
+                features_position: bottom
+              - type: tile
+                entity: input_boolean.cat_night_override
+                show_entity_picture: false
+                hide_state: false
+                vertical: true
+                tap_action:
+                  action: toggle
+                features_position: bottom
+              - type: custom:bubble-card
+                card_type: media-player
+                entity: media_player.echo_dot
+                card_layout: normal
+                hide:
+                  power_button: true
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: toggle
+                double_tap_action:
+                  action: none
+                force_icon: false
+                icon: mdi:cast-audio-variant
+                grid_options:
+                  columns: 12
+                styles: ""
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
+                sub_button:
+                  main: []
+                  bottom: []
+                cover_background: true
+              - type: tile
+                entity: sensor.echo_dot_melvin_next_alarm
+                name:
+                  type: entity
+                vertical: false
+                features_position: bottom
+                visibility:
+                  - condition: state
+                    state_not: unavailable
+              - type: custom:bubble-card
+                card_type: separator
+                icon: ""
+                styles: |-
+                  .bubble-line {
+                    background: var(--secondary-text-color);
+                    opacity: 1;
+                  }
+                name: Lights
+                grid_options:
+                  columns: 12
+              - type: tile
+                grid_options:
+                  columns: 12
+                  rows: auto
+                entity: light.hue_filament_bulb_1
+                icon: phu:bulbs-classic
+                vertical: false
+                tap_action:
+                  action: toggle
+                icon_tap_action:
+                  action: more-info
+                features:
+                  - type: light-brightness
+                features_position: inline
+            popup_mode: centered
+            with_bottom_offset: true
+            show_header: true
+            show_previous_button: false
     max_columns: 1
     dense_section_placement: true
     background:
@@ -2473,8 +2595,8 @@ views:
         name: Dishwasher - ends
         visibility:
           - condition: state
-            entity: sensor.lave_vaisselle_operation_state
-            state_not: finished
+            entity: switch.lave_vaisselle_power
+            state_not: "off"
       - type: entity
         show_name: true
         show_state: true
@@ -2483,8 +2605,8 @@ views:
         name: Dishwasher - Progress
         visibility:
           - condition: state
-            entity: sensor.lave_vaisselle_operation_state
-            state_not: finished
+            entity: switch.lave_vaisselle_power
+            state_not: "off"
     sections:
       - type: grid
         cards:
@@ -2538,14 +2660,19 @@ views:
               }
             sub_button:
               main:
-                - entity: switch.lave_vaisselle_power
-                  icon: mdi:power
-                  name: Dishwasher power
+                - entity: switch.lave_vaisselle_silence_on_demand
+                  icon: mdi:volume-off
+                  name: Silence on demand
                   tap_action:
                     action: toggle
                 - entity: switch.lave_vaisselle_childlock
                   name: Child lock
                   icon: mdi:account-child
+                - entity: switch.lave_vaisselle_power
+                  icon: mdi:power
+                  name: Dishwasher power
+                  tap_action:
+                    action: toggle
               bottom: []
             grid_options:
               columns: 12
@@ -2566,19 +2693,20 @@ views:
             heading_style: title
           - type: entities
             entities:
-              - entity: select.lave_vaisselle_selected_program
-                name: Program
-                icon: mdi:dishwasher
-              - entity: switch.lave_vaisselle_vario_speed
-                name: Speed mode
-                icon: mdi:speedometer
               - entity: select.lave_vaisselle_active_program
-                name: Choose again program to start it
+                name: Choose program to start it
+              - entity: button.lave_vaisselle_stop_program
+                name:
+                  type: entity
+                icon: mdi:dishwasher-off
               - type: custom:fold-entity-row
                 head:
                   type: section
                   label: Other programs
                 entities:
+                  - entity: switch.lave_vaisselle_vario_speed
+                    name: Speed mode
+                    icon: mdi:speedometer
                   - entity: switch.lave_vaisselle_intensive_zone
                     name: Intensive (2h15) 70°
                     icon: mdi:auto-mode
