@@ -33,7 +33,6 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | Speech-to-Phrase                | Yes    | x         |             |
 | Terminal & SSH                  | **No** | x         |             |
 | Volvo                           | Yes    | x         |             |
-| Alexa Media Player              | Yes    |           | x           |
 | Bambu Lab                       | Yes    |           | x           |
 | Big Slider Card                 | Yes    |           | x           |
 | Bubble Card                     | Yes    |           | x           |

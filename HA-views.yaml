@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 13/06/2026 (DD/MM/YYYY)
+# Last updated: 14/06/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -628,7 +628,7 @@ views:
             card_type: pop-up
             hash: "#livingRoom_Popup"
             entity: light.salon
-            show_icon: false
+            show_icon: true
             name: Living room
             show_last_changed: false
             tap_action:
@@ -1007,11 +1007,13 @@ views:
                   rows: auto
             popup_mode: centered
             with_bottom_offset: true
+            icon: phu:rooms-living
+            use_accent_color: true
           - type: custom:bubble-card
             card_type: pop-up
             hash: "#tv_Popup"
             entity: light.salon
-            show_icon: false
+            show_icon: true
             name: TV
             show_last_changed: false
             tap_action:
@@ -1257,12 +1259,15 @@ views:
                   rows: auto
             popup_mode: centered
             with_bottom_offset: true
+            icon: mdi:television
+            use_accent_color: true
           - type: custom:bubble-card
             card_type: pop-up
             hash: "#office_Popup"
             button_type: name
             name: Office
-            show_icon: false
+            entity: light.jarvis
+            show_icon: true
             sub_button:
               main: []
               bottom: []
@@ -1417,12 +1422,14 @@ views:
             with_bottom_offset: true
             full_width_on_mobile: false
             bg_opacity: "60"
+            icon: mdi:desk
+            use_accent_color: true
           - type: custom:bubble-card
             card_type: pop-up
             hash: "#3dprinter_Popup"
             button_type: name
             name: 3D Printer
-            show_icon: false
+            show_icon: true
             sub_button:
               main: []
               bottom: []
@@ -1595,11 +1602,12 @@ views:
             with_bottom_offset: true
             full_width_on_mobile: false
             bg_opacity: "60"
+            icon: phu:3dprinter-standby
           - type: custom:bubble-card
             card_type: pop-up
             hash: "#climate_Popup"
             name: Climate
-            show_icon: false
+            show_icon: true
             sub_button:
               main: []
               bottom: []
@@ -1747,6 +1755,10 @@ views:
                   bottom: []
                 grid_options:
                   columns: 12
+                styles: |-
+                  .bubble-dropdown-arrow {
+                    background-color: rgba(0, 0, 0, 0.05);
+                  }
               - type: custom:bubble-card
                 card_type: climate
                 sub_button:
@@ -1770,6 +1782,14 @@ views:
                 grid_options:
                   rows: 1.719
                   columns: 6
+                icon_color:
+                  color_hex: "#3498db"
+                  use_hex: true
+                styles: |-
+                  .bubble-main-icon-container {
+                    background-color: #3498db;
+                    color: white;
+                  }
               - type: custom:bubble-card
                 card_type: climate
                 sub_button:
@@ -1792,6 +1812,11 @@ views:
                 grid_options:
                   rows: 1.719
                   columns: 6
+                styles: |-
+                  .bubble-main-icon-container {
+                    background-color: #9b59b6;
+                    color: white;
+                  }
               - type: custom:bubble-card
                 card_type: climate
                 sub_button:
@@ -1813,6 +1838,11 @@ views:
                 rows: 1.719
                 grid_options:
                   columns: 6
+                styles: |-
+                  .bubble-main-icon-container {
+                    background-color: #e74c3c;
+                    color: white;
+                  }
               - type: custom:bubble-card
                 card_type: climate
                 sub_button:
@@ -1835,16 +1865,25 @@ views:
                 grid_options:
                   rows: 1.719
                   columns: 6
+                styles: |-
+                  .bubble-main-icon-container {
+                    background-color: #f1c40f;
+                    color: black;
+                  }
             popup_mode: centered
             button_type: name
             with_bottom_offset: true
             full_width_on_mobile: false
             bg_opacity: "60"
+            show_header: true
+            show_close_button: true
+            show_previous_button: false
+            icon: mdi:thermostat
           - type: custom:bubble-card
             card_type: pop-up
             hash: "#bedroom_Popup"
             entity: light.hue_filament_bulb_1
-            show_icon: false
+            show_icon: true
             name: Bedroom
             show_last_changed: false
             tap_action:
@@ -1963,6 +2002,8 @@ views:
             with_bottom_offset: true
             show_header: true
             show_previous_button: false
+            icon: phu:rooms-bedroom
+            use_accent_color: true
     max_columns: 1
     dense_section_placement: true
     background:
