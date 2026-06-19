@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 14/06/2026 (DD/MM/YYYY)
+# Last updated: 20/06/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -138,22 +138,20 @@ views:
                 card_type: separator
                 icon: mdi:weather-cloudy
                 sub_button:
-                  - entity: weather.forecast_maison
+                  - entity: weather.irm
                     icon: mdi:thermometer
                     name: Temperature
                     show_state: true
                     show_background: false
                 styles: >-
                   ${card.querySelector('.bubble-name').innerText =
-                  hass.formatEntityState(hass.states['weather.forecast_maison'])}
+                  hass.formatEntityState(hass.states['weather.irm'])}
 
                   ${card.querySelector('.bubble-sub-button-name-container').innerText
-                  =
-                  hass.states['weather.forecast_maison'].attributes.temperature
-                  + " °C"}
+                  = hass.states['weather.irm'].attributes.temperature + " °C"}
 
                   ${icon.setAttribute("icon",
-                  getWeatherIcon(hass.states['weather.forecast_maison'].state))}
+                  getWeatherIcon(hass.states['weather.irm'].state))}
                 modules: []
                 frosted_glass:
                   icon_background: dark
@@ -1612,6 +1610,22 @@ views:
               main: []
               bottom: []
             cards:
+              - type: custom:air-quality-card
+                name: Air Quality
+                hours_to_show: 24
+                temperature_unit: auto
+                radon_unit: auto
+                language: auto
+                co2_entity: sensor.healthy_home_coach_carbon_dioxide_sensor
+                humidity_entity: sensor.healthy_home_coach_humidity_sensor
+                temperature_entity: sensor.healthy_home_coach_temperature_sensor
+                show_min_max: true
+                display: expandable
+                auto_expand: false
+                order:
+                  - temperature
+                  - humidity
+                  - co2
               - type: custom:mushroom-template-card
                 primary: |
                   {{ states('sensor.air_quality_summary') }}
@@ -1626,7 +1640,7 @@ views:
                 vertical: true
                 features_position: bottom
                 grid_options:
-                  columns: 6
+                  columns: 12
                   rows: auto
                 card_mod:
                   style: >
@@ -1658,59 +1672,6 @@ views:
                       50%  { transform: scale(1.015); opacity: 0.92; }
                       100% { transform: scale(1); opacity: 1; }
                     }
-              - type: custom:mushroom-template-card
-                primary: |
-                  {{ states('sensor.aqi_summary') }}
-                secondary: |
-                  AQI : {{ states('sensor.healthy_home_coach_air_quality') }}
-                tap_action:
-                  action: more-info
-                vertical: true
-                features_position: bottom
-                multiline_secondary: true
-                card_mod:
-                  style: >
-                    {% set aqi = states('sensor.healthy_home_coach_air_quality')
-                    | int(0) %}
-
-
-                    ha-card {
-                      border-radius: 14px;
-                      padding: 12px;
-                      color: white;
-                      --icon-color: white;
-                      transition: all 0.4s ease;
-                    }
-
-
-                    /* Dynamic colors */
-
-                    ha-card {
-                      {% if aqi <= 2 %}
-                        background: linear-gradient(135deg, #4CAF50, #2E7D32);
-                      {% elif aqi == 3 %}
-                        background: linear-gradient(135deg, #8BC34A, #558B2F);
-                      {% elif aqi == 4 %}
-                        background: linear-gradient(135deg, #FF9800, #EF6C00);
-                      {% elif aqi == 5 %}
-                        background: linear-gradient(135deg, #F44336, #C62828);
-                      {% else %}
-                        background: linear-gradient(135deg, #6A1B9A, #4A148C);
-                        animation: pulse 2.2s ease-in-out infinite;
-                      {% endif %}
-                    }
-
-
-                    /* Animation */
-
-                    @keyframes pulse {
-                      0%   { transform: scale(1); opacity: 1; }
-                      50%  { transform: scale(1.015); opacity: 0.92; }
-                      100% { transform: scale(1); opacity: 1; }
-                    }
-                grid_options:
-                  columns: 6
-                  rows: auto
               - type: custom:mini-graph-card
                 name: Home temperature
                 entities:
@@ -2085,6 +2046,9 @@ views:
               sub_buttons_per_column: 2
               main_icon_bg_color: "#737373"
               ts_pad_top: 20
+              icon_width: 70
+              icon_height: 60
+              icon_size: 42
           - type: custom:bubble-card
             card_type: button
             button_type: name
@@ -2148,6 +2112,9 @@ views:
               sub_buttons_per_column: 3
               main_icon_bg_color: "#F25022"
               ts_pad_top: 20
+              icon_width: 70
+              icon_height: 60
+              icon_size: 42
           - type: custom:bubble-card
             card_type: button
             button_type: name
@@ -2230,6 +2197,9 @@ views:
               sub_buttons_per_column: 3
               main_icon_bg_color: "#7FBA00"
               ts_pad_top: 20
+              icon_width: 70
+              icon_height: 60
+              icon_size: 42
           - type: custom:bubble-card
             card_type: button
             button_type: name
@@ -2280,6 +2250,9 @@ views:
               sub_buttons_per_column: 2
               main_icon_bg_color: "#00A4EF"
               ts_pad_top: 20
+              icon_width: 70
+              icon_height: 60
+              icon_size: 42
           - type: custom:bubble-card
             card_type: button
             button_type: name
@@ -2320,6 +2293,9 @@ views:
               sub_buttons_per_column: 2
               main_icon_bg_color: "#FFB900"
               ts_pad_top: 20
+              icon_width: 70
+              icon_height: 60
+              icon_size: 42
           - type: custom:bubble-card
             card_type: button
             button_type: switch
@@ -2722,6 +2698,9 @@ views:
               ts_pad_top: 20
               sub_buttons_per_column: 2
               main_icon_bg_color: "#abacae"
+              icon_width: 70
+              icon_height: 60
+              icon_size: 42
             rows: 1.844
           - type: entities
             entities:
@@ -3472,6 +3451,9 @@ views:
               card_radius: 32
               ts_pad_top: 20
               main_icon_bg_color: "#abacae"
+              icon_width: 70
+              icon_height: 60
+              icon_size: 42
             grid_options:
               columns: 8
               rows: 3.406
