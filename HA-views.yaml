@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 20/06/2026 (DD/MM/YYYY)
+# Last updated: 21/06/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -616,6 +616,61 @@ views:
               - condition: state
                 entity: switch.lave_vaisselle_power
                 state_not: "off"
+          - type: vertical-stack
+            cards:
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                card_layout: normal
+                sub_button:
+                  main:
+                    - entity: >-
+                        sensor.laundry_room_grillplats_plug_washing_machine_status
+                      show_state: true
+                      icon: mdi:timelapse
+                      visibility: []
+                      show_background: false
+                      show_attribute: false
+                      show_name: false
+                      name: Washing Machine Status
+                  bottom: []
+                styles: |-
+                  .bubble-button-card-container {
+                    background: RGBA(0, 0, 0, 0.2);
+                  }
+                modules:
+                  - frosted_glass
+                  - icon_border_progress
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
+                icon_border_progress:
+                  - button: sub-button-1
+                    source: sensor.lave_vaisselle_program_progress
+                    invert: false
+                    interpolate_colors: false
+                    condition:
+                      - condition: numeric_state
+                        entity_id: sensor.lave_vaisselle_program_progress
+                        below: 100
+                entity: input_boolean.washing_machine_running
+                visibility:
+                  - condition: state
+                    entity: input_boolean.washing_machine_running
+                    state: "on"
+                button_action:
+                  hold_action:
+                    action: none
+                name: Washing machine
+                show_state: false
+            visibility:
+              - condition: state
+                entity: input_boolean.washing_machine_running
+                state: "on"
       - type: grid
         cards:
           - type: custom:decluttering-card
@@ -3277,10 +3332,8 @@ views:
                           (states('sensor.system_monitor_drive_used') | float + states('sensor.system_monitor_drive_free') | float) * 100) %}
           {% if usage < 60 %} green {% elif usage < 80 %} orange {% else %} red
           {% endif %}
-        label: >
-          HA SSD ({{ ((states('sensor.system_monitor_drive_used') | float /
-          (states('sensor.system_monitor_drive_used') | float +
-          states('sensor.ssd_total') | float)) * 100) | round(1) }}% used)
+        label: |
+          HA SSD ({{ states('sensor.system_monitor_drive_usage') }}% used)
         content: >
           {{ states('sensor.system_monitor_drive_used') }} GB / {{
           states('sensor.ssd_total') }} GB

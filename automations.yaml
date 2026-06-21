@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 13/06/2026 (DD/MM/YYYY)
+# Last updated: 21/06/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night - Without guests
@@ -1040,8 +1040,8 @@
   actions:
   - action: notify.notify_devices
     data:
-      title: "\U0001F431 Fontaine à eau"
-      message: Il est temps de remplacer le filtre.
+      title: "\U0001F431 Water dispenser"
+      message: It’s time to replace the filter in the cat’s water fountain.
       data:
         tag: cat_fountain_filter
         notification_icon: mdi:water
@@ -1369,4 +1369,70 @@
   actions:
   - delay: 00:00:02
   - action: shell_command.kindle_copy
+  mode: single
+- id: '1782002023177'
+  alias: Washing Machine - Started
+  description: ''
+  triggers:
+  - entity_id: sensor.grillplats_plug_power
+    above: 20
+    trigger: numeric_state
+  conditions:
+  - condition: state
+    entity_id: input_boolean.washing_machine_running
+    state: 'off'
+  actions:
+  - target:
+      entity_id: input_boolean.washing_machine_running
+    action: input_boolean.turn_on
+    data: {}
+  mode: single
+- id: '1782002156892'
+  alias: Washing Machine - Finished
+  description: ''
+  triggers:
+  - entity_id:
+    - sensor.grillplats_plug_power
+    below: 2
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+    trigger: numeric_state
+  conditions:
+  - condition: state
+    entity_id: input_boolean.washing_machine_running
+    state: 'on'
+  actions:
+  - target:
+      entity_id: input_boolean.washing_machine_running
+    action: input_boolean.turn_off
+    data: {}
+  - data:
+      title: "\U0001F9FA Washing machine"
+      message: The program is finished, you can now hang out the laundry.
+      data:
+        tag: washing_machine_finished
+        notification_icon: mdi:washing-machine
+    action: notify.notify_devices
+  - target:
+      entity_id: media_player.hk_citation_one
+    data:
+      media:
+        media_content_id: media-source://media_source/local/homepod_notification.mp3
+        media_content_type: audio/mpeg
+        metadata: {}
+    action: media_player.play_media
+  - delay: 00:00:02
+  - target:
+      entity_id: media_player.hk_citation_one
+    data:
+      media:
+        media_content_id: "{% set sounds = [\n  \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-Lessive-Finish1.mp3\",\n
+          \ \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-Lessive-Finish2.mp3\",\n
+          \ \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-Lessive-Finish3.mp3\"\n]
+          %} {{ sounds | random }}\n"
+        media_content_type: audio/mpeg
+        metadata: {}
+    action: media_player.play_media
   mode: single
