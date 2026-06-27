@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 21/06/2026 (DD/MM/YYYY)
+# Last updated: 26/06/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -490,6 +490,26 @@ views:
               columns: 6
               rows: auto
             name: Dishwasher finished
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.vacuum_cleaner_full_bin
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            sub_button:
+              main: []
+              bottom: []
+            grid_options:
+              columns: 6
+              rows: auto
+            name: Vacuum cleaner full bin
           - type: vertical-stack
             cards:
               - type: custom:bubble-card

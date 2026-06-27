@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page used for maintenance purpose.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 30/05/2026 (DD/MM/YYYY)
+# Last updated: 26/06/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -80,7 +80,7 @@ decluttering_templates:
         album_cover_background: true
         players:
           - entity: media_player.spotify_melvin_campos_casares
-            icon: ''
+            icon: ""
           - entity: media_player.google_tv
             title: Google TV
             icon: mdi:youtube-tv
@@ -109,107 +109,34 @@ views:
             heading_style: title
             icon: phu:aqara-thermo-e1
           - type: markdown
-            content: '**Battery type:** 2x AA'
+            content: "**Battery type:** 2x AA"
             text_only: true
           - type: tile
             entity: sensor.radiator_thermostat_w600_battery
-            name: Entrance thermostat
+            name: Entrance
             vertical: false
             features_position: bottom
           - type: tile
             entity: sensor.radiator_thermostat_w600_battery_3
-            name: Bathroom thermostat
+            name: Bathroom
             vertical: false
             features_position: bottom
           - type: tile
             entity: sensor.radiator_thermostat_w600_battery_2
-            name: Office thermostat
+            name: Office
             vertical: false
             features_position: bottom
           - type: tile
             entity: sensor.radiator_thermostat_w600_battery_4
-            name: Bedroom thermostat
+            name: Bedroom
             vertical: false
             features_position: bottom
-      - type: grid
-        cards:
-          - type: heading
-            heading: Philips Hue Smart Buttons
-            heading_style: title
-            icon: phu:button
-          - type: markdown
-            content: '**Battery type:** CR2032'
-            text_only: true
-          - type: tile
-            entity: sensor.hue_smart_button_1_batterie
-            name: Entrance button
-            vertical: false
-            features_position: bottom
-          - type: tile
-            entity: sensor.hue_smart_button_3_batterie
-            name: Living room button
-            vertical: false
-            features_position: bottom
-          - type: tile
-            entity: sensor.hue_smart_button_2_batterie
-            name: Office button
-            vertical: false
-            features_position: bottom
-          - type: heading
-            heading: Philips Hue switches
-            heading_style: title
-            icon: phu:hue-only
-          - type: markdown
-            content: '**Battery type:** CR2032'
-            text_only: true
-          - type: vertical-stack
-            cards:
-              - type: heading
-                heading: Hue Tap Dial
-                heading_style: title
-                icon: phu:tap-dial
-                grid_options:
-                  columns: 6
-                  rows: auto
-              - type: tile
-                entity: sensor.hue_tap_dial_switch_1_batterie
-                name: Living room dial switch
-                vertical: false
-                features_position: bottom
-                grid_options:
-                  columns: 6
-                  rows: 1
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: vertical-stack
-            cards:
-              - type: heading
-                heading: Hue Dimmer
-                heading_style: title
-                icon: phu:dimmer-switch
-                grid_options:
-                  columns: 6
-                  rows: auto
-              - type: tile
-                entity: sensor.hue_dimmer_switch_1_batterie
-                name: Bedroom dimmer switch
-                vertical: false
-                features_position: bottom
-                grid_options:
-                  columns: 6
-                  rows: 1
-            grid_options:
-              columns: 6
-              rows: auto
-      - type: grid
-        cards:
           - type: heading
             heading: Philips Hue Motion sensor
             heading_style: title
             icon: phu:motion-sensor
           - type: markdown
-            content: '**Battery type:** 2x AAA'
+            content: "**Battery type:** 2x AAA"
             text_only: true
           - type: tile
             entity: sensor.detecteur_entree_batterie
@@ -223,13 +150,106 @@ views:
             features_position: bottom
       - type: grid
         cards:
+          - type: heading
+            heading: Philips Hue Smart Buttons
+            heading_style: title
+            icon: phu:button
+          - type: markdown
+            content: "**Battery type:** CR2032"
+            text_only: true
+          - type: tile
+            entity: sensor.hue_smart_button_1_batterie
+            name: Entrance
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.hue_smart_button_3_batterie
+            name: Living room
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.hue_smart_button_2_batterie
+            name: Office
+            vertical: false
+            features_position: bottom
+          - type: heading
+            heading: Philips Hue switches
+            heading_style: title
+            icon: phu:hue-only
+          - type: markdown
+            content: "**Battery type:** CR2032"
+            text_only: true
+          - type: vertical-stack
+            cards:
+              - type: heading
+                heading: Hue Tap Dial
+                heading_style: title
+                icon: phu:tap-dial
+                grid_options:
+                  columns: 6
+                  rows: auto
+              - type: tile
+                grid_options:
+                  columns: 6
+                  rows: 1
+                entity: sensor.hue_tap_dial_switch_1_batterie
+                name: Living room
+                vertical: false
+                features_position: bottom
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: vertical-stack
+            cards:
+              - type: heading
+                heading: Hue Dimmer
+                heading_style: title
+                icon: phu:dimmer-switch
+                grid_options:
+                  columns: 6
+                  rows: auto
+              - type: tile
+                grid_options:
+                  columns: 6
+                  rows: 1
+                entity: sensor.hue_dimmer_switch_1_batterie
+                name: Bedroom
+                vertical: false
+                features_position: bottom
+            grid_options:
+              columns: 6
+              rows: auto
+      - type: grid
+        cards:
+          - type: heading
+            heading: iRobot Roomba
+            heading_style: title
+            icon: phu:irobot
+          - type: entities
+            entities:
+              - entity: vacuum.r5_d4
+                name: Status
+                secondary_info: last-updated
+                icon: ""
+              - entity: binary_sensor.r5_d4_bac_plein
+                name: Bin is full?
+              - entity: sensor.r5_d4_batterie
+                name: Battery level
+              - entity: sensor.r5_d4_cycles_de_la_batterie
+                name: Battery cycle
+                icon: phu:irobot
+              - entity: sensor.r5_d4_temps_total_de_nettoyage
+                name: Total cleaning time
+            state_color: true
+      - type: grid
+        cards:
           - type: custom:decluttering-card
             template: home_navbar
     header:
       card:
         type: markdown
         text_only: true
-        content: '## Maintenance'
+        content: "## Maintenance"
     max_columns: 3
     title: Maintenance
     icon: mdi:home-battery

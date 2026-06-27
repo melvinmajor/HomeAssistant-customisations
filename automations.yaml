@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 21/06/2026 (DD/MM/YYYY)
+# Last updated: 26/06/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night - Without guests
@@ -674,7 +674,7 @@
     - conditions:
       - condition: numeric_state
         entity_id: sensor.system_monitor_temperature_cpu
-        above: 75
+        above: 80
       sequence:
       - target:
           entity_id: switch.fanshim_fan
@@ -1435,4 +1435,41 @@
         media_content_type: audio/mpeg
         metadata: {}
     action: media_player.play_media
+  mode: single
+- id: '1782462642485'
+  alias: Vacuum cleaner - full bin
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: 48bc332b376c3340dff3fdb8a018fbad
+    entity_id: b4c71dfe4244176fd394580538137787
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - action: notify.notify_devices
+    metadata: {}
+    data:
+      message: The dustbin is full.
+      title: "\U0001F916 R5-D4"
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.hk_citation_one
+    data:
+      media:
+        media_content_id: media-source://media_source/local/homepod_notification.mp3
+        media_content_type: audio/mpeg
+        metadata: {}
+  - delay: 00:00:02
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.hk_citation_one
+    data:
+      media:
+        media_content_id: "{% set sounds = [\n  \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-VacuumCleaner-FullBin1.mp3\",\n
+          \ \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-VacuumCleaner-FullBin2.mp3\",\n
+          \ \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-VacuumCleaner-FullBin3.mp3\"\n]
+          %} {{ sounds | random }}\n"
+        media_content_type: audio/mpeg
+        metadata: {}
   mode: single
