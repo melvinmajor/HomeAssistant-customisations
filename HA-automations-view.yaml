@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 26/06/2026 (DD/MM/YYYY)
+# Last updated: 06/07/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -359,60 +359,6 @@ views:
           - type: custom:bubble-card
             card_type: button
             button_type: state
-            entity: automation.entrance_light_motion_at_day_office_side
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Entrance light motion day - office side
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.entrance_light_motion_at_day
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Entrance light motion day - bed side
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.turn_off_lights
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            grid_options:
-              columns: 6
-              rows: auto
-            sub_button:
-              main: []
-              bottom: []
-            name: Lights OFF
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
             entity: automation.nest_cam_motion_notification
             double_tap_action:
               action: none
@@ -453,46 +399,6 @@ views:
           - type: custom:bubble-card
             card_type: button
             button_type: state
-            entity: automation.washing_machine_finished
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            grid_options:
-              columns: 6
-              rows: auto
-            name: Washing machine finished
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.dishwasher_cycle_finished
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            grid_options:
-              columns: 6
-              rows: auto
-            name: Dishwasher finished
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
             entity: automation.vacuum_cleaner_full_bin
             double_tap_action:
               action: none
@@ -510,91 +416,140 @@ views:
               columns: 6
               rows: auto
             name: Vacuum cleaner full bin
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: separator
-                name: Without guests
-              - type: custom:bubble-card
-                card_type: button
-                button_type: state
-                entity: automation.entrance_light_motion_at_sunrise
-                double_tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                button_action:
-                  double_tap_action:
-                    action: none
-                  hold_action:
-                    action: none
-                sub_button:
-                  main: []
-                  bottom: []
-                name: Entrance light motion sunrise/sunset - without guests
-              - type: custom:bubble-card
-                card_type: button
-                button_type: state
-                entity: automation.entrance_light_motion_at_night
-                double_tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                button_action:
-                  double_tap_action:
-                    action: none
-                  hold_action:
-                    action: none
-                sub_button:
-                  main: []
-                  bottom: []
-                name: Entrance light motion night - without guests
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: separator
-                name: With guests
-              - type: custom:bubble-card
-                card_type: button
-                button_type: state
-                entity: >-
-                  automation.entrance_light_motion_at_sunrise_or_sunset_with_guests
-                double_tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                button_action:
-                  double_tap_action:
-                    action: none
-                  hold_action:
-                    action: none
-                sub_button:
-                  main: []
-                  bottom: []
-                name: Entrance light motion sunrise/sunset - with guests
-              - type: custom:bubble-card
-                card_type: button
-                button_type: state
-                entity: automation.entrance_light_motion_at_night_with_guests
-                double_tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                button_action:
-                  double_tap_action:
-                    action: none
-                  hold_action:
-                    action: none
-                sub_button:
-                  main: []
-                  bottom: []
-                name: Entrance light motion night - with guests
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.turn_off_lights
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            grid_options:
+              columns: 6
+              rows: auto
+            sub_button:
+              main: []
+              bottom: []
+            name: Lights OFF
+          - type: heading
+            heading: Light entrance automations
+            heading_style: subtitle
+            icon: ""
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.entrance_light_motion_at_day_office_side
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            sub_button:
+              main: []
+              bottom: []
+            name: Day - office side
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.entrance_light_motion_at_day
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            sub_button:
+              main: []
+              bottom: []
+            name: Day - bed side
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.entrance_light_motion_at_sunrise
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            sub_button:
+              main: []
+              bottom: []
+            name: Sunrise/Sunset
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.entrance_light_motion_at_night
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            sub_button:
+              main: []
+              bottom: []
+            name: Night
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.entrance_light_front_door_opened
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            sub_button:
+              main: []
+              bottom: []
+            name: Door detection
+            grid_options:
+              columns: 6
+              rows: auto
         column_span: 1
       - type: grid
         cards:
           - type: heading
             heading: Smart buttons and switch automations
             heading_style: title
+            icon: phu:hue-only
+          - type: heading
+            heading: Smart buttons
+            heading_style: subtitle
             icon: phu:button
           - type: custom:bubble-card
             card_type: button
@@ -610,6 +565,13 @@ views:
                 action: none
               hold_action:
                 action: none
+            sub_button:
+              main: []
+              bottom: []
+            name: Entrance short press
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -623,6 +585,13 @@ views:
                 action: none
               hold_action:
                 action: none
+            sub_button:
+              main: []
+              bottom: []
+            name: Entrance long press
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -636,6 +605,17 @@ views:
                 action: none
               hold_action:
                 action: none
+            sub_button:
+              main: []
+              bottom: []
+            name: Office long press
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: heading
+            heading: Dimmer switch - Bedroom
+            heading_style: subtitle
+            icon: phu:dimmer-switch
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -652,6 +632,10 @@ views:
             sub_button:
               main: []
               bottom: []
+            name: On/Off button
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -668,6 +652,10 @@ views:
             sub_button:
               main: []
               bottom: []
+            name: Increase brightness
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -684,6 +672,10 @@ views:
             sub_button:
               main: []
               bottom: []
+            name: Decrease brightness
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -700,6 +692,10 @@ views:
             sub_button:
               main: []
               bottom: []
+            name: Hue button short press
+            grid_options:
+              columns: 6
+              rows: auto
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -716,6 +712,10 @@ views:
             sub_button:
               main: []
               bottom: []
+            name: Hue button long press
+            grid_options:
+              columns: 6
+              rows: auto
       - type: grid
         cards:
           - type: heading
@@ -782,6 +782,46 @@ views:
               columns: 6
               rows: auto
             name: Fountain filter 8:30PM
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.dishwasher_cycle_finished
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            sub_button:
+              main: []
+              bottom: []
+            grid_options:
+              columns: 6
+              rows: auto
+            name: Dishwasher finished
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            entity: automation.washing_machine_finished
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            button_action:
+              double_tap_action:
+                action: none
+              hold_action:
+                action: none
+            sub_button:
+              main: []
+              bottom: []
+            grid_options:
+              columns: 6
+              rows: auto
+            name: Washing machine finished
           - type: heading
             heading: Tags automations
             heading_style: title
