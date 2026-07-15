@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page used for maintenance purpose.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 26/06/2026 (DD/MM/YYYY)
+# Last updated: 15/07/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -96,6 +96,10 @@ decluttering_templates:
       styles: |
         .navbar.mobile.bottom {
           bottom: 5px;
+        }
+        .navbar-card {
+          background: RGBA(0, 0, 0, 0.2) !important;
+          backdrop-filter: blur(12px);
         }
       haptic:
         tap_action: true

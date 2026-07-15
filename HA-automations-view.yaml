@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 06/07/2026 (DD/MM/YYYY)
+# Last updated: 15/07/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -96,6 +96,10 @@ decluttering_templates:
       styles: |
         .navbar.mobile.bottom {
           bottom: 5px;
+        }
+        .navbar-card {
+          background: RGBA(0, 0, 0, 0.2) !important;
+          backdrop-filter: blur(12px);
         }
       haptic:
         tap_action: true
@@ -957,3 +961,20 @@ views:
           {% else %}
             red
           {% endif %}
+    background:
+      opacity: 50
+      alignment: center
+      size: cover
+      repeat: no-repeat
+      attachment: fixed
+      image:
+        media_content_id: media-source://image_upload/462e2194db1d5af6a88dcb237e80ca40
+        media_content_type: image/jpeg
+        metadata:
+          title: microsoft-surface-dark-abstract-3840x2160.jpg
+          thumbnail: /api/image/serve/462e2194db1d5af6a88dcb237e80ca40/256x256
+          media_class: image
+          navigateIds:
+            - {}
+            - media_content_type: app
+              media_content_id: media-source://image_upload
