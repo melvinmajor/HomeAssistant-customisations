@@ -129,6 +129,13 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            sub_button:
+              main: []
+              bottom: []
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             entity: input_select.heating_mode
@@ -144,6 +151,10 @@ views:
             sub_button:
               main: []
               bottom: []
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             entity: input_boolean.visitor_override
@@ -155,6 +166,14 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            button_type: switch
+            sub_button:
+              main: []
+              bottom: []
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             entity: input_boolean.entrance_light_override
@@ -171,6 +190,10 @@ views:
               main: []
               bottom: []
             name: Entrance Override
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             entity: input_boolean.cat_night_override
@@ -182,6 +205,14 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            button_type: switch
+            sub_button:
+              main: []
+              bottom: []
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             entity: input_datetime.cat_fountain_filter
@@ -197,6 +228,10 @@ views:
             sub_button:
               main: []
               bottom: []
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             entity: input_boolean.washing_machine_running
@@ -212,6 +247,10 @@ views:
             sub_button:
               main: []
               bottom: []
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -235,6 +274,10 @@ views:
             attribute: last_triggered
             show_state: true
             name: Kindle AutoCopy Home Status image
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: heading
             heading: Heating system
             heading_style: title
@@ -264,6 +307,10 @@ views:
             show_attribute: true
             attribute: last_triggered
             show_state: false
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -289,6 +336,10 @@ views:
             show_attribute: true
             attribute: last_triggered
             show_state: false
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -314,6 +365,10 @@ views:
             show_attribute: true
             attribute: last_triggered
             show_state: false
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
       - type: grid
         cards:
           - type: heading
@@ -340,6 +395,10 @@ views:
               main: []
               bottom: []
             name: TV scene ON
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -360,6 +419,10 @@ views:
               main: []
               bottom: []
             name: TV scene OFF
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -380,6 +443,10 @@ views:
               main: []
               bottom: []
             name: Nest Cam - Motion
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -399,7 +466,11 @@ views:
             grid_options:
               columns: 6
               rows: auto
-            name: Washing machine started
+            name: Washing machine start
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -419,7 +490,11 @@ views:
             grid_options:
               columns: 6
               rows: auto
-            name: Vacuum cleaner full bin
+            name: Vacuum cleaner full
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -440,6 +515,10 @@ views:
               main: []
               bottom: []
             name: Lights OFF
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: heading
             heading: Light entrance automations
             heading_style: subtitle
@@ -464,6 +543,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -484,6 +567,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -504,6 +591,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -524,6 +615,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -544,6 +639,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
         column_span: 1
       - type: grid
         cards:
@@ -576,6 +675,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -596,6 +699,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -616,6 +723,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: heading
             heading: Dimmer switch - Bedroom
             heading_style: subtitle
@@ -640,6 +751,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -660,6 +775,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -680,6 +799,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -700,6 +823,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -720,10 +847,14 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
       - type: grid
         cards:
           - type: heading
-            heading: Reminders automations
+            heading: Reminders and voice automations
             heading_style: title
             icon: mdi:alarm-multiple
           - type: custom:bubble-card
@@ -746,6 +877,10 @@ views:
               columns: 6
               rows: auto
             name: Trash out 8PM
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -766,6 +901,10 @@ views:
               columns: 6
               rows: auto
             name: Trash out 10PM
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -786,6 +925,10 @@ views:
               columns: 6
               rows: auto
             name: Fountain filter 8:30PM
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -806,6 +949,10 @@ views:
               columns: 6
               rows: auto
             name: Dishwasher finished
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -825,7 +972,11 @@ views:
             grid_options:
               columns: 6
               rows: auto
-            name: Washing machine finished
+            name: Washing machine end
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: heading
             heading: Tags automations
             heading_style: title
@@ -844,6 +995,13 @@ views:
               hold_action:
                 action: none
             icon: mdi:robot
+            sub_button:
+              main: []
+              bottom: []
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: heading
             heading: Other automations
             heading_style: title
@@ -871,6 +1029,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             button_type: state
@@ -894,6 +1056,10 @@ views:
             grid_options:
               columns: 6
               rows: auto
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
           - type: custom:bubble-card
             card_type: button
             entity: input_boolean.f1_track_status_light
@@ -910,6 +1076,10 @@ views:
             sub_button:
               main: []
               bottom: []
+            styles: |-
+              .bubble-button-card-container {
+                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
       - type: grid
         cards:
           - type: custom:decluttering-card
