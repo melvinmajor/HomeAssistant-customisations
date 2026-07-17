@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 15/07/2026 (DD/MM/YYYY)
+# Last updated: 18/07/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -15,31 +15,39 @@ decluttering_templates:
         - url: /custom-dashboard/shortcuts
           icon: mdi:lifebuoy
           label: Shortcuts
+          icon_color: "#9e9e9e"
         - url: /custom-dashboard/home
           icon: mdi:home
           label: Home
+          icon_color: "#9e9e9e"
           hold_action:
             action: navigate
             navigation_path: /config/devices/dashboard
         - url: /custom-dashboard/kitchen
           icon: mdi:fridge
           label: Kitchen
+          icon_color: "#9e9e9e"
         - url: /custom-dashboard/vehicle
           icon: phu:volvo
           label: Vehicle
+          icon_color: "#9e9e9e"
         - icon: mdi:server-minus
           label: IT
           url: /custom-dashboard/IT-server
+          icon_color: "#9e9e9e"
         - icon: mdi:dots-horizontal
           label: More
+          icon_color: "#9e9e9e"
           tap_action:
             action: open-popup
           popup:
             - icon: mdi:cog
               url: /config/dashboard
               label: Configuration
+              icon_color: white
             - icon: mdi:update
               url: /config/updates
+              icon_color: white
               label: |
                 [[[
                   const updates = parseInt(states['sensor.updates']?.state) || 0;
@@ -48,13 +56,17 @@ decluttering_templates:
             - url: /dashboard-automations
               icon: mdi:robot
               label: Automations
+              icon_color: white
             - icon: mdi:home-battery
               label: Maintenance
               url: /custom-maintenance
+              icon_color: white
             - url: /hacs/dashboard
               icon: phu:smarthome-solver
               label: HACS
+              icon_color: white
             - icon: mdi:power
+              icon_color: white
               tap_action:
                 action: call-service
                 service: homeassistant.restart
