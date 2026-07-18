@@ -120,7 +120,6 @@ class KindleDisplay(hass.Hass):
         temp_office = self.get_state("sensor.radiator_thermostat_w600_temperature_2")
 
         # --- AIR QUALITY ---
-        aqi_summary = self.get_state("sensor.aqi_summary")
         aqi_pm25 = self.get_state("sensor.healthy_home_coach_air_quality")
         aqi_co2 = self.get_state("sensor.healthy_home_coach_carbon_dioxide_sensor")
 
@@ -306,13 +305,18 @@ class KindleDisplay(hass.Hass):
         y_left = y + 35
         draw.text((LEFT_X, y_left), f"Living Room: {temp_living}°C | {humidity_living}% RH", font=font_text, fill=0)
         y_left += 30
+
+        # Two-column layout for small room temperatures
+        col_gap = 180  # horizontal space between the two columns
+
+        # First row
         draw.text((LEFT_X, y_left), f"Entrance: {temp_entrance}°C", font=font_text_small, fill=0)
-        y_left += 25
-        draw.text((LEFT_X, y_left), f"Bedroom: {temp_bedroom}°C", font=font_text_small, fill=0)
+        draw.text((LEFT_X + col_gap, y_left), f"Bedroom: {temp_bedroom}°C", font=font_text_small, fill=0)
+
+        # Second row
         y_left += 25
         draw.text((LEFT_X, y_left), f"Bathroom: {temp_bathroom}°C", font=font_text_small, fill=0)
-        y_left += 25
-        draw.text((LEFT_X, y_left), f"Office: {temp_office}°C", font=font_text_small, fill=0)
+        draw.text((LEFT_X + col_gap, y_left), f"Office: {temp_office}°C", font=font_text_small, fill=0)
 
         # --- COLUMN 2 - AIR QUALITY ---
         title = "Air Quality"
@@ -321,19 +325,6 @@ class KindleDisplay(hass.Hass):
         text_bottom = bbox[3]
         draw.line((RIGHT_X, text_bottom + 5, 758 - MARGIN_X, text_bottom + 5), fill=LINE_FILL, width=LINE_WIDTH)
         y_right = y + 35
-
-        summary = aqi_summary or ""
-        emoji_char = ""
-        text_part = summary
-        if summary and ord(summary[0]) > 1000:
-            emoji_char = summary[0]
-            text_part = summary[1:].strip()
-        if emoji_char:
-            draw.text((RIGHT_X, y_right), emoji_char, font=font_emoji, fill=0)
-            draw.text((RIGHT_X + 30, y_right), text_part, font=font_text, fill=0)
-        else:
-            draw.text((RIGHT_X, y_right), summary, font=font_text, fill=0)
-        y_right += 30
         draw.text((RIGHT_X, y_right), f"PM2.5 Index: {aqi_pm25}", font=font_text_small, fill=0)
         y_right += 25
         draw.text((RIGHT_X, y_right), f"CO2: {aqi_co2} ppm", font=font_text_small, fill=0)
@@ -364,9 +355,9 @@ class KindleDisplay(hass.Hass):
             x_col = MARGIN_X + i * col_width
 
             # --- LABEL ABOVE DATE ---
-            bbox = draw.textbbox((0, 0), label, font=font_text_small)
+            bbox = draw.textbbox((0, 0), label, font=font_text)
             label_w = bbox[2] - bbox[0]
-            draw.text((x_col + (col_width - label_w) // 2, y), label, font=font_text_small, fill=0)
+            draw.text((x_col + (col_width - label_w) // 2, y), label, font=font_text, fill=0)
 
             # --- DATE ---
             raw = self.get_state(entity)
@@ -376,9 +367,9 @@ class KindleDisplay(hass.Hass):
             except:
                 formatted = "-"
 
-            bbox = draw.textbbox((0, 0), formatted, font=font_text_small)
+            bbox = draw.textbbox((0, 0), formatted, font=font_text)
             date_w = bbox[2] - bbox[0]
-            draw.text((x_col + (col_width - date_w) // 2, y + 25), formatted, font=font_text_small, fill=0)
+            draw.text((x_col + (col_width - date_w) // 2, y + 25), formatted, font=font_text, fill=0)
 
         # Move Y for next section
         y += 80
