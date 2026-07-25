@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 18/07/2026 (DD/MM/YYYY)
+# Last updated: 25/07/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -1703,50 +1703,9 @@ views:
                   - temperature
                   - humidity
                   - co2
-              - type: custom:mushroom-template-card
-                primary: >
-                  CO₂ {{
-                  states('sensor.healthy_home_coach_carbon_dioxide_sensor')
-                  }}ppm · {{ states('sensor.healthy_home_coach_noise') }}dB ·
-                  AQI {{ states('sensor.healthy_home_coach_air_quality') }}
-                tap_action:
-                  action: more-info
-                multiline_secondary: true
-                vertical: true
-                features_position: bottom
-                grid_options:
-                  columns: 12
-                  rows: auto
-                card_mod:
-                  style: >
-                    {% set co2 =
-                    states('sensor.healthy_home_coach_carbon_dioxide_sensor') |
-                    int(0) %}
-
-                    ha-card {
-                      border-radius: 14px;
-                      padding: 12px;
-                      color: white;
-                      --icon-color: white;
-                      transition: all 0.4s ease;
-                    }
-
-                    /* Dynamic colors */ ha-card {
-                      {% if co2 < 800 %}
-                        background: linear-gradient(135deg, #4CAF50, #2E7D32);
-                      {% elif co2 < 1200 %}
-                        background: linear-gradient(135deg, #FF9800, #EF6C00);
-                      {% else %}
-                        background: linear-gradient(135deg, #F44336, #C62828);
-                        animation: pulse 2.2s ease-in-out infinite;
-                      {% endif %}
-                    }
-
-                    /* Animation */ @keyframes pulse {
-                      0%   { transform: scale(1); opacity: 1; }
-                      50%  { transform: scale(1.015); opacity: 0.92; }
-                      100% { transform: scale(1); opacity: 1; }
-                    }
+                  - noise
+                noise_entity: sensor.healthy_home_coach_noise
+                y_scale: auto
               - type: custom:mini-graph-card
                 name: Home temperature
                 entities:
