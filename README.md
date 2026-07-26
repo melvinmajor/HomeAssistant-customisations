@@ -32,11 +32,14 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | Speech-to-Phrase                | Yes    | x         |             |
 | Terminal & SSH                  | **No** | x         |             |
 | Volvo                           | Yes    | x         |             |
+| Whisper                         | Yes    | x         |             |
 | Air Quality Card                | Yes    |           | x           |
 | Bambu Lab                       | Yes    |           | x           |
 | Big Slider Card                 | Yes    |           | x           |
 | Bubble Card                     | Yes    |           | x           |
 | Bubble Card Tools               | Yes    |           | x           |
+| button-card                     | Yes    |           | x           |
+| Calendar Card Pro               | Yes    |           | x           |
 | card-mod                        | Yes    |           | x           |
 | Custom brand icons              | Yes    |           | x           |
 | Decluttering Card               | Yes    |           | x           |
@@ -46,6 +49,7 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | HACS                            | Yes    |           | x           |
 | Home Assistant Swipe Navigation | Yes    |           | x           |
 | kiosk-mode                      | Yes    |           | x           |
+| layout-card                     | Yes    |           | x           |
 | Material Home Component         | Yes    |           | x           |
 | Material You Theme              | Yes    |           | x           |
 | Material You Utilities          | Yes    |           | x           |
@@ -54,8 +58,11 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | Mushroom                        | Yes    |           | x           |
 | Navbard card                    | Yes    |           | x           |
 | Presence Simulation             | Yes    |           | x           |
+| pyscript                        | Yes    |           | x           |
 | RecycleApp                      | Yes    |           | x           |
 | UI Lovelace Minimalist          | Yes    |           | x           |
+| View Assist                     | Yes    |           | x           |
+| View Assist Companion App       | Yes    |           | x           |
 | Weather Chart Card              | Yes    |           | x           |
 
 **Specifically for Bubble Card:**

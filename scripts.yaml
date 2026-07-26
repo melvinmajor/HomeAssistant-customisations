@@ -1,0 +1,17 @@
+## Home Assistant scripts.yaml script file.
+# GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
+# Author: Melvin Campos Casares
+# Last updated: 26/07/2026 (DD/MM/YYYY)
+
+sleep_mode_for_echo_show_5_2021:
+  alias: Sleep mode for Echo Show 5 (2021)
+  mode: single
+  sequence:
+  - target:
+      entity_id: input_boolean.cat_night_override
+    action: input_boolean.turn_on
+  - target:
+      entity_id: automation.turn_off_lights
+    action: automation.trigger
+    data:
+      skip_condition: true

@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 06/07/2026 (DD/MM/YYYY)
+# Last updated: 26/07/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night
@@ -208,6 +208,7 @@
   - data:
       name: Material You
     action: frontend.set_theme
+    enabled: false
   - action: tts.clear_cache
     metadata: {}
     data: {}
@@ -397,42 +398,44 @@
       entity_id: tts.piper
     enabled: false
   - action: media_player.play_media
-    metadata:
-      title: homepod_notification.mp3
-      thumbnail:
-      media_class: music
-      children_media_class:
-      navigateIds:
-      - {}
-      - media_content_type: app
-        media_content_id: media-source://media_source
     data:
-      media_content_id: media-source://media_source/local/homepod_notification.mp3
-      media_content_type: audio/mpeg
+      media:
+        media_content_id: media-source://media_source/local/homepod_notification.mp3
+        media_content_type: audio/mpeg
+        metadata:
+          title: homepod_notification.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
     target:
-      entity_id: media_player.hk_citation_multibeam_1100_2678
+      entity_id: media_player.hk_citation_multibeam_1100_7927
   - delay:
       hours: 0
       minutes: 0
       seconds: 2
       milliseconds: 0
   - action: media_player.play_media
-    metadata:
-      title: Siwis-FR-Demarrage_espace_TV.mp3
-      thumbnail:
-      media_class: music
-      children_media_class:
-      navigateIds:
-      - {}
-      - media_content_type: app
-        media_content_id: media-source://media_source
-      - media_content_type: ''
-        media_content_id: media-source://media_source/local/TTS-saved-renders
     data:
-      media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Demarrage_espace_TV.mp3
-      media_content_type: audio/mpeg
+      media:
+        media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Demarrage_espace_TV.mp3
+        media_content_type: audio/mpeg
+        metadata:
+          title: Siwis-FR-Demarrage_espace_TV.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+          - media_content_type: ''
+            media_content_id: media-source://media_source/local/TTS-saved-renders
     target:
-      entity_id: media_player.hk_citation_multibeam_1100_2678
+      entity_id: media_player.hk_citation_multibeam_1100_7927
   - type: turn_on
     device_id: 3458fd1afc8a4bcbcc547872874bcbbc
     entity_id: 4f78e3210faad5f67623cd9c4d5b471d
@@ -464,42 +467,44 @@
       entity_id: tts.piper
     enabled: false
   - action: media_player.play_media
-    metadata:
-      title: homepod_notification.mp3
-      thumbnail:
-      media_class: music
-      children_media_class:
-      navigateIds:
-      - {}
-      - media_content_type: app
-        media_content_id: media-source://media_source
     data:
-      media_content_id: media-source://media_source/local/homepod_notification.mp3
-      media_content_type: audio/mpeg
+      media:
+        media_content_id: media-source://media_source/local/homepod_notification.mp3
+        media_content_type: audio/mpeg
+        metadata:
+          title: homepod_notification.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
     target:
-      entity_id: media_player.hk_citation_multibeam_1100_2678
+      entity_id: media_player.hk_citation_multibeam_1100_7927
   - delay:
       hours: 0
       minutes: 0
       seconds: 2
       milliseconds: 0
   - action: media_player.play_media
-    metadata:
-      title: Siwis-FR-Extinction_espace_TV.mp3
-      thumbnail:
-      media_class: music
-      children_media_class:
-      navigateIds:
-      - {}
-      - media_content_type: app
-        media_content_id: media-source://media_source
-      - media_content_type: ''
-        media_content_id: media-source://media_source/local/TTS-saved-renders
     data:
-      media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Extinction_espace_TV.mp3
-      media_content_type: audio/mpeg
+      media:
+        media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Extinction_espace_TV.mp3
+        media_content_type: audio/mpeg
+        metadata:
+          title: Siwis-FR-Extinction_espace_TV.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+          - media_content_type: ''
+            media_content_id: media-source://media_source/local/TTS-saved-renders
     target:
-      entity_id: media_player.hk_citation_multibeam_1100_2678
+      entity_id: media_player.hk_citation_multibeam_1100_7927
   - type: turn_off
     device_id: 3458fd1afc8a4bcbcc547872874bcbbc
     entity_id: 4f78e3210faad5f67623cd9c4d5b471d
@@ -1444,3 +1449,210 @@
           entity_id: light.accueil
         action: light.turn_off
   mode: restart
+- id: '1783979460688'
+  alias: View Assist - Alarms Reminders Timers
+  description: ''
+  use_blueprint:
+    path: dinki/blueprint-alarmsreminderstimers.yaml
+    input:
+      use_vaca_onboard_sound: true
+      spokenlanguage: fr
+      timer:
+      - timer pour {when}
+      - timer de {when}
+      - (mets|commence) [le] timer {name} pour {when}
+      reminder:
+      - (rappelle-moi | mets un rappel) pour {name} (à) {when}
+      - rappelle-moi (à) {when} concernant {name}
+      - rappelle-moi (à) {when} sur {name}
+      - rappel (à | pour) {when} concernant {name}
+      - rappel pour {when}
+      alarm:
+      - alarme pour {when}
+      - alarme nommé {name} pour {when}
+      - réveille-moi [à] {when}
+      listtimers:
+      - liste [moi] mes (timers | alarmes | rappels)
+      showtimers:
+      - montre [moi] mes (timers | alarmes | rappels)
+      snoozealarm:
+      - snooze [mes] (timers | alarmes | rappels)
+      - reporte [mes] (timers | alarmes | rappels)
+      - retarde [mes] (timers | alarmes | rappels)
+      - postpose [mes] (timers | alarmes | rappels)
+      timeremaining:
+      - combien de temps reste-il pour mon (timer | alarme | rappel)
+      - combien de temps [il] reste pour {name} (timer | alarme | rappel)
+      canceltimer:
+      - annule (timer | alarme | rappel) nommé {name}
+      - annule mon (timer | alarme | rappel) pour {when}
+      - (Eteint | annule | stoppe) [mon] (timer | alarme | rappel)
+- id: '1783979473970'
+  alias: View Assist - Quelle heure et date
+  description: ''
+  use_blueprint:
+    path: dinki/blueprint-whattimeisit.yaml
+    input:
+      language: fr
+      command_prompt_time: '[Quelle] [est] [l''] heure [est-il]'
+      command_prompt_date: (Quelle est la date | quel jour on est | quel jour sommes-nous)
+      command_prompt_dayofweek: ([Quel] [est] [le] jour de la semaine [sommes-nous]
+        | Quel est le jour de la semaine)
+- id: '1783979722127'
+  alias: View Assist - Météo
+  description: ''
+  use_blueprint:
+    path: dinki/blueprint-howstheweather.yaml
+    input:
+      language: fr
+      weather_entity: weather.irm
+      command_prompt: (Quelle | Quelle est | Comment est) [la] météo [fait-il]
+- id: '1784037354172'
+  alias: Echo Show 5 – Idle mode
+  description: ''
+  triggers:
+  - entity_id:
+    - event.vaca_dfc186925_gesture
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    trigger: state
+  conditions:
+  - condition: template
+    value_template: '{{ 7 <= now().hour < 22 }}'
+  - condition: state
+    entity_id: sensor.echo_show_5_2021
+    state:
+    - normal
+    attribute: mode
+  actions:
+  - data:
+      mode: night
+    action: view_assist.set_state
+    target:
+      entity_id: sensor.echo_show_5_2021
+  - target:
+      entity_id: number.vaca_dfc186925_screen_brightness
+    data:
+      value: '1'
+    action: number.set_value
+  - target:
+      entity_id: switch.vaca_dfc186925_auto_brightness
+    action: switch.turn_off
+- id: '1784037428175'
+  alias: Echo Show 5 – Wake on Interaction
+  description: ''
+  triggers:
+  - entity_id:
+    - event.vaca_dfc186925_gesture
+    trigger: state
+  conditions:
+  - condition: template
+    value_template: '{{ 7 <= now().hour < 22 }}'
+  - condition: state
+    entity_id: sensor.echo_show_5_2021
+    state:
+    - night
+    attribute: mode
+  actions:
+  - data:
+      mode: normal
+    action: view_assist.set_state
+    target:
+      entity_id: sensor.echo_show_5_2021
+  - target:
+      entity_id: switch.vaca_dfc186925_auto_brightness
+    action: switch.turn_on
+  mode: single
+- id: '1784038655563'
+  alias: Echo Show 5 – Auto Night Mode
+  description: ''
+  triggers:
+  - at: '22:00:00'
+    trigger: time
+  actions:
+  - target:
+      entity_id: sensor.echo_show_5_2021
+    data:
+      mode: night
+      background: none
+      background_offset_x: 0
+      background_offset_y: 0
+      screen_mode: hide_header_sidebar
+      theme_overrides:
+        primary_text_color: '#ff0000'
+        secondary_text_color: '#ff0000'
+        accent_color: '#ff0000'
+        icon_color: '#ff0000'
+        header_text_color: '#ff0000'
+        card_text_color: '#ff0000'
+    action: view_assist.set_state
+  - target:
+      entity_id: number.vaca_dfc186925_screen_brightness
+    data:
+      value: '1'
+    action: number.set_value
+  mode: single
+- id: '1784038708465'
+  alias: Echo Show 5 – Auto Day Mode
+  description: ''
+  triggers:
+  - at: 07:00:00
+    trigger: time
+  actions:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ (as_timestamp(now()) - as_timestamp(states(''sensor.view_assist_last_interaction'')))
+          < 900 }}
+
+          '
+      sequence:
+      - action: view_assist.set_state
+        target:
+          entity_id: sensor.echo_show_5_2021
+        data:
+          mode: normal
+          background: /view_assist/dashboard/SurfaceDuo-NightSky.jpg
+          background_offset_x: 0
+          background_offset_y: 0
+          screen_mode: normal
+          theme_overrides: {}
+      - target:
+          entity_id: number.vaca_dfc186925_screen_brightness
+        data:
+          value: 50
+        action: number.set_value
+      - target:
+          entity_id: switch.vaca_dfc186925_auto_brightness
+        action: switch.turn_on
+        data: {}
+      alias: Recent interaction
+    - conditions:
+      - condition: template
+        value_template: '{{ (as_timestamp(now()) - as_timestamp(states(''sensor.view_assist_last_interaction'')))
+          >= 900 }}
+
+          '
+      sequence:
+      - action: view_assist.set_state
+        target:
+          entity_id: sensor.echo_show_5_2021
+        data:
+          mode: night
+          background: none
+          background_offset_x: 0
+          background_offset_y: 0
+          screen_mode: hide_header_sidebar
+      - target:
+          entity_id: number.vaca_dfc186925_screen_brightness
+        data:
+          value: '1'
+        action: number.set_value
+      - target:
+          entity_id: switch.vaca_dfc186925_auto_brightness
+        action: switch.turn_off
+        data: {}
+      alias: No recent interaction
+  mode: single
