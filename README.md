@@ -20,6 +20,7 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | AirCast                         | Yes    | x         |             |
 | AppDaemon                       | Yes    | x         |             |
 | Assist Microphone               | Yes    | x         |             |
+| Cloudflared                     | Yes    | x         |             |
 | File Editor                     | Yes    | x         |             |
 | Matter Server                   | Yes    | x         |             |
 | Mosquitto broker                | Yes    | x         |             |
