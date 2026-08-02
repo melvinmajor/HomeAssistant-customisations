@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 26/07/2026 (DD/MM/YYYY)
+# Last updated: 02/08/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night
@@ -196,19 +196,13 @@
     action: light.turn_off
   mode: restart
 - id: '1735677677036'
-  alias: Startup and daily system care
-  description: Set Home Assistant theme for all users at startup and everyday at 7AM.
+  alias: Daily system care
+  description: Daily system care for Home Assistant
   triggers:
-  - event: start
-    trigger: homeassistant
   - trigger: time
     at: 06:00:00
   conditions: []
   actions:
-  - data:
-      name: Material You
-    action: frontend.set_theme
-    enabled: false
   - action: tts.clear_cache
     metadata: {}
     data: {}
@@ -1471,6 +1465,7 @@
       - alarme pour {when}
       - alarme nommé {name} pour {when}
       - réveille-moi [à] {when}
+      - reveille-moi [à] {when}
       listtimers:
       - liste [moi] mes (timers | alarmes | rappels)
       showtimers:
@@ -1655,4 +1650,59 @@
         action: switch.turn_off
         data: {}
       alias: No recent interaction
+  mode: single
+- id: '1785665277101'
+  alias: Startup
+  description: Actions to perform at startup for Home Assistant
+  triggers:
+  - event: start
+    trigger: homeassistant
+  conditions: []
+  actions:
+  - data:
+      name: Material You
+    action: frontend.set_theme
+    enabled: false
+  - action: tts.clear_cache
+    metadata: {}
+    data: {}
+  - if:
+    - condition: state
+      entity_id: input_select.heating_mode
+      state:
+      - Summer
+    then:
+    - action: automation.trigger
+      metadata: {}
+      target:
+        entity_id: automation.heating_summer_mode
+      data:
+        skip_condition: true
+    else:
+    - action: automation.trigger
+      metadata: {}
+      target:
+        entity_id: automation.heating_winter_mode_init
+      data:
+        skip_condition: true
+    alias: Heating mode check
+  - if:
+    - condition: time
+      after: 07:00:00
+      before: '22:00:00'
+    then:
+    - action: automation.trigger
+      metadata: {}
+      target:
+        entity_id: automation.echo_show_5_auto_day_mode
+      data:
+        skip_condition: true
+    else:
+    - action: automation.trigger
+      metadata: {}
+      target:
+        entity_id: automation.echo_show_5_auto_night_mode
+      data:
+        skip_condition: true
+    alias: Echo Show 5 day or night mode
   mode: single

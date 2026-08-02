@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 25/07/2026 (DD/MM/YYYY)
+# Last updated: 02/08/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -115,6 +115,69 @@ decluttering_templates:
         }
       haptic:
         tap_action: true
+  home_temperature_graph:
+    card:
+      type: custom:mini-graph-card
+      name: Home temperature
+      entities:
+        - entity: sensor.netatmo_iaq_temperature
+          name: Living room
+        - entity: sensor.radiator_thermostat_w600_temperature
+          name: Entrance
+        - entity: sensor.radiator_thermostat_w600_temperature_2
+          name: Office
+        - entity: sensor.radiator_thermostat_w600_temperature_3
+          name: Bathroom
+        - entity: sensor.radiator_thermostat_w600_temperature_4
+          name: Bedroom
+      show:
+        labels: true
+        labels_secondary: true
+      animate: false
+      line_width: 3
+      decimals: 1
+      hour24: true
+      unit: °C
+      font_size: 90
+  waste_badge:
+    card:
+      type: custom:mushroom-template-badge
+      entity: "[[entity]]"
+      picture: |
+        {{ state_attr('[[entity]]', 'entity_picture') }}
+      content: |
+        {{ strptime(states('[[entity]]'), '%d/%m/%Y').strftime('%a %d %b') }}
+      tap_action:
+        action: more-info
+  climate_card:
+    card:
+      type: custom:bubble-card
+      card_type: climate
+      entity: "[[entity]]"
+      name: "[[name]]"
+      modules:
+        - frosted_glass
+      main_buttons_position: bottom
+      icon: phu:aqara-thermo-e1
+      show_state: false
+      show_attribute: true
+      attribute: current_temperature
+      sub_button:
+        main:
+          - name: HVAC modes menu
+            select_attribute: hvac_modes
+            state_background: false
+            show_arrow: false
+            sub_button_type: select
+        bottom: []
+      styles: |-
+        .bubble-main-icon-container {
+          background-color: [[color]];
+          color: [[text_color]];
+        }
+        .bubble-climate-container {
+          background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+        }
 views:
   - title: Shortcuts
     path: shortcuts
@@ -122,28 +185,18 @@ views:
     subview: false
     cards: []
     badges:
-      - type: custom:mushroom-template-badge
-        entity: sensor.residual_household_waste
-        picture: "{{ state_attr('sensor.residual_household_waste', 'entity_picture') }}"
-        content: >-
-          {{ strptime(states('sensor.residual_household_waste'),
-          '%d/%m/%Y').strftime('%a %d %b') }}
-        tap_action:
-          action: more-info
-      - type: custom:mushroom-template-badge
-        entity: sensor.pmd
-        picture: "{{ state_attr('sensor.pmd', 'entity_picture') }}"
-        content: "{{ strptime(states('sensor.pmd'), '%d/%m/%Y').strftime('%a %d %b') }}"
-        tap_action:
-          action: more-info
-      - type: custom:mushroom-template-badge
-        entity: sensor.paper_cardboard
-        picture: "{{ state_attr('sensor.paper_cardboard', 'entity_picture') }}"
-        content: >-
-          {{ strptime(states('sensor.paper_cardboard'), '%d/%m/%Y').strftime('%a
-          %d %b') }}
-        tap_action:
-          action: more-info
+      - type: custom:decluttering-card
+        template: waste_badge
+        variables:
+          - entity: sensor.residual_household_waste
+      - type: custom:decluttering-card
+        template: waste_badge
+        variables:
+          - entity: sensor.pmd
+      - type: custom:decluttering-card
+        template: waste_badge
+        variables:
+          - entity: sensor.paper_cardboard
     type: sections
     sections:
       - type: grid
@@ -198,18 +251,20 @@ views:
                 card_type: separator
                 icon: mdi:home
                 sub_button:
-                  - name: temperature
-                    entity: sensor.healthy_home_coach_temperature_sensor
-                    show_state: true
-                    show_attribute: true
-                    show_last_changed: false
-                    show_background: false
-                  - name: humidity
-                    entity: sensor.healthy_home_coach_humidity_sensor
-                    show_state: true
-                    show_attribute: true
-                    show_last_changed: false
-                    show_background: false
+                  main:
+                    - name: temperature
+                      entity: sensor.netatmo_iaq_temperature
+                      show_state: true
+                      show_attribute: true
+                      show_last_changed: false
+                      show_background: false
+                    - name: humidity
+                      entity: sensor.netatmo_iaq_humidity
+                      show_state: true
+                      show_attribute: true
+                      show_last_changed: false
+                      show_background: false
+                  bottom: []
                 styles: |-
                   .bubble-line {
                     background: var(--primary-text-color);
@@ -1693,9 +1748,9 @@ views:
                 temperature_unit: auto
                 radon_unit: auto
                 language: auto
-                co2_entity: sensor.healthy_home_coach_carbon_dioxide_sensor
-                humidity_entity: sensor.healthy_home_coach_humidity_sensor
-                temperature_entity: sensor.healthy_home_coach_temperature_sensor
+                co2_entity: sensor.netatmo_iaq_carbon_dioxide
+                humidity_entity: sensor.netatmo_iaq_humidity
+                temperature_entity: sensor.netatmo_iaq_temperature
                 show_min_max: true
                 display: expandable
                 auto_expand: false
@@ -1704,33 +1759,12 @@ views:
                   - humidity
                   - co2
                   - noise
-                noise_entity: sensor.healthy_home_coach_noise
+                  - pressure
+                noise_entity: sensor.netatmo_iaq_noise
                 y_scale: auto
-              - type: custom:mini-graph-card
-                name: Home temperature
-                entities:
-                  - entity: sensor.healthy_home_coach_temperature_sensor
-                    name: Living room
-                  - entity: sensor.radiator_thermostat_w600_temperature
-                    name: Entrance
-                  - entity: sensor.radiator_thermostat_w600_temperature_2
-                    name: Office
-                  - entity: sensor.radiator_thermostat_w600_temperature_3
-                    name: Bathroom
-                  - entity: sensor.radiator_thermostat_w600_temperature_4
-                    name: Bedroom
-                show:
-                  labels: true
-                  labels_secondary: true
-                animate: false
-                line_width: 3
-                decimals: 1
-                hour24: true
-                unit: °C
-                font_size: 90
-                grid_options:
-                  columns: 12
-                  rows: auto
+                pressure_entity: sensor.netatmo_iaq_atmospheric_pressure
+              - type: custom:decluttering-card
+                template: home_temperature_graph
               - type: custom:bubble-card
                 card_type: select
                 entity: input_select.heating_mode
@@ -1750,121 +1784,53 @@ views:
                   bottom: []
                 grid_options:
                   columns: 12
-                styles: |-
+                styles: |
                   .bubble-dropdown-arrow {
                     background-color: rgba(0, 0, 0, 0.05);
                   }
-              - type: custom:bubble-card
-                card_type: climate
-                sub_button:
-                  main:
-                    - name: HVAC modes menu
-                      select_attribute: hvac_modes
-                      state_background: false
-                      show_arrow: false
-                      sub_button_type: select
-                  bottom: []
-                entity: climate.radiator_thermostat_w600
-                modules:
-                  - frosted_glass
-                main_buttons_position: bottom
-                icon: phu:aqara-thermo-e1
-                name: Entrance
-                show_state: false
-                show_attribute: true
-                attribute: current_temperature
-                rows: 1.719
+                  .bubble-container {
+                    background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+                  }
+              - type: custom:decluttering-card
+                template: climate_card
+                variables:
+                  - entity: climate.radiator_thermostat_w600
+                  - name: Entrance
+                  - color: "#3498db"
+                  - text_color: white
+                grid_options:
+                  columns: 6
+                  rows: 1.719
+              - type: custom:decluttering-card
+                template: climate_card
+                variables:
+                  - entity: climate.radiator_thermostat_w600_3
+                  - name: Bathroom
+                  - color: "#9b59b6"
+                  - text_color: white
                 grid_options:
                   rows: 1.719
                   columns: 6
-                icon_color:
-                  color_hex: "#3498db"
-                  use_hex: true
-                styles: |-
-                  .bubble-main-icon-container {
-                    background-color: #3498db;
-                    color: white;
-                  }
-              - type: custom:bubble-card
-                card_type: climate
-                sub_button:
-                  main:
-                    - name: HVAC modes menu
-                      select_attribute: hvac_modes
-                      state_background: false
-                      show_arrow: false
-                      sub_button_type: select
-                  bottom: []
-                entity: climate.radiator_thermostat_w600_3
-                modules:
-                  - frosted_glass
-                main_buttons_position: bottom
-                rows: 1.719
-                icon: phu:aqara-thermo-e1
-                name: Bathroom
-                show_attribute: true
-                attribute: current_temperature
+              - type: custom:decluttering-card
+                template: climate_card
+                variables:
+                  - entity: climate.radiator_thermostat_w600_2
+                  - name: Office
+                  - color: "#e74c3c"
+                  - text_color: white
                 grid_options:
                   rows: 1.719
                   columns: 6
-                styles: |-
-                  .bubble-main-icon-container {
-                    background-color: #9b59b6;
-                    color: white;
-                  }
-              - type: custom:bubble-card
-                card_type: climate
-                sub_button:
-                  main:
-                    - name: HVAC modes menu
-                      select_attribute: hvac_modes
-                      state_background: false
-                      show_arrow: false
-                      sub_button_type: select
-                  bottom: []
-                entity: climate.radiator_thermostat_w600_2
-                modules:
-                  - frosted_glass
-                main_buttons_position: bottom
-                icon: phu:aqara-thermo-e1
-                name: Office
-                show_attribute: true
-                attribute: current_temperature
-                rows: 1.719
-                grid_options:
-                  columns: 6
-                styles: |-
-                  .bubble-main-icon-container {
-                    background-color: #e74c3c;
-                    color: white;
-                  }
-              - type: custom:bubble-card
-                card_type: climate
-                sub_button:
-                  main:
-                    - name: HVAC modes menu
-                      select_attribute: hvac_modes
-                      state_background: false
-                      show_arrow: false
-                      sub_button_type: select
-                  bottom: []
-                entity: climate.radiator_thermostat_w600_4
-                modules:
-                  - frosted_glass
-                main_buttons_position: bottom
-                rows: 1.719
-                icon: phu:aqara-thermo-e1
-                name: Bedroom
-                show_attribute: true
-                attribute: current_temperature
+              - type: custom:decluttering-card
+                template: climate_card
+                variables:
+                  - entity: climate.radiator_thermostat_w600_4
+                  - name: Bedroom
+                  - color: "#f1c40f"
+                  - text_color: black
                 grid_options:
                   rows: 1.719
                   columns: 6
-                styles: |-
-                  .bubble-main-icon-container {
-                    background-color: #f1c40f;
-                    color: black;
-                  }
             popup_mode: centered
             button_type: name
             with_bottom_offset: true
@@ -1931,6 +1897,37 @@ views:
                 features_position: bottom
               - type: custom:bubble-card
                 card_type: media-player
+                entity: media_player.vaca_dfc186925_media_player
+                card_layout: normal
+                hide:
+                  power_button: true
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: toggle
+                double_tap_action:
+                  action: none
+                force_icon: false
+                icon: mdi:cast-audio-variant
+                grid_options:
+                  columns: 12
+                styles: ""
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  opacity: 0.6
+                  icon_shadow: false
+                  main_shadow: false
+                  blur: 20
+                sub_button:
+                  main: []
+                  bottom: []
+                cover_background: true
+                name: Echo Show 5 (2021)
+              - type: custom:bubble-card
+                card_type: media-player
                 entity: media_player.echo_dot
                 card_layout: normal
                 hide:
@@ -1959,6 +1956,9 @@ views:
                   main: []
                   bottom: []
                 cover_background: true
+                visibility:
+                  - condition: state
+                    state_not: unavailable
               - type: tile
                 entity: sensor.echo_dot_melvin_next_alarm
                 name:
@@ -2455,162 +2455,46 @@ views:
               .bubble-select-card-container {
                 background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
               }
-          - type: custom:bubble-card
-            card_type: climate
-            sub_button:
-              main:
-                - name: HVAC modes menu
-                  select_attribute: hvac_modes
-                  state_background: false
-                  show_arrow: false
-                  sub_button_type: select
-              bottom: []
-            entity: climate.radiator_thermostat_w600
-            modules:
-              - frosted_glass
-            main_buttons_position: bottom
-            icon: phu:aqara-thermo-e1
-            name: Entrance
-            show_state: false
-            show_attribute: true
-            attribute: current_temperature
-            rows: 1.719
+          - type: custom:decluttering-card
+            template: climate_card
+            variables:
+              - entity: climate.radiator_thermostat_w600
+              - name: Entrance
+              - text_color: white
             grid_options:
-              columns: 6
               rows: 1.719
-            frosted_glass:
-              icon_background: dark
-              border: bubble
-              opacity: 0.6
-              icon_shadow: false
-              main_shadow: false
-              blur: 20
-            styles: |-
-              .bubble-climate-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: climate
-            sub_button:
-              main:
-                - name: HVAC modes menu
-                  select_attribute: hvac_modes
-                  state_background: false
-                  show_arrow: false
-                  sub_button_type: select
-              bottom: []
-            entity: climate.radiator_thermostat_w600_3
-            modules:
-              - frosted_glass
-            main_buttons_position: bottom
-            rows: 1.719
-            icon: phu:aqara-thermo-e1
-            name: Bathroom
-            show_attribute: true
-            attribute: current_temperature
-            grid_options:
               columns: 6
+          - type: custom:decluttering-card
+            template: climate_card
+            variables:
+              - entity: climate.radiator_thermostat_w600_3
+              - name: Bathroom
+              - text_color: white
+            grid_options:
               rows: 1.719
-            frosted_glass:
-              icon_background: dark
-              border: bubble
-              opacity: 0.6
-              icon_shadow: false
-              main_shadow: false
-              blur: 20
-            styles: |-
-              .bubble-climate-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: climate
-            sub_button:
-              main:
-                - name: HVAC modes menu
-                  select_attribute: hvac_modes
-                  state_background: false
-                  show_arrow: false
-                  sub_button_type: select
-              bottom: []
-            entity: climate.radiator_thermostat_w600_2
-            modules:
-              - frosted_glass
-            main_buttons_position: bottom
-            icon: phu:aqara-thermo-e1
-            name: Office
-            show_attribute: true
-            attribute: current_temperature
-            grid_options:
               columns: 6
-            rows: 1.719
-            frosted_glass:
-              icon_background: dark
-              border: bubble
-              opacity: 0.6
-              icon_shadow: false
-              main_shadow: false
-              blur: 20
-            styles: |-
-              .bubble-climate-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: climate
-            sub_button:
-              main:
-                - name: HVAC modes menu
-                  select_attribute: hvac_modes
-                  state_background: false
-                  show_arrow: false
-                  sub_button_type: select
-              bottom: []
-            entity: climate.radiator_thermostat_w600_4
-            modules:
-              - frosted_glass
-            main_buttons_position: bottom
-            rows: 1.719
-            icon: phu:aqara-thermo-e1
-            name: Bedroom
-            show_attribute: true
-            attribute: current_temperature
+          - type: custom:decluttering-card
+            template: climate_card
+            variables:
+              - entity: climate.radiator_thermostat_w600_2
+              - name: Office
+              - text_color: white
             grid_options:
-              columns: 6
               rows: 1.719
-            frosted_glass:
-              icon_background: dark
-              border: bubble
-              opacity: 0.6
-              icon_shadow: false
-              main_shadow: false
-              blur: 20
-            styles: |-
-              .bubble-climate-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
+              columns: 6
+          - type: custom:decluttering-card
+            template: climate_card
+            variables:
+              - entity: climate.radiator_thermostat_w600_4
+              - name: Bedroom
+              - text_color: white
+            grid_options:
+              rows: 1.719
+              columns: 6
       - type: grid
         cards:
-          - type: custom:mini-graph-card
-            name: Home temperature
-            entities:
-              - entity: sensor.healthy_home_coach_temperature_sensor
-                name: Living room
-              - entity: sensor.radiator_thermostat_w600_temperature
-                name: Entrance
-              - entity: sensor.radiator_thermostat_w600_temperature_2
-                name: Office
-              - entity: sensor.radiator_thermostat_w600_temperature_3
-                name: Bathroom
-              - entity: sensor.radiator_thermostat_w600_temperature_4
-                name: Bedroom
-            show:
-              labels: true
-              labels_secondary: true
-            animate: false
-            line_width: 3
-            decimals: 1
-            hour24: true
-            unit: °C
-            font_size: 90
+          - type: custom:decluttering-card
+            template: home_temperature_graph
           - type: custom:weather-chart-card
             entity: weather.irm
             show_main: true
@@ -2663,46 +2547,42 @@ views:
               rows: 2
       - type: grid
         cards:
-          - type: custom:bubble-card
-            card_type: calendar
-            event_action:
-              tap_action:
-                action: more-info
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            entities:
-              - entity: calendar.home
-                color: light-green
-              - entity: calendar.f1_race_season_calendar
-                color: light-grey
+          - entities:
               - entity: calendar.proton_family
-                color: deep-orange
+                accent_color: "#1e88e5"
               - entity: calendar.proton_family_anniversary
-                color: "#936e58"
-            show_end: false
-            show_progress: true
-            show_place: false
-            sub_button:
-              main: []
-              bottom: []
-            card_layout: large
-            modules:
-              - frosted_glass
-            frosted_glass:
-              icon_background: dark
-              border: bubble
-              opacity: 0.6
-              main_shadow: false
-              icon_shadow: false
+                accent_color: "#936d58"
+              - entity: calendar.calendar_melvin
+                accent_color: "#c2ffb3"
+                label: (Melvin)
+            days_to_show: 21
+            filter_duplicates: true
+            vertical_line_width: 5px
+            first_day_of_week: monday
+            week_separator_width: 1px
+            month_separator_width: 1.5px
+            month_separator_color: var(--secondary-text-color)
+            today_indicator: mdi:star
+            today_indicator_size: 16px
+            event_background_opacity: 20
+            time_24h: true
+            type: custom:calendar-card-pro
+            max_events: 4
+            card_mod:
+              style:
+                .: |
+                  ha-card {
+                    background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+                    box-shadow: none;
+                    backdrop-filter: blur(12px);
+                    border-radius: 24px;
+                    padding: 12px 18px;
+                    height: 100%;
+                    overflow-y: auto;
+                  }
             grid_options:
+              rows: 5
               columns: 12
-              rows: 3
-            styles: |-
-              .bubble-calendar-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
           - show_state: true
             show_name: true
             camera_view: auto
@@ -3531,7 +3411,7 @@ views:
       alignment: center
       size: cover
       repeat: no-repeat
-      attachment: scroll
+      attachment: fixed
       image:
         media_content_id: media-source://image_upload/54385bf6fc986c20a6a2e0950cdf1efd
         media_content_type: image/jpeg
