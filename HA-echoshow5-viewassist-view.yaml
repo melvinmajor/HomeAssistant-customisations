@@ -1,7 +1,7 @@
 ## Home Assistant view used in combination with View Assist module
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 26/07/2026 (DD/MM/YYYY)
+# Last updated: 02/08/2026 (DD/MM/YYYY)
 
 button_card_templates:
   variable_template:
@@ -815,7 +815,7 @@ views:
       - type: custom:button-card
         variables:
           var_dashboard: vaconfig
-          var_sensor_livingroom: sensor.healthy_home_coach_temperature_sensor
+          var_sensor_livingroom: sensor.netatmo_iaq_temperature
           var_sensor_entrance: sensor.radiator_thermostat_w600_temperature
           var_sensor_office: sensor.radiator_thermostat_w600_temperature_2
           var_sensor_bathroom: sensor.radiator_thermostat_w600_temperature_3
@@ -979,20 +979,25 @@ views:
                   - padding: 6.25vh
                   - opacity: 0.6
                   - text-align: left
+                  - color: "[[[ return variables.var_font_color ]]]"
                 custom_fields:
-                  afuera:
+                  livingroom:
                     - display: grid
                     - justify-self: start
                     - text-align: left
-                  sala:
+                  entrance:
                     - display: grid
                     - justify-self: start
                     - text-align: left
-                  manu:
+                  office:
                     - display: grid
                     - justify-self: start
                     - text-align: left
-                  matias:
+                  bathroom:
+                    - display: grid
+                    - justify-self: start
+                    - text-align: left
+                  bedroom:
                     - display: grid
                     - justify-self: start
                     - text-align: left
@@ -1002,8 +1007,8 @@ views:
                     try {
                       const v = hass.states[variables.var_sensor_livingroom].state;
                       return `<div style="display:grid;justify-items:start;text-align:left;">
-                        <span style="font-size:2.5vh;font-weight:300;color:white;margin-bottom:-0.8vh;">Living Room</span>
-                        <span style="font-size:8vh;font-weight:400;color:white;">${parseFloat(v).toFixed(1).replace('.', ',')}°</span>
+                        <span style="font-size:2.5vh;font-weight:300;margin-bottom:-0.8vh;">Living Room</span>
+                        <span style="font-size:8vh;font-weight:400;">${parseFloat(v).toFixed(1).replace('.', ',')}°</span>
                       </div>`;
                     } catch { return ''; }
                   ]]]
@@ -1012,8 +1017,8 @@ views:
                     try {
                       const v = hass.states[variables.var_sensor_entrance].state;
                       return `<div style="display:grid;justify-items:start;text-align:left;">
-                        <span style="font-size:2.5vh;font-weight:300;color:white;margin-bottom:-0.8vh;">Entrance</span>
-                        <span style="font-size:8vh;font-weight:400;color:white;">${parseFloat(v).toFixed(1).replace('.', ',')}°</span>
+                        <span style="font-size:2.5vh;font-weight:300;margin-bottom:-0.8vh;">Entrance</span>
+                        <span style="font-size:8vh;font-weight:400;">${parseFloat(v).toFixed(1).replace('.', ',')}°</span>
                       </div>`;
                     } catch { return ''; }
                   ]]]
@@ -1022,8 +1027,8 @@ views:
                     try {
                       const v = hass.states[variables.var_sensor_office].state;
                       return `<div style="display:grid;justify-items:start;text-align:left;">
-                        <span style="font-size:2.5vh;font-weight:300;color:white;margin-bottom:-0.8vh;">Office</span>
-                        <span style="font-size:8vh;font-weight:400;color:white;">${parseFloat(v).toFixed(1).replace('.', ',')}°</span>
+                        <span style="font-size:2.5vh;font-weight:300;margin-bottom:-0.8vh;">Office</span>
+                        <span style="font-size:8vh;font-weight:400;">${parseFloat(v).toFixed(1).replace('.', ',')}°</span>
                       </div>`;
                     } catch { return ''; }
                   ]]]
@@ -1032,8 +1037,8 @@ views:
                     try {
                       const v = hass.states[variables.var_sensor_bathroom].state;
                       return `<div style="display:grid;justify-items:start;text-align:left;">
-                        <span style="font-size:2.5vh;font-weight:300;color:white;margin-bottom:-0.8vh;">Bathroom</span>
-                        <span style="font-size:8vh;font-weight:400;color:white;">${parseFloat(v).toFixed(1).replace('.', ',')}°</span>
+                        <span style="font-size:2.5vh;font-weight:300;margin-bottom:-0.8vh;">Bathroom</span>
+                        <span style="font-size:8vh;font-weight:400;">${parseFloat(v).toFixed(1).replace('.', ',')}°</span>
                       </div>`;
                     } catch { return ''; }
                   ]]]
@@ -1042,8 +1047,8 @@ views:
                     try {
                       const v = hass.states[variables.var_sensor_bedroom].state;
                       return `<div style="display:grid;justify-items:start;text-align:left;">
-                        <span style="font-size:2.5vh;font-weight:300;color:white;margin-bottom:-0.8vh;">Bedroom</span>
-                        <span style="font-size:8vh;font-weight:400;color:white;">${parseFloat(v).toFixed(1).replace('.', ',')}°</span>
+                        <span style="font-size:2.5vh;font-weight:300;margin-bottom:-0.8vh;">Bedroom</span>
+                        <span style="font-size:8vh;font-weight:400;">${parseFloat(v).toFixed(1).replace('.', ',')}°</span>
                       </div>`;
                     } catch { return ''; }
                   ]]]
@@ -1370,6 +1375,9 @@ views:
                   accent_color: "#1e88e5"
                 - entity: calendar.proton_family_anniversary
                   accent_color: "#936d58"
+                - entity: calendar.calendar_melvin
+                  accent_color: "#c2ffb3"
+                  label: (Melvin)
               days_to_show: 14
               max_events: 4
               event_background_opacity: 20
