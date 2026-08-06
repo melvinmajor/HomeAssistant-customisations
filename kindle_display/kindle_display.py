@@ -112,16 +112,17 @@ class KindleDisplay(hass.Hass):
         tomorrow_forecast = forecast_list[24] if len(forecast_list) > 24 else None
 
         # --- ROOM TEMPERATURES ---
-        temp_living = self.get_state("sensor.healthy_home_coach_temperature_sensor")
-        humidity_living = self.get_state("sensor.healthy_home_coach_humidity_sensor")
+        temp_living = self.get_state("sensor.netatmo_iaq_temperature")
+        humidity_living = self.get_state("sensor.netatmo_iaq_humidity")
         temp_entrance = self.get_state("sensor.radiator_thermostat_w600_temperature")
         temp_bedroom = self.get_state("sensor.radiator_thermostat_w600_temperature_4")
         temp_bathroom = self.get_state("sensor.radiator_thermostat_w600_temperature_3")
         temp_office = self.get_state("sensor.radiator_thermostat_w600_temperature_2")
 
         # --- AIR QUALITY ---
-        aqi_pm25 = self.get_state("sensor.healthy_home_coach_air_quality")
-        aqi_co2 = self.get_state("sensor.healthy_home_coach_carbon_dioxide_sensor")
+        health_index = self.get_state("sensor.netatmo_iaq_health_index")
+        atmospheric_pressure = self.get_state("sensor.netatmo_iaq_atmospheric_pressure")
+        aqi_co2 = self.get_state("sensor.netatmo_iaq_carbon_dioxide")
 
         # --- IMAGE SETUP ---
         img = Image.new("L", (IMAGE_WIDTH, IMAGE_HEIGHT), 255)
@@ -167,7 +168,7 @@ class KindleDisplay(hass.Hass):
         #draw.text((MARGIN_X, y + 30), f"Humidity: {weather_humidity}%", font=font_text, fill=0)
         weather_uv = self.get_state("weather.irm", attribute="uv_index")
         uv_cat = uv_category(weather_uv)
-        draw.text((MARGIN_X, y + 30), f"UV: {uv_cat} ({weather_uv})", font=font_text_small, fill=0)
+        draw.text((MARGIN_X, y + 30), f"UV: {uv_cat} ({weather_uv})", font=font_text, fill=0)
 
         # Icon today
         icon_today = ICON_MAP.get(weather_state, "wi-na.png")
@@ -182,7 +183,7 @@ class KindleDisplay(hass.Hass):
 
         # --- NEXT HOURS (horizontal icons + time + temp) ---
         y += 80
-        title = "Next Hours"
+        title = "View per hour"
         draw.text((MARGIN_X, y), title, font=font_text, fill=0)
         bbox = draw.textbbox((MARGIN_X, y), title, font=font_text)
         text_bottom = bbox[3]
@@ -261,7 +262,7 @@ class KindleDisplay(hass.Hass):
             sunrise_raw = self.get_state("sensor.sun_next_rising")
             sunset_raw = self.get_state("sensor.sun_next_setting")
 
-            draw.text((MARGIN_X, y), f"{cond_detailed_tomorrow}", font=font_text_small, fill=0)
+            draw.text((MARGIN_X, y), f"{cond_detailed_tomorrow}", font=font_text, fill=0)
             y += 25
             draw.text((MARGIN_X, y), f"Min {temp_min}°C / Max {temp_max}°C", font=font_text, fill=0)
             y += 30
@@ -325,7 +326,9 @@ class KindleDisplay(hass.Hass):
         text_bottom = bbox[3]
         draw.line((RIGHT_X, text_bottom + 5, 758 - MARGIN_X, text_bottom + 5), fill=LINE_FILL, width=LINE_WIDTH)
         y_right = y + 35
-        draw.text((RIGHT_X, y_right), f"PM2.5 Index: {aqi_pm25}", font=font_text_small, fill=0)
+        draw.text((RIGHT_X, y_right), f"Health Index: {health_index}", font=font_text, fill=0)
+        y_right += 30
+        draw.text((RIGHT_X, y_right), f"Atmospheric Pressure: {atmospheric_pressure} hPa", font=font_text_small, fill=0)
         y_right += 25
         draw.text((RIGHT_X, y_right), f"CO2: {aqi_co2} ppm", font=font_text_small, fill=0)
 
