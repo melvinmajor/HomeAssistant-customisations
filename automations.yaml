@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 02/08/2026 (DD/MM/YYYY)
+# Last updated: 07/08/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night
@@ -518,67 +518,70 @@
     trigger: event
   actions:
   - target:
-      entity_id: media_player.hk_citation_one
+      entity_id: media_player.google_nest_audio
     data:
       volume_level: 0.35
     action: media_player.volume_set
   - action: media_player.play_media
-    metadata:
-      title: homepod_notification.mp3
-      thumbnail:
-      media_class: music
-      children_media_class:
-      navigateIds:
-      - {}
-      - media_content_type: app
-        media_content_id: media-source://media_source
     data:
-      media_content_id: media-source://media_source/local/homepod_notification.mp3
-      media_content_type: audio/mpeg
+      media:
+        media_content_id: media-source://media_source/local/homepod_notification.mp3
+        media_content_type: audio/mpeg
+        metadata:
+          title: homepod_notification.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
     target:
-      entity_id: media_player.hk_citation_multibeam_1100_2678
+      entity_id: media_player.google_nest_audio
   - delay:
       hours: 0
       minutes: 0
       seconds: 2
       milliseconds: 0
   - action: media_player.play_media
-    metadata:
-      title: Siwis-FR-Minuteur_fin.mp3
-      thumbnail:
-      media_class: music
-      children_media_class:
-      navigateIds:
-      - {}
-      - media_content_type: app
-        media_content_id: media-source://media_source
-      - media_content_type: ''
-        media_content_id: media-source://media_source/local/TTS-saved-renders
     data:
-      media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Minuteur_fin.mp3
-      media_content_type: audio/mpeg
+      media:
+        media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Minuteur_fin.mp3
+        media_content_type: audio/mpeg
+        metadata:
+          title: Siwis-FR-Minuteur_fin.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+          - media_content_type: ''
+            media_content_id: media-source://media_source/local/TTS-saved-renders
     target:
-      entity_id: media_player.hk_citation_one
+      entity_id: media_player.google_nest_audio
   - delay:
       hours: 0
       minutes: 0
       seconds: 2
       milliseconds: 0
   - action: media_player.play_media
-    metadata:
-      title: Alexa-timer.mp3
-      thumbnail:
-      media_class: music
-      children_media_class:
-      navigateIds:
-      - {}
-      - media_content_type: app
-        media_content_id: media-source://media_source
     data:
-      media_content_id: media-source://media_source/local/Alexa-timer.mp3
-      media_content_type: audio/mpeg
+      media:
+        media_content_id: media-source://media_source/local/Alexa-timer.mp3
+        media_content_type: audio/mpeg
+        metadata:
+          title: Alexa-timer.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
     target:
-      entity_id: media_player.hk_citation_one
+      entity_id: media_player.google_nest_audio
     enabled: true
   mode: single
 - id: '1759051652362'
@@ -695,7 +698,7 @@
   - action: media_player.play_media
     metadata: {}
     target:
-      device_id: 2f63efcfe824bf68a927171be0f7389b
+      device_id: e4637128094a4b1b6d31fca25a00f802
     data:
       media:
         media_content_id: media-source://media_source/local/homepod_notification.mp3
@@ -718,7 +721,7 @@
   - action: media_player.play_media
     metadata: {}
     target:
-      device_id: 2f63efcfe824bf68a927171be0f7389b
+      device_id: e4637128094a4b1b6d31fca25a00f802
     data:
       media:
         media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Poubelle-Rappel1.mp3
@@ -762,7 +765,7 @@
   - action: media_player.play_media
     metadata: {}
     target:
-      device_id: 2f63efcfe824bf68a927171be0f7389b
+      device_id: e4637128094a4b1b6d31fca25a00f802
     data:
       media:
         media_content_id: media-source://media_source/local/homepod_notification.mp3
@@ -785,7 +788,7 @@
   - action: media_player.play_media
     metadata: {}
     target:
-      device_id: 2f63efcfe824bf68a927171be0f7389b
+      device_id: e4637128094a4b1b6d31fca25a00f802
     data:
       media:
         media_content_id: media-source://media_source/local/TTS-saved-renders/Siwis-FR-Poubelle-Rappel2.mp3
@@ -968,7 +971,7 @@
           title: ✅ Fait
   - action: media_player.play_media
     target:
-      entity_id: media_player.hk_citation_one
+      entity_id: media_player.google_nest_audio
     data:
       media:
         media_content_id: media-source://media_source/local/homepod_notification.mp3
@@ -977,7 +980,7 @@
   - delay: 00:00:02
   - action: media_player.play_media
     target:
-      entity_id: media_player.hk_citation_one
+      entity_id: media_player.google_nest_audio
     data:
       media:
         media_content_id: "{% set sounds = [\n  \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-FiltreFontaine-Rappel1.mp3\",\n
@@ -1212,8 +1215,7 @@
   - action: light.turn_on
     metadata: {}
     target:
-      entity_id:
-      - light.tv
+      entity_id: light.tv_2
     data:
       brightness_pct: 66
       transition: 1
@@ -1255,7 +1257,7 @@
         notification_icon: mdi:dishwasher
     action: notify.notify_devices
   - target:
-      entity_id: media_player.hk_citation_one
+      entity_id: media_player.google_nest_audio
     data:
       media:
         media_content_id: media-source://media_source/local/homepod_notification.mp3
@@ -1264,7 +1266,7 @@
     action: media_player.play_media
   - delay: 00:00:02
   - target:
-      entity_id: media_player.hk_citation_one
+      entity_id: media_player.google_nest_audio
     data:
       media:
         media_content_id: "{% set sounds = [\n  \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-LaveVaisselle-Finish1.mp3\",\n
@@ -1334,7 +1336,7 @@
         notification_icon: mdi:washing-machine
     action: notify.notify_devices
   - target:
-      entity_id: media_player.hk_citation_one
+      entity_id: media_player.google_nest_audio
     data:
       media:
         media_content_id: media-source://media_source/local/homepod_notification.mp3
@@ -1343,7 +1345,7 @@
     action: media_player.play_media
   - delay: 00:00:02
   - target:
-      entity_id: media_player.hk_citation_one
+      entity_id: media_player.google_nest_audio
     data:
       media:
         media_content_id: "{% set sounds = [\n  \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-Lessive-Finish1.mp3\",\n
@@ -1372,7 +1374,7 @@
       title: "\U0001F916 R5-D4"
   - action: media_player.play_media
     target:
-      entity_id: media_player.hk_citation_one
+      entity_id: media_player.google_nest_audio
     data:
       media:
         media_content_id: media-source://media_source/local/homepod_notification.mp3
@@ -1381,7 +1383,7 @@
   - delay: 00:00:02
   - action: media_player.play_media
     target:
-      entity_id: media_player.hk_citation_one
+      entity_id: media_player.google_nest_audio
     data:
       media:
         media_content_id: "{% set sounds = [\n  \"media-source://media_source/local/TTS-saved-renders/Siwis-FR-VacuumCleaner-FullBin1.mp3\",\n
@@ -1705,4 +1707,49 @@
       data:
         skip_condition: true
     alias: Echo Show 5 day or night mode
+  mode: single
+- id: '1785948861626'
+  alias: Turn on TV lights with TV
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - media_player.lg_webos_tv_qned866re
+    to:
+    - 'on'
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.tv_2
+    data:
+      transition: 1
+      brightness_pct: 66
+      color_temp_kelvin: 2288
+  mode: single
+- id: '1785948939896'
+  alias: Turn off TV lights with TV
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - media_player.lg_webos_tv_qned866re
+    to:
+    - 'off'
+    from:
+    - 'on'
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id: light.tv_2
+    data:
+      transition: 1
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.friday
+    data: {}
   mode: single

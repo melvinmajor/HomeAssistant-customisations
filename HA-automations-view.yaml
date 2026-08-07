@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 06/08/2026 (DD/MM/YYYY)
+# Last updated: 07/08/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -115,6 +115,34 @@ decluttering_templates:
         }
       haptic:
         tap_action: true
+  bubble_button:
+    card:
+      type: custom:bubble-card
+      card_type: button
+      button_type: "[[button_type]]"
+      entity: "[[entity]]"
+      name: "[[name]]"
+      icon: "[[icon]]"
+      show_icon: "[[show_icon]]"
+      show_state: "[[show_state]]"
+      show_attribute: "[[show_attribute]]"
+      attribute: "[[attribute]]"
+      double_tap_action:
+        action: none
+      hold_action:
+        action: none
+      button_action:
+        double_tap_action:
+          action: none
+        hold_action:
+          action: none
+      sub_button:
+        main: []
+        bottom: []
+      styles: |
+        .bubble-button-card-container {
+          background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+        }
 views:
   - title: Automations
     sections:
@@ -124,114 +152,76 @@ views:
             heading: System automations and helpers
             heading_style: title
             icon: mdi:home-assistant
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.reset_kill_switch
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ""
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.reset_kill_switch
+              - name: ""
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_select.heating_mode
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: ""
-            button_type: switch
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: input_select.heating_mode
+              - name: ""
+              - icon: ""
+              - button_type: switch
+              - show_icon: true
+              - show_state: true
+              - show_attribute: true
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_datetime.cat_fountain_filter
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: ""
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: input_datetime.cat_fountain_filter
+              - name: ""
+              - icon: ""
+              - button_type: switch
+              - show_icon: true
+              - show_state: true
+              - show_attribute: true
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            button_type: switch
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_boolean.washing_machine_running
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: ""
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: input_boolean.washing_machine_running
+              - name: ""
+              - icon: ""
+              - button_type: switch
+              - show_icon: true
+              - show_state: true
+              - show_attribute: true
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            button_type: switch
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.kindle_generate_and_copy_image
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.kindle_generate_and_copy_image
+              - name: Kindle AutoCopy image
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            sub_button:
-              main: []
-              bottom: []
-            show_attribute: false
-            attribute: last_triggered
-            show_state: true
-            name: Kindle AutoCopy image
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
           - type: heading
             heading: Override helpers
             heading_style: subtitle
@@ -299,366 +289,239 @@ views:
             heading: Heating system
             heading_style: title
             icon: mdi:home-thermometer
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.heating_summer_mode
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.heating_summer_mode
+              - name: Summer mode
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: false
+              - show_attribute: true
+              - attribute: last_triggered
             grid_options:
               columns: 12
               rows: auto
-            sub_button:
-              main: []
-              bottom: []
-            name: Summer mode
-            show_last_updated: false
-            show_last_changed: false
-            show_attribute: true
-            attribute: last_triggered
-            show_state: false
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.heating_winter_mode_init
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.heating_winter_mode_init
+              - name: Winter mode
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: false
+              - show_attribute: true
+              - attribute: last_triggered
             grid_options:
-              columns: 6
+              columns: 12
               rows: auto
-            sub_button:
-              main: []
-              bottom: []
-            name: Winter mode
-            show_last_updated: false
-            show_last_changed: false
-            show_attribute: true
-            attribute: last_triggered
-            show_state: false
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.heating_schedule
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.heating_schedule
+              - name: Winter schedule
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: false
+              - show_attribute: true
+              - attribute: last_triggered
             grid_options:
-              columns: 6
+              columns: 12
               rows: auto
-            sub_button:
-              main: []
-              bottom: []
-            name: Winter schedule
-            show_last_updated: false
-            show_last_changed: false
-            show_attribute: true
-            attribute: last_triggered
-            show_state: false
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
       - type: grid
         cards:
           - type: heading
             heading: House automations
             heading_style: title
             icon: mdi:home-automation
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.turn_on_tv_scene
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.turn_on_tv_scene
+              - name: TV scene ON
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            sub_button:
-              main: []
-              bottom: []
-            name: TV scene ON
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.turn_off_tv_scene
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.turn_off_tv_scene
+              - name: TV scene OFF
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            sub_button:
-              main: []
-              bottom: []
-            name: TV scene OFF
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.nest_cam_motion_notification
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.nest_cam_motion_notification
+              - name: Nest Cam - Motion
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            sub_button:
-              main: []
-              bottom: []
-            name: Nest Cam - Motion
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.washing_machine_started
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.washing_machine_started
+              - name: Washing machine start
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            name: Washing machine start
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.vacuum_cleaner_full_bin
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.vacuum_cleaner_full_bin
+              - name: Vacuum cleaner full
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            name: Vacuum cleaner full
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.turn_off_lights
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.turn_off_lights
+              - name: Lights OFF
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            sub_button:
-              main: []
-              bottom: []
-            name: Lights OFF
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.turn_on_tv_lights_with_tv
+              - name: Turn on TV lights
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.turn_off_tv_lights_with_tv
+              - name: Turn off TV lights
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
+            grid_options:
+              columns: 6
+              rows: auto
           - type: heading
             heading: Light entrance automations
             heading_style: subtitle
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.entrance_light_motion_at_day_office_side
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Day - office side
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.entrance_light_motion_at_day_office_side
+              - name: Day - office side
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.entrance_light_motion_at_day
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Day - bed side
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.entrance_light_motion_at_day
+              - name: Day - bed side
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.entrance_light_motion_at_sunrise
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Sunrise/Sunset
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.entrance_light_motion_at_sunrise
+              - name: Sunrise/Sunset
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.entrance_light_motion_at_night
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Night
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.entrance_light_motion_at_night
+              - name: Night
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.entrance_light_front_door_opened
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Door detection
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.entrance_light_front_door_opened
+              - name: Door detection
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
         column_span: 1
       - type: grid
         cards:
@@ -670,536 +533,323 @@ views:
             heading: Smart buttons
             heading_style: subtitle
             icon: phu:button
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: >-
-              automation.toggle_entrance_light_override_with_smart_button_at_entrance
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Entrance short press
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: >-
+                  automation.toggle_entrance_light_override_with_smart_button_at_entrance
+              - name: Entrance short press
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.new_automation
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Entrance long press
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.smart_button_entrance_long_press
+              - name: Entrance long press
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.button_office_long_press
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Office long press
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.button_office_long_press
+              - name: Office long press
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
           - type: heading
             heading: Dimmer switch - Bedroom
             heading_style: subtitle
             icon: phu:dimmer-switch
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.dimmer_switch_bedroom_on_off
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: On/Off button
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.dimmer_switch_bedroom_on_off
+              - name: On/Off button
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.dimmer_switch_bedroom_increase_brightness
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Increase brightness
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.dimmer_switch_bedroom_increase_brightness
+              - name: Increase brightness
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.dimmer_switch_bedroom_decrease_brightness
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Decrease brightness
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.dimmer_switch_bedroom_decrease_brightness
+              - name: Decrease brightness
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.dimmer_switch_bedroom_hue_button_short_press
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Hue button short press
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.dimmer_switch_bedroom_hue_button_short_press
+              - name: Hue button short press
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.dimmer_switch_bedroom_hue_button_long_press
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
-            name: Hue button long press
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.dimmer_switch_bedroom_hue_button_long_press
+              - name: Hue button long press
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
       - type: grid
         cards:
           - type: heading
             heading: Reminders and voice automations
             heading_style: title
             icon: mdi:alarm-multiple
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.put_the_trash_out_reminder_1
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.put_the_trash_out_reminder_1
+              - name: Trash out 8PM
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            name: Trash out 8PM
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.put_the_trash_out_reminder_2
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.put_the_trash_out_reminder_2
+              - name: Trash out 10PM
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            name: Trash out 10PM
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.cat_fountain_filter_reminder
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.cat_fountain_filter_reminder
+              - name: Fountain filter 8:30PM
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            name: Fountain filter 8:30PM
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.dishwasher_cycle_finished
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.dishwasher_cycle_finished
+              - name: Dishwasher finished
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            name: Dishwasher finished
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.washing_machine_finished
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            sub_button:
-              main: []
-              bottom: []
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.washing_machine_finished
+              - name: Washing machine end
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            name: Washing machine end
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
           - type: heading
             heading: Tags automations
             heading_style: title
             icon: mdi:nfc-tap
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.tag_white_circle_is_scanned
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: mdi:robot
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.tag_white_circle_is_scanned
+              - name: ""
+              - icon: mdi:robot
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
+            grid_options:
+              columns: 12
+              rows: auto
           - type: heading
             heading: View Assist automations
             heading_style: title
             icon: phu:echo-show-5-gen-2
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.echo_show_5_anti_burn_in
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ""
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.echo_show_5_anti_burn_in
+              - name: Idle mode
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 4
               rows: auto
-            name: Idle mode
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.echo_show_5_auto_day_mode
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ""
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.echo_show_5_auto_day_mode
+              - name: Day mode
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 4
               rows: auto
-            name: Day mode
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.echo_show_5_auto_night_mode
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ""
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.echo_show_5_auto_night_mode
+              - name: Night mode
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 4
               rows: auto
-            name: Night mode
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.echo_show_5_wake_on_interaction
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ""
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.echo_show_5_wake_on_interaction
+              - name: Wake on interaction
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            name: Wake on interaction
           - type: heading
             heading: Other automations
             heading_style: title
             icon: mdi:transit-connection-variant
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.f1_track_status_light
-            name: F1 light automation
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ""
-            sub_button:
-              main: []
-              bottom: []
-            slider_fill_orientation: left
-            slider_value_position: right
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.f1_track_status_light
+              - name: F1 light automation
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            button_type: state
-            entity: automation.set_tv_lights_back_to_normal_state_after_f1
-            name: Restore TV lights after F1
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            button_action:
-              double_tap_action:
-                action: none
-              hold_action:
-                action: none
-            icon: ""
-            sub_button:
-              main: []
-              bottom: []
-            slider_fill_orientation: left
-            slider_value_position: right
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.set_tv_lights_back_to_normal_state_after_f1
+              - name: Restore TV lights after F1
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_boolean.f1_track_status_light
-            name: F1 light helper
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: ""
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.f1_track_status_light
+              - name: F1 light helper
+              - icon: ""
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
             grid_options:
               columns: 6
               rows: auto
-            button_type: switch
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
       - type: grid
         cards:
           - type: custom:decluttering-card

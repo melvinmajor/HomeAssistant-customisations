@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 02/08/2026 (DD/MM/YYYY)
+# Last updated: 07/08/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -177,6 +177,12 @@ decluttering_templates:
         }
         .bubble-climate-container {
           background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+        }
+        .bubble-climate-minus-button, .bubble-climate-plus-button {
+          background: rgba(0, 0, 0, 0.15) !important;
+        }
+        .bubble-sub-button {
+          background: rgba(64, 90, 169, 0.15);
         }
 views:
   - title: Shortcuts
@@ -835,10 +841,10 @@ views:
                   rows: auto
               - type: custom:bubble-card
                 card_type: media-player
-                entity: media_player.hk_citation_one
+                entity: media_player.google_nest_audio
                 card_layout: normal
                 hide:
-                  power_button: true
+                  power_button: false
                 tap_action:
                   action: more-info
                 hold_action:
@@ -846,7 +852,7 @@ views:
                 double_tap_action:
                   action: none
                 force_icon: false
-                icon: mdi:cast-audio-variant
+                icon: phu:nest-audio
                 grid_options:
                   columns: 12
                 styles: ""
@@ -863,6 +869,8 @@ views:
                   main: []
                   bottom: []
                 cover_background: true
+                show_attribute: false
+                show_name: false
               - type: custom:bubble-card
                 card_type: separator
                 icon: ""
@@ -1231,11 +1239,11 @@ views:
                 entity: media_player.hk_citation_multibeam_1100_7927
                 show_name: false
                 hide:
-                  power_button: true
+                  power_button: false
                 card_layout: normal
                 double_tap_action:
                   action: none
-                icon: mdi:cast-audio-variant
+                icon: phu:sonos-playbar
                 sub_button:
                   main: []
                   bottom: []
@@ -1402,29 +1410,6 @@ views:
               main: []
               bottom: []
             cards:
-              - type: custom:bubble-card
-                card_type: media-player
-                entity: media_player.google_nest_audio
-                card_layout: normal
-                hide:
-                  power_button: true
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: toggle
-                double_tap_action:
-                  action: none
-                force_icon: false
-                show_name: true
-                show_state: false
-                name: G Nest Audio
-                icon: phu:nest-audio
-                sub_button:
-                  main: []
-                  bottom: []
-                cover_background: true
-                grid_options:
-                  columns: 12
               - type: custom:bubble-card
                 card_type: climate
                 sub_button:
@@ -1791,6 +1776,9 @@ views:
                   .bubble-container {
                     background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
                   }
+                  .bubble-dropdown-arrow {
+                    background: rgba(64, 90, 169, 0.15);
+                  }
               - type: custom:decluttering-card
                 template: climate_card
                 variables:
@@ -1926,48 +1914,6 @@ views:
                   bottom: []
                 cover_background: true
                 name: Echo Show 5 (2021)
-              - type: custom:bubble-card
-                card_type: media-player
-                entity: media_player.echo_dot
-                card_layout: normal
-                hide:
-                  power_button: true
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: toggle
-                double_tap_action:
-                  action: none
-                force_icon: false
-                icon: mdi:cast-audio-variant
-                grid_options:
-                  columns: 12
-                styles: ""
-                modules:
-                  - frosted_glass
-                frosted_glass:
-                  icon_background: dark
-                  border: bubble
-                  opacity: 0.6
-                  icon_shadow: false
-                  main_shadow: false
-                  blur: 20
-                sub_button:
-                  main: []
-                  bottom: []
-                cover_background: true
-                visibility:
-                  - condition: state
-                    state_not: unavailable
-              - type: tile
-                entity: sensor.echo_dot_melvin_next_alarm
-                name:
-                  type: entity
-                vertical: false
-                features_position: bottom
-                visibility:
-                  - condition: state
-                    state_not: unavailable
               - type: custom:bubble-card
                 card_type: separator
                 icon: ""
@@ -2454,6 +2400,9 @@ views:
             styles: |-
               .bubble-select-card-container {
                 background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+              }
+              .bubble-dropdown-arrow {
+                background: rgba(64, 90, 169, 0.15);
               }
           - type: custom:decluttering-card
             template: climate_card
