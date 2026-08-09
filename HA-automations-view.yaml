@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 07/08/2026 (DD/MM/YYYY)
+# Last updated: 09/08/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -15,29 +15,29 @@ decluttering_templates:
         - url: /custom-dashboard/shortcuts
           icon: mdi:lifebuoy
           label: Shortcuts
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
         - url: /custom-dashboard/home
           icon: mdi:home
           label: Home
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
           hold_action:
             action: navigate
             navigation_path: /config/devices/dashboard
         - url: /custom-dashboard/kitchen
           icon: mdi:fridge
           label: Kitchen
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
         - url: /custom-dashboard/vehicle
           icon: phu:volvo
           label: Vehicle
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
         - icon: mdi:server-minus
           label: IT
           url: /custom-dashboard/IT-server
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
         - icon: mdi:dots-horizontal
           label: More
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
           tap_action:
             action: open-popup
           popup:
@@ -92,7 +92,7 @@ decluttering_templates:
         album_cover_background: true
         players:
           - entity: media_player.spotify_melvin_campos_casares
-            icon: ""
+            icon: ''
           - entity: media_player.google_tv
             title: Google TV
             icon: mdi:youtube-tv
@@ -119,14 +119,14 @@ decluttering_templates:
     card:
       type: custom:bubble-card
       card_type: button
-      button_type: "[[button_type]]"
-      entity: "[[entity]]"
-      name: "[[name]]"
-      icon: "[[icon]]"
-      show_icon: "[[show_icon]]"
-      show_state: "[[show_state]]"
-      show_attribute: "[[show_attribute]]"
-      attribute: "[[attribute]]"
+      button_type: '[[button_type]]'
+      entity: '[[entity]]'
+      name: '[[name]]'
+      icon: '[[icon]]'
+      show_icon: '[[show_icon]]'
+      show_state: '[[show_state]]'
+      show_attribute: '[[show_attribute]]'
+      attribute: '[[attribute]]'
       double_tap_action:
         action: none
       hold_action:
@@ -156,8 +156,8 @@ views:
             template: bubble_button
             variables:
               - entity: automation.reset_kill_switch
-              - name: ""
-              - icon: ""
+              - name: ''
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -170,9 +170,9 @@ views:
             template: bubble_button
             variables:
               - entity: input_select.heating_mode
-              - name: ""
-              - icon: ""
-              - button_type: switch
+              - name: ''
+              - icon: ''
+              - button_type: state
               - show_icon: true
               - show_state: true
               - show_attribute: true
@@ -184,9 +184,9 @@ views:
             template: bubble_button
             variables:
               - entity: input_datetime.cat_fountain_filter
-              - name: ""
-              - icon: ""
-              - button_type: switch
+              - name: ''
+              - icon: ''
+              - button_type: state
               - show_icon: true
               - show_state: true
               - show_attribute: true
@@ -198,9 +198,9 @@ views:
             template: bubble_button
             variables:
               - entity: input_boolean.washing_machine_running
-              - name: ""
-              - icon: ""
-              - button_type: switch
+              - name: ''
+              - icon: ''
+              - button_type: state
               - show_icon: true
               - show_state: true
               - show_attribute: true
@@ -213,7 +213,7 @@ views:
             variables:
               - entity: automation.kindle_generate_and_copy_image
               - name: Kindle AutoCopy image
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -225,66 +225,48 @@ views:
           - type: heading
             heading: Override helpers
             heading_style: subtitle
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_boolean.visitor_override
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: mdi:account-group
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: input_boolean.visitor_override
+              - name: Guest
+              - icon: mdi:account-group
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: true
+              - attribute: last_triggered
             grid_options:
               columns: 4
               rows: auto
-            button_type: switch
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-            name: Guest
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_boolean.cat_night_override
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: mdi:cat
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: input_boolean.cat_night_override
+              - name: Cat night
+              - icon: mdi:cat
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: true
+              - attribute: last_triggered
             grid_options:
               columns: 4
               rows: auto
-            button_type: switch
-            sub_button:
-              main: []
-              bottom: []
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
-            name: Cat night
-          - type: custom:bubble-card
-            card_type: button
-            entity: input_boolean.entrance_light_override
-            show_icon: true
-            show_state: true
-            show_attribute: true
-            show_last_changed: false
-            icon: phu:button
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: input_boolean.entrance_light_override
+              - name: Entry
+              - icon: phu:button
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: true
+              - attribute: last_triggered
             grid_options:
               columns: 4
               rows: auto
-            button_type: switch
-            sub_button:
-              main: []
-              bottom: []
-            name: Entry
-            styles: |-
-              .bubble-button-card-container {
-                background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-              }
           - type: heading
             heading: Heating system
             heading_style: title
@@ -294,42 +276,42 @@ views:
             variables:
               - entity: automation.heating_summer_mode
               - name: Summer mode
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: false
               - show_attribute: true
               - attribute: last_triggered
             grid_options:
-              columns: 12
+              columns: 6
               rows: auto
           - type: custom:decluttering-card
             template: bubble_button
             variables:
               - entity: automation.heating_winter_mode_init
               - name: Winter mode
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: false
               - show_attribute: true
               - attribute: last_triggered
             grid_options:
-              columns: 12
+              columns: 6
               rows: auto
           - type: custom:decluttering-card
             template: bubble_button
             variables:
               - entity: automation.heating_schedule
               - name: Winter schedule
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: false
               - show_attribute: true
               - attribute: last_triggered
             grid_options:
-              columns: 12
+              columns: 6
               rows: auto
       - type: grid
         cards:
@@ -342,7 +324,7 @@ views:
             variables:
               - entity: automation.turn_on_tv_scene
               - name: TV scene ON
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -356,7 +338,7 @@ views:
             variables:
               - entity: automation.turn_off_tv_scene
               - name: TV scene OFF
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -370,7 +352,7 @@ views:
             variables:
               - entity: automation.nest_cam_motion_notification
               - name: Nest Cam - Motion
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -384,7 +366,7 @@ views:
             variables:
               - entity: automation.washing_machine_started
               - name: Washing machine start
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -398,7 +380,7 @@ views:
             variables:
               - entity: automation.vacuum_cleaner_full_bin
               - name: Vacuum cleaner full
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -412,7 +394,7 @@ views:
             variables:
               - entity: automation.turn_off_lights
               - name: Lights OFF
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -426,7 +408,7 @@ views:
             variables:
               - entity: automation.turn_on_tv_lights_with_tv
               - name: Turn on TV lights
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -440,7 +422,7 @@ views:
             variables:
               - entity: automation.turn_off_tv_lights_with_tv
               - name: Turn off TV lights
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -457,7 +439,7 @@ views:
             variables:
               - entity: automation.entrance_light_motion_at_day_office_side
               - name: Day - office side
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -471,7 +453,7 @@ views:
             variables:
               - entity: automation.entrance_light_motion_at_day
               - name: Day - bed side
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -485,7 +467,7 @@ views:
             variables:
               - entity: automation.entrance_light_motion_at_sunrise
               - name: Sunrise/Sunset
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -499,7 +481,7 @@ views:
             variables:
               - entity: automation.entrance_light_motion_at_night
               - name: Night
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -513,7 +495,7 @@ views:
             variables:
               - entity: automation.entrance_light_front_door_opened
               - name: Door detection
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -539,7 +521,7 @@ views:
               - entity: >-
                   automation.toggle_entrance_light_override_with_smart_button_at_entrance
               - name: Entrance short press
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -553,7 +535,7 @@ views:
             variables:
               - entity: automation.smart_button_entrance_long_press
               - name: Entrance long press
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -567,7 +549,7 @@ views:
             variables:
               - entity: automation.button_office_long_press
               - name: Office long press
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -585,7 +567,7 @@ views:
             variables:
               - entity: automation.dimmer_switch_bedroom_on_off
               - name: On/Off button
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -599,7 +581,7 @@ views:
             variables:
               - entity: automation.dimmer_switch_bedroom_increase_brightness
               - name: Increase brightness
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -613,7 +595,7 @@ views:
             variables:
               - entity: automation.dimmer_switch_bedroom_decrease_brightness
               - name: Decrease brightness
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -627,7 +609,7 @@ views:
             variables:
               - entity: automation.dimmer_switch_bedroom_hue_button_short_press
               - name: Hue button short press
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -641,7 +623,7 @@ views:
             variables:
               - entity: automation.dimmer_switch_bedroom_hue_button_long_press
               - name: Hue button long press
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -661,7 +643,7 @@ views:
             variables:
               - entity: automation.put_the_trash_out_reminder_1
               - name: Trash out 8PM
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -675,7 +657,7 @@ views:
             variables:
               - entity: automation.put_the_trash_out_reminder_2
               - name: Trash out 10PM
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -689,7 +671,7 @@ views:
             variables:
               - entity: automation.cat_fountain_filter_reminder
               - name: Fountain filter 8:30PM
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -703,7 +685,7 @@ views:
             variables:
               - entity: automation.dishwasher_cycle_finished
               - name: Dishwasher finished
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -717,7 +699,7 @@ views:
             variables:
               - entity: automation.washing_machine_finished
               - name: Washing machine end
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -734,7 +716,7 @@ views:
             template: bubble_button
             variables:
               - entity: automation.tag_white_circle_is_scanned
-              - name: ""
+              - name: ''
               - icon: mdi:robot
               - button_type: state
               - show_icon: true
@@ -753,7 +735,7 @@ views:
             variables:
               - entity: automation.echo_show_5_anti_burn_in
               - name: Idle mode
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -767,7 +749,7 @@ views:
             variables:
               - entity: automation.echo_show_5_auto_day_mode
               - name: Day mode
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -781,7 +763,7 @@ views:
             variables:
               - entity: automation.echo_show_5_auto_night_mode
               - name: Night mode
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -795,7 +777,7 @@ views:
             variables:
               - entity: automation.echo_show_5_wake_on_interaction
               - name: Wake on interaction
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -813,7 +795,7 @@ views:
             variables:
               - entity: automation.f1_track_status_light
               - name: F1 light automation
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -827,7 +809,7 @@ views:
             variables:
               - entity: automation.set_tv_lights_back_to_normal_state_after_f1
               - name: Restore TV lights after F1
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -841,7 +823,7 @@ views:
             variables:
               - entity: automation.f1_track_status_light
               - name: F1 light helper
-              - icon: ""
+              - icon: ''
               - button_type: state
               - show_icon: true
               - show_state: true
@@ -862,7 +844,7 @@ views:
     header:
       card:
         type: markdown
-        content: "## Automations and key helpers"
+        content: '## Automations and key helpers'
         text_only: true
         card_mod:
           style: |
@@ -877,13 +859,13 @@ views:
       - type: custom:mushroom-template-badge
         entity: input_select.default_dashboard
         icon: mdi:view-dashboard
-        content: "{{ states(entity) }}"
-        label: "{{ state_attr(entity, 'friendly_name') }}"
+        content: '{{ states(entity) }}'
+        label: '{{ state_attr(entity, ''friendly_name'') }}'
       - type: custom:mushroom-template-badge
         entity: automation.startup
         icon: mdi:home-assistant
-        content: "{{ states(entity) | title }}"
-        label: "{{ state_attr(entity, 'friendly_name') }}"
+        content: '{{ states(entity) | title }}'
+        label: '{{ state_attr(entity, ''friendly_name'') }}'
         color: |
           {% if is_state(entity, 'on') %}
             green
@@ -893,8 +875,8 @@ views:
       - type: custom:mushroom-template-badge
         entity: automation.set_ha_theme_at_startup
         icon: mdi:home-assistant
-        content: "{{ states(entity) | title }}"
-        label: "{{ state_attr(entity, 'friendly_name') }}"
+        content: '{{ states(entity) | title }}'
+        label: '{{ state_attr(entity, ''friendly_name'') }}'
         color: |
           {% if is_state(entity, 'on') %}
             green
@@ -904,7 +886,7 @@ views:
       - type: custom:mushroom-template-badge
         entity: automation.fanshim_ventilation
         icon: mdi:cpu-64-bit
-        content: "{{ states(entity) | title }}"
+        content: '{{ states(entity) | title }}'
         label: FanSHIM
         color: |
           {% if is_state(entity, 'on') %}

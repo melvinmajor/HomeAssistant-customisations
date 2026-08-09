@@ -1,7 +1,7 @@
 ## Home Assistant configuration.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 03/06/2026 (DD/MM/YYYY)
+# Last updated: 08/08/2026 (DD/MM/YYYY)
 
 # Loads default set of integrations. Do not remove.
 default_config:
@@ -36,7 +36,7 @@ panel_custom:
 template:
     # Storage for Bubble Card Modules
   - trigger:
-      - trigger: event
+      - platform: event
         event_type: bubble_card_update_modules
     sensor:
       - name: "Bubble Card Modules"

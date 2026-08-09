@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page used for maintenance purpose.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 18/07/2026 (DD/MM/YYYY)
+# Last updated: 09/08/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -15,29 +15,29 @@ decluttering_templates:
         - url: /custom-dashboard/shortcuts
           icon: mdi:lifebuoy
           label: Shortcuts
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
         - url: /custom-dashboard/home
           icon: mdi:home
           label: Home
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
           hold_action:
             action: navigate
             navigation_path: /config/devices/dashboard
         - url: /custom-dashboard/kitchen
           icon: mdi:fridge
           label: Kitchen
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
         - url: /custom-dashboard/vehicle
           icon: phu:volvo
           label: Vehicle
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
         - icon: mdi:server-minus
           label: IT
           url: /custom-dashboard/IT-server
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
         - icon: mdi:dots-horizontal
           label: More
-          icon_color: "#9e9e9e"
+          icon_color: '#9e9e9e'
           tap_action:
             action: open-popup
           popup:
@@ -92,7 +92,7 @@ decluttering_templates:
         album_cover_background: true
         players:
           - entity: media_player.spotify_melvin_campos_casares
-            icon: ""
+            icon: ''
           - entity: media_player.google_tv
             title: Google TV
             icon: mdi:youtube-tv
@@ -125,7 +125,7 @@ views:
             heading_style: title
             icon: phu:aqara-thermo-e1
           - type: markdown
-            content: "**Battery type:** 2x AA"
+            content: '**Battery type:** 2x AA'
             text_only: true
           - type: tile
             entity: sensor.radiator_thermostat_w600_battery
@@ -152,7 +152,7 @@ views:
             heading_style: title
             icon: phu:motion-sensor
           - type: markdown
-            content: "**Battery type:** 2x AAA"
+            content: '**Battery type:** 2x AAA'
             text_only: true
           - type: tile
             entity: sensor.detecteur_entree_batterie
@@ -164,6 +164,18 @@ views:
             name: Entrance (office side)
             vertical: false
             features_position: bottom
+          - type: heading
+            heading: Ikea Motion sensor
+            heading_style: title
+            icon: phu:outdoor-motion
+          - type: markdown
+            content: '**Battery type:** 2x AAA'
+            text_only: true
+          - type: tile
+            entity: sensor.myggspray_wrlss_mtn_sensor_battery
+            name: Bathroom
+            vertical: false
+            features_position: bottom
       - type: grid
         cards:
           - type: heading
@@ -171,7 +183,7 @@ views:
             heading_style: title
             icon: phu:button
           - type: markdown
-            content: "**Battery type:** CR2032"
+            content: '**Battery type:** CR2032'
             text_only: true
           - type: tile
             entity: sensor.hue_smart_button_1_batterie
@@ -193,7 +205,7 @@ views:
             heading_style: title
             icon: phu:hue-only
           - type: markdown
-            content: "**Battery type:** CR2032"
+            content: '**Battery type:** CR2032'
             text_only: true
           - type: vertical-stack
             cards:
@@ -246,7 +258,7 @@ views:
               - entity: vacuum.r5_d4
                 name: Status
                 secondary_info: last-updated
-                icon: ""
+                icon: ''
               - entity: binary_sensor.r5_d4_bac_plein
                 name: Bin is full?
               - entity: sensor.r5_d4_batterie
@@ -265,7 +277,7 @@ views:
       card:
         type: markdown
         text_only: true
-        content: "## Maintenance"
+        content: '## Maintenance'
     max_columns: 3
     title: Maintenance
     icon: mdi:home-battery
