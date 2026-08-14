@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 09/08/2026 (DD/MM/YYYY)
+# Last updated: 15/08/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -3347,20 +3347,11 @@ views:
         show_name: true
         show_state: true
         show_icon: true
-        entity: binary_sensor.rax120jarvis_gateway_etat_du_reseau_etendu_wan
-        name: Netgear RAX120
-        show_entity_picture: false
-        state_content: state
-        icon: phu:nighthawk
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
         entity: sensor.backup_derniere_sauvegarde_automatique_reussie
         show_entity_picture: false
         state_content: state
         icon: mdi:cloud-upload-outline
-        name: Last successful backup
+        name: Last backup
       - type: custom:mushroom-template-badge
         icon: mdi:harddisk
         color: >
