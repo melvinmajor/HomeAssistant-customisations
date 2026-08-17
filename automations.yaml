@@ -1,17 +1,20 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 07/08/2026 (DD/MM/YYYY)
+# Last updated: 17/08/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night
   description: Night motion automation (guests / no guests unified)
   triggers:
-  - entity_id:
-    - binary_sensor.detecteur_entree_mouvement
-    - binary_sensor.hue_motion_sensor_2_mouvement
+  - trigger: state
+    entity_id: binary_sensor.detecteur_entree_mouvement
     to: 'on'
-    trigger: state
+    id: chambre
+  - trigger: state
+    entity_id: binary_sensor.hue_motion_sensor_2_mouvement
+    to: 'on'
+    id: bureau
   conditions:
   - condition: time
     after: '23:00:00'
@@ -25,35 +28,36 @@
   actions:
   - choose:
     - conditions:
-      - condition: state
-        entity_id: input_boolean.visitor_override
-        state: 'on'
+      - condition: trigger
+        id: chambre
       sequence:
       - if:
-        - condition: state
-          entity_id: light.accueil
-          state: 'off'
+        - condition: and
+          conditions:
+          - condition: state
+            entity_id: input_boolean.visitor_override
+            state: 'off'
+          - condition: numeric_state
+            entity_id: sensor.myggspray_wrlss_mtn_sensor_illuminance
+            above: 8
         then:
-        - target:
-            entity_id: light.accueil
+        - stop: Someone in bathroom, no need of light.
+        else:
+        - action: light.turn_on
+          target:
+            entity_id:
+            - light.couloir_cote_chambre
           data:
             brightness_pct: 20
-          action: light.turn_on
     - conditions:
-      - condition: state
-        entity_id: input_boolean.visitor_override
-        state: 'off'
+      - condition: trigger
+        id: bureau
       sequence:
-      - if:
-        - condition: state
-          entity_id: light.accueil
-          state: 'off'
-        then:
-        - target:
-            entity_id: light.accueil
-          data:
-            brightness_pct: 20
-          action: light.turn_on
+      - action: light.turn_on
+        target:
+          entity_id: light.couloir_cote_bureau
+        data:
+          brightness_pct: 20
   - wait_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
       \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
   - choose:
@@ -68,9 +72,10 @@
   - condition: template
     value_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
       \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
-  - target:
-      entity_id: light.accueil
-    action: light.turn_off
+  - action: light.turn_off
+    target:
+      entity_id:
+      - light.accueil
     data: {}
   mode: restart
 - id: '1726612427289'
@@ -146,11 +151,14 @@
   alias: Entrance light motion at sunrise or sunset
   description: Unified sunrise/sunset motion automation
   triggers:
-  - entity_id:
-    - binary_sensor.detecteur_entree_mouvement
-    - binary_sensor.hue_motion_sensor_2_mouvement
+  - trigger: state
+    entity_id: binary_sensor.detecteur_entree_mouvement
     to: 'on'
-    trigger: state
+    id: chambre
+  - trigger: state
+    entity_id: binary_sensor.hue_motion_sensor_2_mouvement
+    to: 'on'
+    id: bureau
   conditions:
   - condition: or
     conditions:
@@ -167,16 +175,37 @@
     entity_id: input_boolean.cat_night_override
     state: 'off'
   actions:
-  - if:
-    - condition: state
-      entity_id: light.accueil
-      state: 'off'
-    then:
-    - target:
-        entity_id: light.accueil
-      data:
-        brightness_pct: 60
-      action: light.turn_on
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: chambre
+      sequence:
+      - if:
+        - condition: and
+          conditions:
+          - condition: state
+            entity_id: input_boolean.visitor_override
+            state: 'off'
+          - condition: numeric_state
+            entity_id: sensor.myggspray_wrlss_mtn_sensor_illuminance
+            above: 8
+        then:
+        - stop: 'SDB éclairée : pas besoin de lumière côté chambre'
+        else:
+        - action: light.turn_on
+          target:
+            entity_id: light.couloir_cote_chambre
+          data:
+            brightness_pct: 20
+    - conditions:
+      - condition: trigger
+        id: bureau
+      sequence:
+      - action: light.turn_on
+        target:
+          entity_id: light.couloir_cote_bureau
+        data:
+          brightness_pct: 20
   - wait_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
       \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
   - choose:
@@ -191,9 +220,9 @@
   - condition: template
     value_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
       \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
-  - target:
+  - action: light.turn_off
+    target:
       entity_id: light.accueil
-    action: light.turn_off
   mode: restart
 - id: '1735677677036'
   alias: Daily system care
@@ -1230,6 +1259,8 @@
     trigger: state
     to:
     - finished
+    from:
+    - run
   conditions:
   - condition: or
     conditions:
@@ -1717,7 +1748,9 @@
     - media_player.lg_webos_tv_qned866re
     to:
     - 'on'
-  conditions: []
+  conditions:
+  - condition: sun.is_set
+    options: {}
   actions:
   - action: light.turn_on
     metadata: {}
@@ -1739,7 +1772,9 @@
     - 'off'
     from:
     - 'on'
-  conditions: []
+  conditions:
+  - condition: sun.is_set
+    options: {}
   actions:
   - action: light.turn_off
     metadata: {}
