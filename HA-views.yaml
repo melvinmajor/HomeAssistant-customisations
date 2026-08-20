@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 15/08/2026 (DD/MM/YYYY)
+# Last updated: 20/08/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -2488,8 +2488,11 @@ views:
               - entity: calendar.calendar_melvin
                 accent_color: '#c2ffb3'
                 label: (Melvin)
-            days_to_show: 21
+            days_to_show: 30
             filter_duplicates: true
+            title: Calendar
+            title_font_size: 18px
+            title_color: var(--secondary-text-color)
             vertical_line_width: 5px
             first_day_of_week: monday
             week_separator_width: 1px
@@ -2498,9 +2501,15 @@ views:
             today_indicator: mdi:star
             today_indicator_size: 16px
             event_background_opacity: 20
+            show_past_events: true
             time_24h: true
             type: custom:calendar-card-pro
             max_events: 4
+            grid_options:
+              rows: 5
+              columns: 12
+            tap_action:
+              action: more-info
             card_mod:
               style:
                 .: |
@@ -2513,9 +2522,6 @@ views:
                     height: 100%;
                     overflow-y: auto;
                   }
-            grid_options:
-              rows: 5
-              columns: 12
           - show_state: true
             show_name: true
             camera_view: auto
