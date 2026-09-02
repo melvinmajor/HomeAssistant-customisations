@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 18/08/2026 (DD/MM/YYYY)
+# Last updated: 02/09/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night
@@ -734,9 +734,9 @@
   - condition: template
     enabled: true
     value_template: "{% set today = now().date() %}\n{% set paper = strptime(states('sensor.paper_cardboard'),
-      '%d/%m/%Y', today) %}\n{% set pmd = strptime(states('sensor.pmd'), '%d/%m/%Y',
+      '%Y-%m-%d', today) %}\n{% set pmd = strptime(states('sensor.pmd'), '%Y-%m-%d',
       today) %}\n{% set residual = strptime(states('sensor.residual_household_waste'),
-      '%d/%m/%Y', today) %}\n\n{{\n  paper.date() - timedelta(days=1) == today\n  or
+      '%Y-%m-%d', today) %}\n\n{{\n  paper.date() - timedelta(days=1) == today\n  or
       pmd.date() - timedelta(days=1) == today\n  or residual.date() - timedelta(days=1)
       == today\n}}"
   - condition: state
@@ -804,9 +804,9 @@
   conditions:
   - condition: template
     value_template: "{% set today = now().date() %}\n{% set paper = strptime(states('sensor.paper_cardboard'),
-      '%d/%m/%Y', today) %}\n{% set pmd = strptime(states('sensor.pmd'), '%d/%m/%Y',
+      '%Y-%m-%d', today) %}\n{% set pmd = strptime(states('sensor.pmd'), '%Y-%m-%d',
       today) %}\n{% set residual = strptime(states('sensor.residual_household_waste'),
-      '%d/%m/%Y', today) %}\n\n{{\n  paper.date() - timedelta(days=1) == today\n  or
+      '%Y-%m-%d', today) %}\n\n{{\n  paper.date() - timedelta(days=1) == today\n  or
       pmd.date() - timedelta(days=1) == today\n  or residual.date() - timedelta(days=1)
       == today\n}}"
     enabled: true
@@ -1868,4 +1868,28 @@
     - action: input_boolean.turn_off
       target:
         entity_id: input_boolean.home
+  mode: single
+- id: '1788127818198'
+  alias: Turn on TV lights at sunset if TV on
+  description: Turns on the TV backlight at sunset if the TV is already on
+  triggers:
+  - trigger: sun
+    event: sunset
+  conditions:
+  - condition: state
+    entity_id: media_player.lg_webos_tv_qned866re
+    state:
+    - 'on'
+  - condition: state
+    entity_id: light.tv_2
+    state: 'off'
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.tv_2
+    data:
+      transition: 1
+      brightness_pct: 66
+      color_temp_kelvin: 2288
   mode: single

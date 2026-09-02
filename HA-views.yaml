@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 20/08/2026 (DD/MM/YYYY)
+# Last updated: 02/09/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -146,7 +146,7 @@ decluttering_templates:
       picture: |
         {{ state_attr('[[entity]]', 'entity_picture') }}
       content: |
-        {{ strptime(states('[[entity]]'), '%d/%m/%Y').strftime('%a %d %b') }}
+        {{ strptime(states('[[entity]]'), '%Y-%m-%d').strftime('%a %d %b') }}
       tap_action:
         action: more-info
   climate_card:
