@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 02/09/2026 (DD/MM/YYYY)
+# Last updated: 12/09/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -2424,60 +2424,45 @@ views:
             grid_options:
               rows: 1.719
               columns: 6
-      - type: grid
-        cards:
           - type: custom:decluttering-card
             template: home_temperature_graph
-          - type: custom:weather-chart-card
-            entity: weather.irm
-            show_main: true
-            show_temperature: true
-            show_current_condition: true
-            show_attributes: true
-            show_time: true
-            show_time_seconds: false
-            show_day: true
+      - type: grid
+        cards:
+          - type: custom:m3-clock-card
+            style: tiles
+            show_seconds: false
             show_date: true
-            show_humidity: true
-            show_pressure: true
-            show_wind_direction: true
-            show_wind_speed: true
-            show_sun: true
-            show_feels_like: false
-            show_dew_point: false
-            show_wind_gust_speed: false
-            show_visibility: false
-            show_last_changed: true
-            use_12hour_format: false
-            icons_size: 25
-            animated_icons: true
-            icon_style: style1
-            autoscroll: false
-            forecast:
-              precipitation_type: rainfall
-              show_probability: true
-              labels_font_size: '11'
-              precip_bar_size: '100'
-              style: style2
-              show_wind_forecast: true
-              condition_icons: true
-              round_temp: false
-              type: daily
-              number_of_forecasts: '0'
-              disable_animation: false
-            units:
-              pressure: hPa
-              speed: km/h
-          - show_current: false
-            show_forecast: true
-            type: weather-forecast
+            size: 0.7
+            card_version: 2.2.0
+            time_format: '24'
+            date_format: auto
+            seconds_style: dots
+            show_seconds_tile: false
+            colon_blink: true
+            ring_animation: reset
+            tile_color_mode: accent_hours
+            sun_entity: sun.sun
+            show_day_progress: false
+            progress_range: day
+            secondary_color: '#ffffff'
+            accent_color: '#4C5C92'
+          - type: custom:m3-weather-card
             entity: weather.irm
-            forecast_type: hourly
-            name:
-              type: device
-            grid_options:
-              columns: 12
-              rows: 2
+            glass_background: true
+            card_version: 2.3.2
+            show_days_toggle: true
+            chips:
+              - uv_index
+            show_sun: true
+            days: 7
+            animation: auto
+            radius: 28
+            show_current: true
+            show_chart: true
+            show_hour_labels: true
+            show_hourly_icons: true
+            show_hourly_temperatures: true
+            show_temp_axis: false
       - type: grid
         cards:
           - entities:
@@ -2522,6 +2507,32 @@ views:
                     height: 100%;
                     overflow-y: auto;
                   }
+            visibility:
+              - condition: state
+                entity: input_boolean.dev_mode
+                state: 'on'
+          - type: custom:m3-calendar-card
+            entities:
+              - entity: calendar.proton_family
+                name: Family Calendar
+                color: '#1e88e5'
+              - entity: calendar.proton_family_anniversary
+                name: Anniversary Calendar
+                color: '#936d58'
+              - entity: calendar.calendar_melvin
+                name: Melvin Calendar
+                color: '#c2ffb3'
+            view: agenda
+            glass_background: true
+            card_version: 2.2.0
+            show_view_switch: true
+            hide_past_today: false
+            show_adjacent_days: true
+            show_next_chip: false
+            tap_action: detail
+            navigation_path: ''
+            days_ahead: 14
+            max_events: 4
           - show_state: true
             show_name: true
             camera_view: auto
@@ -2562,19 +2573,40 @@ views:
                 background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
               }
           - type: heading
-            heading: Cleaning robot
-            heading_style: title
             icon: phu:irobot
-          - type: glance
-            entities:
-              - entity: vacuum.r5_d4
-                name: Status
-              - entity: binary_sensor.r5_d4_bac_plein
-                name: Full bin?
-              - entity: sensor.r5_d4_batterie
-                name: Battery level
-              - entity: sensor.r5_d4_duree_moyenne_d_une_mission
-                name: Average time
+            heading_style: title
+            heading: Cleaning robot
+          - type: tile
+            entity: vacuum.millenium_vacuum
+            name:
+              type: device
+            vertical: false
+            features:
+              - type: vacuum-commands
+            features_position: bottom
+          - type: markdown
+            content: |
+              {{ states('sensor.millenium_status_message') }}
+            grid_options:
+              columns: 6
+              rows: 2
+            title: Status message
+            card_mod:
+              style: |
+                :host {
+                  --ha-card-header-font-size: 16px;
+                  --ha-space-3: 15px;
+                  --ha-space-4: 8px;
+                  --ha-line-height-expanded: 1.2;
+                }
+                ha-markdown {
+                  padding: 6px 10px !important;
+                  line-height: 1.35 !important;
+                }
+                ha-markdown p {
+                  margin-block-start: 4px !important;
+                  margin-block-end: 4px !important;
+                }
       - type: grid
         cards:
           - type: custom:decluttering-card
@@ -3488,6 +3520,74 @@ views:
             grid_options:
               rows: auto
           - type: heading
+            heading: Network
+            heading_style: title
+            icon: mdi:router-network-wireless
+          - type: vertical-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: switch
+                    entity: button.source_start_plc_pairing
+                    card_layout: large
+                    name: Start PLC pairing
+                    force_icon: false
+                    icon: mdi:plus-network-outline
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    sub_button:
+                      main: []
+                      bottom: []
+                    styles: |-
+                      .bubble-button-card-container {
+                        background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+                      }
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: >-
+                      binary_sensor.rax120jarvis_gateway_etat_du_reseau_etendu_wan
+                    name: Network state
+                    icon: mdi:router-wireless-settings
+                    force_icon: false
+                    modules:
+                      - frosted_glass
+                    frosted_glass:
+                      icon_background: dark
+                      border: bubble
+                      opacity: 0.6
+                    button_action:
+                      hold_action:
+                        action: none
+                    show_last_changed: false
+                    show_last_updated: false
+                    show_attribute: false
+                    sub_button:
+                      main: []
+                      bottom: []
+                    styles: |-
+                      .bubble-button-card-container {
+                        background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+                      }
+              - type: history-graph
+                entities:
+                  - entity: sensor.rax120jarvis_gateway_vitesse_de_telechargement
+                    name: Download
+                  - entity: >-
+                      sensor.rax120jarvis_gateway_vitesse_de_telechargement_montant
+                    name: Upload
+                logarithmic_scale: false
+                title: Router bandwith usage
+                hours_to_show: 8
+      - type: grid
+        cards:
+          - type: heading
             heading: Printer
             heading_style: title
             icon: mdi:printer-outline
@@ -3657,72 +3757,6 @@ views:
       - type: grid
         cards:
           - type: heading
-            heading: Network
-            heading_style: title
-            icon: mdi:router-network-wireless
-          - type: vertical-stack
-            cards:
-              - type: horizontal-stack
-                cards:
-                  - type: custom:bubble-card
-                    card_type: button
-                    button_type: switch
-                    entity: button.source_start_plc_pairing
-                    card_layout: large
-                    name: Start PLC pairing
-                    force_icon: false
-                    icon: mdi:plus-network-outline
-                    modules:
-                      - frosted_glass
-                    frosted_glass:
-                      icon_background: dark
-                      border: bubble
-                      opacity: 0.6
-                    sub_button:
-                      main: []
-                      bottom: []
-                    styles: |-
-                      .bubble-button-card-container {
-                        background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-                      }
-                  - type: custom:bubble-card
-                    card_type: button
-                    button_type: state
-                    entity: >-
-                      binary_sensor.rax120jarvis_gateway_etat_du_reseau_etendu_wan
-                    name: Network state
-                    icon: mdi:router-wireless-settings
-                    force_icon: false
-                    modules:
-                      - frosted_glass
-                    frosted_glass:
-                      icon_background: dark
-                      border: bubble
-                      opacity: 0.6
-                    button_action:
-                      hold_action:
-                        action: none
-                    show_last_changed: false
-                    show_last_updated: false
-                    show_attribute: false
-                    sub_button:
-                      main: []
-                      bottom: []
-                    styles: |-
-                      .bubble-button-card-container {
-                        background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-                      }
-              - type: history-graph
-                entities:
-                  - entity: sensor.rax120jarvis_gateway_vitesse_de_telechargement
-                    name: Download
-                  - entity: >-
-                      sensor.rax120jarvis_gateway_vitesse_de_telechargement_montant
-                    name: Upload
-                logarithmic_scale: false
-                title: Router bandwith usage
-                hours_to_show: 8
-          - type: heading
             heading: Jarvis
             heading_style: title
             icon: phu:nas
@@ -3737,31 +3771,6 @@ views:
                     name: Number of watchers on Jarvis
                 state_color: true
                 title: Plex
-      - type: grid
-        cards:
-          - type: heading
-            heading: Motion devices state
-            heading_style: title
-          - color: state
-            type: entities
-            entities:
-              - entity: sensor.detecteur_entree_eclairement
-                name: Illuminance (bedroom side)
-                secondary_info: none
-                icon: phu:motion-sensor-luminance-alt
-              - entity: sensor.hue_motion_sensor_2_eclairement
-                secondary_info: none
-                name: Illuminance (office side)
-                icon: phu:motion-sensor-luminance-alt
-              - entity: sensor.myggspray_wrlss_mtn_sensor_illuminance
-                name: Illuminance (bathroom)
-                icon: phu:outdoor-motion
-              - entity: binary_sensor.detecteur_entree_mouvement
-                name: Motion (bedroom side)
-              - entity: binary_sensor.hue_motion_sensor_2_mouvement
-                name: Motion (office side)
-              - entity: binary_sensor.myggspray_wrlss_mtn_sensor_occupancy
-                name: Motion (bathroom)
           - type: heading
             heading: Matter
             heading_style: title

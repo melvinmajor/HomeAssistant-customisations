@@ -51,6 +51,7 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | Home Assistant Swipe Navigation | Yes    |           | x           |
 | kiosk-mode                      | Yes    |           | x           |
 | layout-card                     | Yes    |           | x           |
+| M3 Cards                        | Yes    |           | x           |
 | Material Home Component         | Yes    |           | x           |
 | Material You Theme              | Yes    |           | x           |
 | Material You Utilities          | Yes    |           | x           |
@@ -61,6 +62,7 @@ A Sonoff Dongle Plus MG24 antenna is plugged to cover Matter over Thread, Zigbee
 | Presence Simulation             | Yes    |           | x           |
 | pyscript                        | Yes    |           | x           |
 | RecycleApp                      | Yes    |           | x           |
+| Roomba v4                       | Yes    |           | x           |
 | UI Lovelace Minimalist          | Yes    |           | x           |
 | View Assist                     | Yes    |           | x           |
 | View Assist Companion App       | Yes    |           | x           |
@@ -82,6 +84,10 @@ Some HA add-ons are installed from external repositories, outside of HACS:
 * [HassOS Configurator (GitHub)](https://github.com/adamoutler/HassOSConfigurator) - for _'HassOS I2C Configurator'_, used to enable Raspberry Pi I2C bus. Once enabled, no need to keep it anymore.
 * [Poeschl Home Assistant Add-ons (GitHub)](https://github.com/Poeschl-HomeAssistant-Addons/repository) - for _'pigpio'_
 * [volvo2mqtt (GitHub)](https://github.com/Dielee/volvo2mqtt) - for _'Volvo2Mqtt'_ (not used anymore, replaced by the official Volvo module as my car is finally supported)
+
+Specific addon added inside HACS:
+
+* [M3 Cards, by j0sp0r](https://github.com/j0sp0r/m3-cards) - a set of useful cards, in a nice UI style _(will probably replace some of my modules over time)_
 
 ## Built with
 
