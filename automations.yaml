@@ -1,7 +1,7 @@
 ## Home Assistant automations.yaml configuration file.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 12/09/2026 (DD/MM/YYYY)
+# Last updated: 28/09/2026 (DD/MM/YYYY)
 
 - id: '1726612228090'
   alias: Entrance light motion at night
@@ -43,7 +43,7 @@
             state: 'off'
           - condition: numeric_state
             entity_id: sensor.myggspray_wrlss_mtn_sensor_illuminance
-            above: 8
+            above: 5
         then:
         - stop: Someone in bathroom, no need of light.
         else:
@@ -52,7 +52,7 @@
             entity_id:
             - light.couloir_cote_chambre
           data:
-            brightness_pct: 20
+            brightness_pct: 40
     - conditions:
       - condition: trigger
         id: bureau
@@ -61,7 +61,7 @@
         target:
           entity_id: light.couloir_cote_bureau
         data:
-          brightness_pct: 20
+          brightness_pct: 40
   - wait_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
       \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
   - choose:
@@ -200,7 +200,7 @@
             state: 'off'
           - condition: numeric_state
             entity_id: sensor.myggspray_wrlss_mtn_sensor_illuminance
-            above: 8
+            above: 5
         then:
         - stop: 'SDB éclairée : pas besoin de lumière côté chambre'
         else:
@@ -208,7 +208,7 @@
           target:
             entity_id: light.couloir_cote_chambre
           data:
-            brightness_pct: 20
+            brightness_pct: 60
     - conditions:
       - condition: trigger
         id: bureau
@@ -217,7 +217,7 @@
         target:
           entity_id: light.couloir_cote_bureau
         data:
-          brightness_pct: 20
+          brightness_pct: 60
   - wait_template: "{{\n  is_state('binary_sensor.detecteur_entree_mouvement', 'off')\n
       \ and\n  is_state('binary_sensor.hue_motion_sensor_2_mouvement', 'off')\n}}\n"
   - choose:
@@ -1453,7 +1453,7 @@
       entity_id: light.accueil
     data:
       brightness_pct: "{% if is_state('input_boolean.cat_night_override', 'on') %}\n
-        \ 20\n{% elif now().hour >= 23 or now().hour < 1 %}\n  20\n{% else %}\n  60\n{%
+        \ 40\n{% elif now().hour >= 23 or now().hour < 1 %}\n  40\n{% else %}\n  60\n{%
         endif %}\n"
     action: light.turn_on
   - wait_for_trigger:
@@ -1849,3 +1849,20 @@
       brightness_pct: 66
       color_temp_kelvin: 2288
   mode: single
+- id: '1790603956783'
+  alias: Suppress Millenium notifications
+  triggers:
+  - event_type: call_service
+    event_data:
+      domain: persistent_notification
+      service: create
+    trigger: event
+  conditions:
+  - condition: template
+    value_template: "{{ trigger.event.data.service_data.title is string\n   and 'Millenium'
+      in trigger.event.data.service_data.title }}\n"
+  actions:
+  - data:
+      notification_id: '{{ trigger.event.data.service_data.notification_id }}'
+    action: persistent_notification.dismiss
+  mode: queued

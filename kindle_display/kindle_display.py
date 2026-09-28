@@ -365,7 +365,7 @@ class KindleDisplay(hass.Hass):
             # --- DATE ---
             raw = self.get_state(entity)
             try:
-                dt = datetime.strptime(raw, "%d/%m/%Y")
+                dt = datetime.strptime(raw, "%Y-%m-%d")
                 formatted = dt.strftime("%a %d %b")
             except:
                 formatted = "-"
