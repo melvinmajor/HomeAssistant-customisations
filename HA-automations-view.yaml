@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page to check configured automations.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 02/09/2026 (DD/MM/YYYY)
+# Last updated: 28/09/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -91,27 +91,29 @@ decluttering_templates:
       media_player:
         album_cover_background: true
         players:
-          - entity: media_player.spotify_melvin_campos_casares
-            icon: ''
           - entity: media_player.google_tv
             title: Google TV
             icon: mdi:youtube-tv
             tap_action:
               action: more-info
               entity: media_player.google_tv_2
+          - entity: media_player.google_nest_audio
+            icon: phu:nest-audio
+            tap_action:
+              action: more-info
+              entity: media_player.google_nest_audio
       layout:
         auto_padding:
           enabled: true
           desktop_px: 100
           mobile_px: 60
         reflect_child_state: true
-      styles: |
+      styles: |-
         .navbar.mobile.bottom {
           bottom: 5px;
         }
         .navbar-card {
           background: RGBA(0, 0, 0, 0.2) !important;
-          backdrop-filter: blur(12px);
         }
       haptic:
         tap_action: true
@@ -208,6 +210,20 @@ views:
             grid_options:
               columns: 6
               rows: auto
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: automation.suppress_roomba_v4_notifications
+              - name: ''
+              - icon: ''
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: false
+              - attribute: last_triggered
+            grid_options:
+              columns: 6
+              rows: auto
           - type: heading
             heading: Helpers
             heading_style: subtitle
@@ -285,6 +301,20 @@ views:
             template: bubble_button
             variables:
               - entity: input_boolean.home
+              - name: ''
+              - icon: ''
+              - button_type: state
+              - show_icon: true
+              - show_state: true
+              - show_attribute: true
+              - attribute: last_triggered
+            grid_options:
+              columns: 4
+              rows: auto
+          - type: custom:decluttering-card
+            template: bubble_button
+            variables:
+              - entity: input_boolean.dev_mode
               - name: ''
               - icon: ''
               - button_type: state

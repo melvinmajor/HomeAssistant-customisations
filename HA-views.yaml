@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 12/09/2026 (DD/MM/YYYY)
+# Last updated: 28/09/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -91,27 +91,29 @@ decluttering_templates:
       media_player:
         album_cover_background: true
         players:
-          - entity: media_player.spotify_melvin_campos_casares
-            icon: ''
           - entity: media_player.google_tv
             title: Google TV
             icon: mdi:youtube-tv
             tap_action:
               action: more-info
               entity: media_player.google_tv_2
+          - entity: media_player.google_nest_audio
+            icon: phu:nest-audio
+            tap_action:
+              action: more-info
+              entity: media_player.google_nest_audio
       layout:
         auto_padding:
           enabled: true
           desktop_px: 100
           mobile_px: 60
         reflect_child_state: true
-      styles: |
+      styles: |-
         .navbar.mobile.bottom {
           bottom: 5px;
         }
         .navbar-card {
           background: RGBA(0, 0, 0, 0.2) !important;
-          backdrop-filter: blur(12px);
         }
       haptic:
         tap_action: true
@@ -766,7 +768,6 @@ views:
             entity: light.salon
             show_icon: true
             name: Living room
-            show_last_changed: false
             tap_action:
               action: none
             double_tap_action:
@@ -794,22 +795,24 @@ views:
               bottom: []
             cards:
               - type: custom:mushroom-template-card
-                primary: |
-                  {{ states('sensor.air_quality_summary') }}
+                primary: >
+                  Health index: {{ states('sensor.netatmo_iaq_health_index') |
+                  capitalize }}
                 secondary: >
-                  CO₂ {{
-                  states('sensor.healthy_home_coach_carbon_dioxide_sensor') }}
-                  ppm · {{ states('sensor.healthy_home_coach_noise') }} dB · AQI
-                  {{ states('sensor.healthy_home_coach_air_quality') }}
-                icon: |
-                  {{ state_attr('sensor.air_quality_summary', 'icon') }}
+                  CO₂ {{ states('sensor.netatmo_iaq_carbon_dioxide') }} ppm ·
+                  Noise {{ states('sensor.netatmo_iaq_noise') }} dB 
+
+                  Temp. {{ states('sensor.netatmo_iaq_temperature') }}°C · Hum.
+                  {{ states('sensor.netatmo_iaq_humidity') }} %
                 multiline_secondary: true
                 vertical: true
                 features_position: bottom
+                grid_options:
+                  columns: 12
+                  rows: auto
                 card_mod:
                   style: >
-                    {% set co2 =
-                    states('sensor.healthy_home_coach_carbon_dioxide_sensor') |
+                    {% set co2 = states('sensor.netatmo_iaq_carbon_dioxide') |
                     int(0) %}
 
                     ha-card {
@@ -820,7 +823,7 @@ views:
                       transition: all 0.4s ease;
                     }
 
-                    /* Dynamic colors */ ha-card {
+                    /* Dynamic background colors */ ha-card {
                       {% if co2 < 800 %}
                         background: linear-gradient(135deg, #4CAF50, #2E7D32);
                       {% elif co2 < 1200 %}
@@ -831,14 +834,11 @@ views:
                       {% endif %}
                     }
 
-                    /* Animation */ @keyframes pulse {
-                      0%   { transform: scale(1); opacity: 1; }
-                      50%  { transform: scale(1.015); opacity: 0.92; }
-                      100% { transform: scale(1); opacity: 1; }
+                    /* Pulse animation for high CO₂ */ @keyframes pulse {
+                      0% { box-shadow: 0 0 0px rgba(244, 67, 54, 0.4); }
+                      50% { box-shadow: 0 0 18px rgba(244, 67, 54, 0.8); }
+                      100% { box-shadow: 0 0 0px rgba(244, 67, 54, 0.4); }
                     }
-                grid_options:
-                  columns: 12
-                  rows: auto
               - type: custom:bubble-card
                 card_type: media-player
                 entity: media_player.google_nest_audio
@@ -1549,170 +1549,22 @@ views:
               main: []
               bottom: []
             cards:
-              - type: custom:ha-bambulab-print_control-card
-                printer: 3c9267e47d7aa4e0fc877665539ca33e
-                grid_options:
-                  columns: 12
-                  rows: auto
-              - type: custom:ha-bambulab-print_status-card
-                printer: 3c9267e47d7aa4e0fc877665539ca33e
-                custom_power: light.chevet
-                style: simple
-                grid_options:
-                  columns: 12
-                  rows: auto
-              - type: custom:bubble-card
-                card_type: button
-                button_type: switch
+              - type: custom:m3-printer-card
                 entity: sensor.a1_03919c452905439_etape_actuelle
-                show_state: true
-                force_icon: false
-                show_icon: true
-                name: Stage
-                icon: mdi:printer-3d
-                button_action:
-                  tap_action:
-                    action: more-info
-                  hold_action:
-                    action: none
-                modules:
-                  - frosted_glass
-                  - icon_color
-                frosted_glass:
-                  icon_background: dark
-                  border: bubble
-                  main_shadow: false
-                  icon_shadow: false
-                  sub_shadow: false
-                  opacity: 0.6
-                icon_color:
-                  use_hex: true
-                  color_hex: '#FFD700'
-                grid_options:
-                  columns: 6
-              - type: custom:bubble-card
-                card_type: button
-                button_type: switch
-                entity: sensor.a1_03919c452905439_progression_de_l_impression
-                show_state: true
-                force_icon: false
-                show_icon: true
-                name: Progress
-                icon: mdi:progress-star-four-points
-                button_action:
-                  tap_action:
-                    action: more-info
-                  hold_action:
-                    action: none
-                modules:
-                  - frosted_glass
-                  - icon_border_progress
-                  - icon_color
-                frosted_glass:
-                  icon_background: dark
-                  border: bubble
-                  opacity: 0.6
-                card_layout: large
-                icon_border_progress:
-                  - button: main
-                    source: sensor.a1_03919c452905439_progression_de_l_impression
-                    interpolate_colors: false
-                icon_color:
-                  use_hex: true
-                  color_hex: '#1E90FF'
-                grid_options:
-                  columns: 6
-              - type: custom:bubble-card
-                card_type: button
-                button_type: switch
-                entity: binary_sensor.a1_03919c452905439_etat
-                show_state: true
-                force_icon: false
-                show_icon: true
-                name: Status
-                icon: mdi:cog
-                button_action:
-                  tap_action:
-                    action: more-info
-                  hold_action:
-                    action: none
-                modules:
-                  - frosted_glass
-                  - icon_color
-                frosted_glass:
-                  icon_background: dark
-                  border: bubble
-                  opacity: 0.6
-                icon_color:
-                  use_hex: true
-                  color_hex: '#69BE28'
-                grid_options:
-                  columns: 6
-              - type: custom:bubble-card
-                card_type: button
-                button_type: switch
-                entity: sensor.a1_03919c452905439_temps_restant
-                show_state: true
-                force_icon: false
-                show_icon: true
-                name: Time left
-                icon: mdi:timer-sand
-                button_action:
-                  tap_action:
-                    action: more-info
-                  hold_action:
-                    action: none
-                modules:
-                  - frosted_glass
-                  - icon_color
-                frosted_glass:
-                  icon_background: dark
-                  border: bubble
-                  opacity: 0.6
-                icon_color:
-                  use_hex: true
-                  color_hex: '#1E90FF'
-                grid_options:
-                  columns: 6
-              - type: custom:bubble-card
-                card_type: button
-                button_type: switch
-                entity: binary_sensor.a1_03919c452905439_erreurs_hms
-                show_state: true
-                force_icon: false
-                show_icon: true
-                color_type: icon
-                name: HMS Errors
-                icon: mdi:information-outline
-                button_action:
-                  tap_action:
-                    action: more-info
-                  hold_action:
-                    action: none
-                modules:
-                  - frosted_glass
-                  - icon_color
-                frosted_glass:
-                  icon_background: dark
-                  border: bubble
-                  opacity: 0.6
-                icon_color:
-                  use_hex: true
-                  color_hex: '#FF4500'
-                grid_options:
-                  columns: 12
-              - show_state: true
-                show_name: true
-                camera_view: auto
-                fit_mode: cover
-                type: picture-entity
-                entity: camera.a1_03919c452905439_camera
-                name: Bambu Lab A1
-                camera_image: camera.a1_03919c452905439_camera
-                aspect_ratio: '16:9'
-                grid_options:
-                  columns: 12
-                  rows: auto
+                show_camera: true
+                camera_live: false
+                camera_refresh: 10
+                icon: phu:bambu-lab-alt
+                name: Printgineer
+                collapsible: false
+                default_collapsed: true
+                collapse_memory: device
+                collapse_blocks:
+                  - camera
+                accessories:
+                  - entity: light.3d_printer
+                    name: Switch
+                    icon: phu:plug-eu
             popup_mode: centered
             with_bottom_offset: true
             full_width_on_mobile: false
@@ -2424,28 +2276,10 @@ views:
             grid_options:
               rows: 1.719
               columns: 6
-          - type: custom:decluttering-card
-            template: home_temperature_graph
       - type: grid
         cards:
-          - type: custom:m3-clock-card
-            style: tiles
-            show_seconds: false
-            show_date: true
-            size: 0.7
-            card_version: 2.2.0
-            time_format: '24'
-            date_format: auto
-            seconds_style: dots
-            show_seconds_tile: false
-            colon_blink: true
-            ring_animation: reset
-            tile_color_mode: accent_hours
-            sun_entity: sun.sun
-            show_day_progress: false
-            progress_range: day
-            secondary_color: '#ffffff'
-            accent_color: '#4C5C92'
+          - type: custom:decluttering-card
+            template: home_temperature_graph
           - type: custom:m3-weather-card
             entity: weather.irm
             glass_background: true
@@ -2746,9 +2580,16 @@ views:
               icon_height: 60
               icon_size: 42
             rows: 1.844
-          - type: entities
-            entities:
-              - entity: input_datetime.cat_fountain_filter
+          - type: tile
+            grid_options:
+              rows: 1
+              columns: 12
+            entity: input_datetime.cat_fountain_filter
+            vertical: false
+            features:
+              - type: date-set
+            features_position: inline
+            time_format: date
         column_span: 1
       - type: grid
         cards:
@@ -3432,44 +3273,10 @@ views:
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
-                entity: sensor.system_monitor_temperature_cpu
-                show_state: true
-                scrolling_effect: true
-                show_icon: false
-                show_name: true
-                show_attribute: false
-                show_last_updated: false
-                show_last_changed: false
-                force_icon: false
-                modules:
-                  - frosted_glass
-                frosted_glass:
-                  icon_background: dark
-                  border: bubble
-                  main_shadow: false
-                  icon_shadow: false
-                button_action:
-                  hold_action:
-                    action: none
-                name: CPU temp
-                sub_button:
-                  main: []
-                  bottom: []
-                styles: |-
-                  .bubble-button-card-container {
-                    background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
-                  }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: state
                 entity: sensor.system_monitor_cpu_usage
-                show_state: true
                 scrolling_effect: true
                 show_icon: false
                 show_name: true
-                show_attribute: false
-                show_last_updated: false
-                show_last_changed: false
                 force_icon: false
                 modules:
                   - frosted_glass
@@ -3488,6 +3295,7 @@ views:
                   .bubble-button-card-container {
                     background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
                   }
+                state_content: state
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
@@ -3517,6 +3325,33 @@ views:
                   .bubble-button-card-container {
                     background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
                   }
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: sensor.system_monitor_temperature_cpu
+                scrolling_effect: true
+                show_icon: false
+                show_name: true
+                force_icon: false
+                modules:
+                  - frosted_glass
+                frosted_glass:
+                  icon_background: dark
+                  border: bubble
+                  main_shadow: false
+                  icon_shadow: false
+                button_action:
+                  hold_action:
+                    action: none
+                name: CPU temp
+                sub_button:
+                  main: []
+                  bottom: []
+                styles: |-
+                  .bubble-button-card-container {
+                    background: rgba(from var(--md-sys-color-surface-container-high) r g b / 0.15) !important;
+                  }
+                state_content: state
             grid_options:
               rows: auto
           - type: heading
