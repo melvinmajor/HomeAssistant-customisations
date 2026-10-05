@@ -1,7 +1,7 @@
 ## Home Assistant view used as a secondary page used for maintenance purpose.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 28/09/2026 (DD/MM/YYYY)
+# Last updated: 05/10/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -386,14 +386,18 @@ views:
       repeat: no-repeat
       attachment: fixed
       image:
-        media_content_id: media-source://image_upload/4f558534f7d571e219bc896a1422c99a
+        media_content_id: >-
+          media-source://media_source/local/backgrounds/Black-Minimalist-Wallpaper-by-kensey-_WallpaperCave_.png
         media_content_type: image/png
         metadata:
           title: Black-Minimalist-Wallpaper-by-kensey-_WallpaperCave_.png
-          thumbnail: /api/image/serve/4f558534f7d571e219bc896a1422c99a/256x256
+          thumbnail: null
           media_class: image
+          children_media_class: null
           navigateIds:
             - {}
             - media_content_type: app
-              media_content_id: media-source://image_upload
+              media_content_id: media-source://media_source
+            - media_content_type: ''
+              media_content_id: media-source://media_source/local/backgrounds
     dense_section_placement: false

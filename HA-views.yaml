@@ -1,7 +1,7 @@
 ## Home Assistant views used for the 'Home' page used as Overview page.
 # GitHub repo: <https://github.com/melvinmajor/HomeAssistant-customisations>
 # Author: Melvin Campos Casares
-# Last updated: 28/09/2026 (DD/MM/YYYY)
+# Last updated: 05/10/2026 (DD/MM/YYYY)
 
 kiosk_mode:
   non_admin_settings:
@@ -1805,7 +1805,22 @@ views:
       size: cover
       repeat: no-repeat
       attachment: fixed
-      image: /api/image/serve/6a3fcb45598992441700eacac6feac59/original
+      image:
+        media_content_id: >-
+          media-source://media_source/local/backgrounds/Space Light Ultrawide
+          QHD.png
+        media_content_type: image/png
+        metadata:
+          title: Space Light Ultrawide QHD.png
+          thumbnail: null
+          media_class: image
+          children_media_class: null
+          navigateIds:
+            - {}
+            - media_content_type: app
+              media_content_id: media-source://media_source
+            - media_content_type: ''
+              media_content_id: media-source://media_source/local/backgrounds
     header:
       layout: center
       badges_position: bottom
@@ -2463,16 +2478,20 @@ views:
       repeat: no-repeat
       attachment: fixed
       image:
-        media_content_id: media-source://image_upload/20b76bb5529b3fba10d44e3769e02fa8
+        media_content_id: >-
+          media-source://media_source/local/backgrounds/snow-mountains-5120x2880.jpg
         media_content_type: image/jpeg
         metadata:
           title: snow-mountains-5120x2880.jpg
-          thumbnail: /api/image/serve/20b76bb5529b3fba10d44e3769e02fa8/256x256
+          thumbnail: null
           media_class: image
+          children_media_class: null
           navigateIds:
             - {}
             - media_content_type: app
-              media_content_id: media-source://image_upload
+              media_content_id: media-source://media_source
+            - media_content_type: ''
+              media_content_id: media-source://media_source/local/backgrounds
   - title: Kitchen
     path: kitchen
     type: sections
@@ -2638,16 +2657,20 @@ views:
       repeat: no-repeat
       attachment: fixed
       image:
-        media_content_id: media-source://image_upload/7b85a08b7269ae86053152b4ffc920e2
+        media_content_id: >-
+          media-source://media_source/local/backgrounds/microsoft-surface-green-abstract-3840x2160.jpg
         media_content_type: image/jpeg
         metadata:
           title: microsoft-surface-green-abstract-3840x2160.jpg
-          thumbnail: /api/image/serve/7b85a08b7269ae86053152b4ffc920e2/256x256
+          thumbnail: null
           media_class: image
+          children_media_class: null
           navigateIds:
             - {}
             - media_content_type: app
-              media_content_id: media-source://image_upload
+              media_content_id: media-source://media_source
+            - media_content_type: ''
+              media_content_id: media-source://media_source/local/backgrounds
   - title: Volvo EX30
     path: vehicle
     icon: phu:volvo
@@ -3206,17 +3229,20 @@ views:
       repeat: no-repeat
       attachment: fixed
       image:
-        media_content_id: media-source://image_upload/5761cc0552c0ae9a97bc3d7fb2526cd5
+        media_content_id: >-
+          media-source://media_source/local/backgrounds/microsoft-surface-brown-abstract-3840x2160.jpg
         media_content_type: image/jpeg
         metadata:
           title: microsoft-surface-brown-abstract-3840x2160.jpg
-          thumbnail: /api/image/serve/5761cc0552c0ae9a97bc3d7fb2526cd5/256x256
+          thumbnail: null
           media_class: image
           children_media_class: null
           navigateIds:
             - {}
             - media_content_type: app
-              media_content_id: media-source://image_upload
+              media_content_id: media-source://media_source
+            - media_content_type: ''
+              media_content_id: media-source://media_source/local/backgrounds
   - title: IT
     path: IT-server
     icon: mdi:server-minus
@@ -3250,16 +3276,20 @@ views:
       repeat: no-repeat
       attachment: fixed
       image:
-        media_content_id: media-source://image_upload/54385bf6fc986c20a6a2e0950cdf1efd
+        media_content_id: >-
+          media-source://media_source/local/backgrounds/microsoft-surface-metallic-abstract-3840x2160.jpg
         media_content_type: image/jpeg
         metadata:
           title: microsoft-surface-metallic-abstract-3840x2160.jpg
-          thumbnail: /api/image/serve/54385bf6fc986c20a6a2e0950cdf1efd/256x256
+          thumbnail: null
           media_class: image
+          children_media_class: null
           navigateIds:
             - {}
             - media_content_type: app
-              media_content_id: media-source://image_upload
+              media_content_id: media-source://media_source
+            - media_content_type: ''
+              media_content_id: media-source://media_source/local/backgrounds
     type: sections
     sections:
       - type: grid
